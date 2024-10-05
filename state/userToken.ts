@@ -1,14 +1,7 @@
-import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
-export const userIdAtom = atomWithStorage<{
-  userId: string;
-  password: string;
-  email: string;
-} | null>('user-id', null);
-
-export const userTokenAtom = atom<{
+export const userTokenAtom = atomWithStorage<{
   userId: string;
   encryptionKey: string;
   userToken: string;
-} | null>(null);
+} | null>('user-token', null);

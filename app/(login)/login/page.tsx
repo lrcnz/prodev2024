@@ -2,6 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Label } from '@radix-ui/react-label';
+import { useMutation } from '@tanstack/react-query';
 import { CircleX, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -32,9 +33,21 @@ const LoginPage = () => {
   } = useForm<FormType>({
     resolver: yupResolver(formSchema),
   });
-  const { loginMutation } = useUserLogin();
+  const [login] = useUserLogin();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const loginMutation = useMutation({
+    mutationFn: async (data: { email: string; password: string }) => {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      return res.json();
+    },
+  });
 
   const onSubmit = async (data: FormType) => {
     if (loginMutation.isPending) return;
@@ -45,6 +58,12 @@ const LoginPage = () => {
       if (res.error) {
         setErrorMsg(res.error?.message || 'Unknown error');
       }
+
+      login({
+        userId: res.result.userId,
+        userToken: res.result.userToken,
+        encryptionKey: res.result.encryptionKey,
+      });
 
       router.push('/');
     } catch (e) {
@@ -83,10 +102,10 @@ const LoginPage = () => {
                     {...register('email')}
                   />
                   {errors.email?.message && (
-                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.email?.message}
-                    </div>
+                    </p>
                   )}
                 </div>
               </div>
@@ -103,10 +122,10 @@ const LoginPage = () => {
                     {...register('password')}
                   />
                   {errors.password?.message && (
-                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.password?.message}
-                    </div>
+                    </p>
                   )}
                 </div>
               </div>
@@ -120,7 +139,7 @@ const LoginPage = () => {
             </div>
             <div className="mt-4 text-muted-foreground">
               Don&apos;t have an account?
-              <Link className="ml-2 text-secondary underline" href="/addaccount">
+              <Link className="ml-2 text-blue-600 underline" href="/signup">
                 Sign up
               </Link>
             </div>
