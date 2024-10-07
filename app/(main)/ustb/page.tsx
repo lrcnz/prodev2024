@@ -1,5 +1,6 @@
 'use client';
 
+import { useAtomValue } from 'jotai';
 import { X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -11,11 +12,10 @@ import { useBalance } from 'wagmi';
 import { useContractExecution } from '@/hooks/useContractExecution';
 import { useErc20Balance } from '@/hooks/useErc20Balance';
 import { useCurrentWallet } from '@/hooks/useWallet';
-import { Button } from '@/ui-components/Button';
-import { Input } from '@/ui-components/Input';
 import { depositSavingsContract } from '@/lib/execution';
 import { w3sSDKAtom } from '@/state/w3s';
-import { useAtomValue } from 'jotai';
+import { Button } from '@/ui-components/Button';
+import { Input } from '@/ui-components/Input';
 import { Toast } from '@/ui-components/Toast';
 
 const ActivitesPage = () => {
@@ -28,21 +28,21 @@ const ActivitesPage = () => {
 
   const onSubmit = async () => {
     console.log('submit', amount);
-    if(!client.sdk) throw new Error('No client found');
+    if (!client.sdk) throw new Error('No client found');
     const contracts = depositSavingsContract(parseUnits(amount, 6));
     console.log(contracts);
     const res = await execution(contracts);
-    console.log(res)
+    console.log(res);
 
     const current = Toast.show({
       content: 'loading',
       duration: 0,
       position: 'top',
-    })
+    });
     client.sdk.execute(res.data.challengeId, (err, result) => {
       current.close();
-      console.log(result)
-      if(err)  {
+      console.log(result);
+      if (err) {
         Toast.show({
           content: 'Transaction failed',
           icon: 'error',
