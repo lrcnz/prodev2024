@@ -13,9 +13,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={client}>
-        <StorageProvider store={store}>
-          {children}
-        </StorageProvider>
+        <StorageProvider store={store}>{children}</StorageProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

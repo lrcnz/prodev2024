@@ -1,4 +1,3 @@
-
 import { userControlledWalletsClient } from '@/lib/walletClient';
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
@@ -24,14 +23,14 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     });
   } catch (error: any) {
     console.error(error.response || error);
-    const notFound = error.message === "No found"
+    const notFound = error.message === 'No found';
     return Response.json(
       {
         error: {
-          message: notFound ? 'Transaction not found' :'Internal server error',
+          message: notFound ? 'Transaction not found' : 'Internal server error',
         },
       },
-      { status: notFound ? 404 :500 }
+      { status: notFound ? 404 : 500 }
     );
   }
 }

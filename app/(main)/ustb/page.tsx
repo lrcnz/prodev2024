@@ -57,13 +57,13 @@ const ActivitesPage = () => {
       });
     });
   };
-  
+
   const onWithdraw = async () => {
     console.log('submit', amount);
     if (!client.sdk) throw new Error('No client found');
     if (!publicClient) throw new Error('No public client found');
     if (!wallet?.address) throw new Error('No wallet address found');
-    const contracts = await withdrawSavingsContract(publicClient, wallet.address );
+    const contracts = await withdrawSavingsContract(publicClient, wallet.address);
     console.log(contracts);
     const res = await execution(contracts);
     console.log(res);
