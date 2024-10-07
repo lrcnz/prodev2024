@@ -2,7 +2,7 @@
 
 import { useAtom } from 'jotai';
 
-import { ChartSpline, Eye, EyeOff, Upload } from 'lucide-react';
+import { ArrowUp, ChartSpline, Eye, EyeOff, Upload } from 'lucide-react';
 
 import Link from 'next/link';
 
@@ -60,6 +60,14 @@ const HomePage = () => {
                 </Link>
               </Button>
               Activities
+            </div>
+            <div className="flex flex-col items-center">
+              <Button asChild className="rounded-full h-12 w-12 p-2.5">
+                <Link href="/ustb">
+                  <ArrowUp />
+                </Link>
+              </Button>
+              USDC-USTB
             </div>
           </div>
         </div>
