@@ -10,6 +10,7 @@ import { useBalance } from 'wagmi';
 
 import { AccountCard } from '@/components/AccountCard';
 import { AppHeader } from '@/components/AppHeader';
+import { ComingSoonItem } from '@/components/ComingSoonItem';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { formatNumber } from '@/lib/utils';
 import { showBalanceAtom } from '@/state/showBalance';
@@ -66,6 +67,18 @@ const HomePage = () => {
         </div>
         <div>
           <div className="mt-8 text-xl font-medium">Earn</div>
+        </div>
+        <div>
+          <div className="mt-8 text-xl font-medium">Coming Soon</div>
+          <div className="flex justify-between mt-4">
+            <ComingSoonItem variant="remittence" />
+            <ComingSoonItem variant="payment" />
+            <ComingSoonItem variant="loan" />
+            <ComingSoonItem variant="stake" />
+          </div>
+        </div>
+        <div className="flex justify-center items-center mt-40">
+          <div className="text-muted-foreground">© 2004-2024 Tardis.com. All rights reserved.</div>
         </div>
       </div>
     </div>
