@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
-import { formatUnits } from 'ethers';
 import numbro from 'numbro';
 import { twMerge } from 'tailwind-merge';
+import { formatUnits } from 'viem';
 
 export function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,6 +23,7 @@ export type FormatOptions = {
   errorValue?: string;
   zeroValue?: string;
   prefix?: string;
+  postfix?: string;
   showBalance?: boolean;
   decimals?: number;
 };
@@ -41,6 +42,7 @@ export const formatNumber = (
     zeroValue = undefined,
     ellipsis = false,
     prefix = undefined,
+    postfix = undefined,
     showBalance = true,
     decimals = undefined,
   }: FormatOptions = {}
@@ -75,7 +77,7 @@ export const formatNumber = (
 
   if (output === 'percent' && ellipsis && Number(num) >= 100) {
     const value = numbro(100).format(options);
-    return `${prefix || ''}${value.split('%')[0]}+%`;
+    return `${prefix || ''}${value.split('%')[0]}+%${postfix || ''}`;
   }
 
   if (output === 'percent' && ellipsis && num && Number(num) < 0.0001) {
@@ -84,7 +86,7 @@ export const formatNumber = (
   }
 
   try {
-    return `${prefix || ''}${output === 'currency' ? '$' : ''}${numbro(num).format(options).toUpperCase()}`;
+    return `${prefix || ''}${output === 'currency' ? '$' : ''}${numbro(num).format(options).toUpperCase()}${postfix || ''}`;
   } catch (error) {
     console.error(error);
     return errorValue;
