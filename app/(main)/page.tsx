@@ -11,6 +11,7 @@ import { useBalance } from 'wagmi';
 import { AccountCard } from '@/components/AccountCard';
 import { AppHeader } from '@/components/AppHeader';
 import { ComingSoonItem } from '@/components/ComingSoonItem';
+import { EarnCard } from '@/components/EarnCard';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { formatNumber } from '@/lib/utils';
 import { showBalanceAtom } from '@/state/showBalance';
@@ -43,7 +44,7 @@ const HomePage = () => {
               showBalance,
             })}
           </div>
-          <div className="mt-8 flex gap-8">
+          <div className="mt-4 flex gap-8">
             <div className="flex flex-col items-center">
               <Button asChild className="rounded-full h-12 w-12 p-2.5">
                 <Link href="/deposit">
@@ -62,14 +63,19 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="mt-8">
+        <div className="mt-10">
           <AccountCard />
         </div>
         <div>
-          <div className="mt-8 text-xl font-medium">Earn</div>
+          <div className="mt-10 text-xl font-medium">Earn</div>
+          <div className="space-y-2 mt-4">
+            <EarnCard type="savings" />
+            <EarnCard type="growth" />
+            <EarnCard type="flexible" />
+          </div>
         </div>
         <div>
-          <div className="mt-8 text-xl font-medium">Coming Soon</div>
+          <div className="mt-10 text-xl font-medium">Coming Soon</div>
           <div className="flex justify-between mt-4">
             <ComingSoonItem variant="remittence" />
             <ComingSoonItem variant="payment" />

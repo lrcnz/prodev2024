@@ -89,3 +89,8 @@ a {
   display: flex;
   justify-content: center;
 }
+
+.adm-popover .adm-popover-inner-content {
+  padding: 4px 8px;
+  font-size: 14px;
+}
