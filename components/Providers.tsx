@@ -5,7 +5,6 @@ import { createStore, Provider as StorageProvider } from 'jotai';
 import { WagmiProvider } from 'wagmi';
 
 import { config as wagmiConfig } from '@/lib/wagmi';
-import { TooltipProvider } from '@/ui-components/tooltip';
 
 export const store = createStore();
 const client = new QueryClient();
@@ -15,7 +14,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={client}>
         <StorageProvider store={store}>
-          <TooltipProvider>{children}</TooltipProvider>
+          {children}
         </StorageProvider>
       </QueryClientProvider>
     </WagmiProvider>

@@ -6,13 +6,13 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { encodeFunctionData, parseUnits, formatUnits } from 'viem';
-import { useBalance } from 'wagmi';
+import { parseUnits } from 'viem';
+import { useBalance, usePublicClient } from 'wagmi';
 
 import { useContractExecution } from '@/hooks/useContractExecution';
 import { useErc20Balance } from '@/hooks/useErc20Balance';
 import { useCurrentWallet } from '@/hooks/useWallet';
-import { depositSavingsContract } from '@/lib/execution';
+import { depositSavingsContract, withdrawSavingsContract } from '@/lib/execution';
 import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
 import { Input } from '@/ui-components/Input';
@@ -25,11 +25,13 @@ const ActivitesPage = () => {
   const client = useAtomValue(w3sSDKAtom);
 
   const execution = useContractExecution();
+  const publicClient = usePublicClient();
 
-  const onSubmit = async () => {
+  const onDeposit = async () => {
     console.log('submit', amount);
     if (!client.sdk) throw new Error('No client found');
-    const contracts = depositSavingsContract(parseUnits(amount, 6));
+    if (!publicClient) throw new Error('No public client found');
+    const contracts = await depositSavingsContract(publicClient, parseUnits(amount, 6));
     console.log(contracts);
     const res = await execution(contracts);
     console.log(res);
@@ -55,6 +57,39 @@ const ActivitesPage = () => {
       });
     });
   };
+  
+  const onWithdraw = async () => {
+    console.log('submit', amount);
+    if (!client.sdk) throw new Error('No client found');
+    if (!publicClient) throw new Error('No public client found');
+    if (!wallet?.address) throw new Error('No wallet address found');
+    const contracts = await withdrawSavingsContract(publicClient, wallet.address );
+    console.log(contracts);
+    const res = await execution(contracts);
+    console.log(res);
+
+    const current = Toast.show({
+      content: 'loading',
+      duration: 0,
+      position: 'top',
+    });
+    client.sdk.execute(res.data.challengeId, (err, result) => {
+      current.close();
+      console.log(result);
+      if (err) {
+        Toast.show({
+          content: 'Transaction failed',
+          icon: 'error',
+        });
+      }
+
+      Toast.show({
+        content: 'Transaction sent',
+        icon: 'success',
+      });
+    });
+  };
+
   const { data: usdcBalance } = useErc20Balance('USDC', wallet?.address);
   const { data: ustbBalance } = useErc20Balance('USTB', wallet?.address);
   const { data: sepoliaETHBalance } = useBalance({
@@ -84,8 +119,13 @@ const ActivitesPage = () => {
           <div>usdc balance: {usdcBalance?.toString()}</div>
           <div>ustb balance: {ustbBalance?.toString()}</div>
           <div>
-            <Button className="w-full" onClick={onSubmit}>
-              Submit
+            <Button className="w-full" onClick={onDeposit}>
+              Deposit Amount
+            </Button>
+          </div>
+          <div>
+            <Button className="w-full" onClick={onWithdraw}>
+              Withdraw All To USDC
             </Button>
           </div>
         </div>
