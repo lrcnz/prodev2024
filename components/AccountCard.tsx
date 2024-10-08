@@ -4,19 +4,19 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import SavingAccountBg from '@/assets/saving_account_bg.png';
-import { useErc20Balance } from '@/hooks/useErc20Balance';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useCurrentWallet } from '@/hooks/useWallet';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { cn } from '@/lib/utils';
 import { Button } from '@/ui-components/Button';
 
 export const AccountCard = ({ balance, className }: { balance?: bigint | number | string; className?: string }) => {
   const [expended, setExpended] = useState<'saving' | 'current' | 'spending'>();
+
   const { data: wallet } = useCurrentWallet();
   const formatBalance = useFormatBalance();
+  const { currentBalance } = useWalletBalance(false);
 
-  const { data: usdcBalance } = useErc20Balance('USDC', wallet?.address);
-  console.log(usdcBalance);
   return (
     <div className={cn('', className)}>
       <div className={cn('rounded-t-lg px-3 py-2 bg-gradient1 min-h-16 relative z-10')}>
@@ -48,7 +48,7 @@ export const AccountCard = ({ balance, className }: { balance?: bigint | number 
           <div className="text-sm font-semibold">Current account</div>
           <div className="flex items-center gap-2">
             <div className="text-xs text-muted-foreground translate-y-[0.5px]">Balance</div>
-            <div className="text-sm">{formatBalance(usdcBalance, { decimals: 6, postfix: ' USDC' })}</div>
+            <div className="text-sm">{formatBalance(currentBalance, { decimals: 6, postfix: ' USDC' })}</div>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export const AccountCard = ({ balance, className }: { balance?: bigint | number 
           <div className="flex items-center gap-2">
             <div className="text-xs text-muted-foreground translate-y-[1px]">Linked</div>
             <div className="text-sm">
-              {formatBalance(usdcBalance, { prefix: 'Spend up to ', decimals: 6, postfix: ' USDC' })}
+              {formatBalance(currentBalance, { prefix: 'Spend up to ', decimals: 6, postfix: ' USDC' })}
             </div>
           </div>
         </div>

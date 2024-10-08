@@ -6,12 +6,15 @@ import { useEffect } from 'react';
 import { useUser } from '@/hooks/useUser';
 import { useUserLogin } from '@/hooks/useUserLogin';
 import { useCurrentWallet } from '@/hooks/useWallet';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { fetchUserChallenge } from '@/lib/queries';
 import { Updater } from '@/state/updater';
 import { userTokenAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
+  useWalletBalance(true);
+
   const userToken = useAtomValue(userTokenAtom);
   const [login] = useUserLogin();
   const { refetch: refetchWallet } = useCurrentWallet(true);
