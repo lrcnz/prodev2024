@@ -70,7 +70,6 @@ export const SwitchPlanModal = () => {
       const res = await execution(withdrawContracts.concat(depositContracts as any));
 
       client.sdk.execute(res.data.challengeId, async (err, result) => {
-        console.log(result);
         if (err) {
           setLoading(false);
 
@@ -86,7 +85,7 @@ export const SwitchPlanModal = () => {
         setLoading(false);
 
         Toast.show({
-          content: 'Transaction sent',
+          content: 'Operation Successful',
           icon: 'success',
         });
         setPlan(plan === 'growth' ? 'savings' : 'growth');
@@ -118,18 +117,17 @@ export const SwitchPlanModal = () => {
           <AlertDialogHeader>
             <VisuallyHidden>
               <AlertDialogTitle>Switch Plan</AlertDialogTitle>
+              <AlertDialogDescription>Confirm your new Earn plan</AlertDialogDescription>
             </VisuallyHidden>
-            <div className="flex justify-center items-center gap-8">
-              {plan === 'growth' ? growth : savings}
-              <div>
-                <ArrowRight />
-              </div>
-              {plan === 'savings' ? growth : savings}
-            </div>
-            <AlertDialogDescription>
-              <div className="mt-3">Confirm your new Earn plan</div>
-            </AlertDialogDescription>
           </AlertDialogHeader>
+          <div className="flex justify-center items-center gap-8">
+            {plan === 'growth' ? growth : savings}
+            <div>
+              <ArrowRight />
+            </div>
+            {plan === 'savings' ? growth : savings}
+          </div>
+          <div className="mt-3 text-center text-muted-foreground">Confirm your new Earn plan</div>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>

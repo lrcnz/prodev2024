@@ -83,10 +83,10 @@ const LoginPage = () => {
                     {...register('email')}
                   />
                   {errors.email?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.email?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -103,10 +103,10 @@ const LoginPage = () => {
                     {...register('password')}
                   />
                   {errors.password?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.password?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
