@@ -57,7 +57,15 @@ const HomePage = () => {
                   <ArrowUp />
                 </Link>
               </Button>
-              USDC-USTB
+              Savings
+            </div>
+            <div className="flex flex-col items-center">
+              <Button asChild className="rounded-full h-12 w-12 p-2.5">
+                <Link href="/growth">
+                  <ArrowUp />
+                </Link>
+              </Button>
+              Growth
             </div>
           </div>
         </div>
