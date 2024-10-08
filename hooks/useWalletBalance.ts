@@ -8,11 +8,15 @@ export const useWalletBalance = (enabled: boolean = false) => {
   const { data: usdcBalance } = useErc20Balance('USDC', wallet?.address, {
     enabled,
   });
+  const { data: ustbBalance } = useErc20Balance('USTB', wallet?.address, {
+    enabled,
+  });
 
   return useMemo(() => {
     return {
       totalBalance: usdcBalance,
       currentBalance: usdcBalance,
+      savingsBalance: ustbBalance,
     };
-  }, [usdcBalance]);
+  }, [usdcBalance, ustbBalance]);
 };

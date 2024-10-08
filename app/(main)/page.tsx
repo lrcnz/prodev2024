@@ -77,7 +77,6 @@ const HomePage = () => {
           <div className="space-y-2 mt-4">
             <EarnCard type="savings" />
             <EarnCard type="growth" />
-            <EarnCard type="flexible" />
           </div>
         </div>
         <div>
