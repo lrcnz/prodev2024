@@ -2,6 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
+import { useAtomValue } from 'jotai';
 import { LogOut, RefreshCcw, X } from 'lucide-react';
 
 import Link from 'next/link';
@@ -11,13 +12,14 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useUserLogin } from '@/hooks/useUserLogin';
-import { useCurrentWallet } from '@/hooks/useWallet';
 import { delay } from '@/lib/utils';
+import { userIdAtom } from '@/state/userToken';
 import { Loading } from '@/ui-components/Loading';
 import { Toast } from '@/ui-components/Toast';
 
 const SettingPage = () => {
-  const { logout } = useUserLogin();
+  const { logout, loginMutateAsync } = useUserLogin();
+  const userId = useAtomValue(userIdAtom);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -34,11 +36,20 @@ const SettingPage = () => {
   };
 
   const onRefresh = async () => {
+    if (!userId?.email || !userId?.password) {
+      Toast.show({
+        icon: 'error',
+        content: 'not logged in',
+      });
+      return;
+    }
     setLoading(true);
+    loginMutateAsync({ email: userId?.email, password: userId?.password });
     Toast.show({
       icon: 'success',
-      content: 'Logged out',
+      content: 'Refreshed token',
     });
+    setLoading(false);
   };
 
   return (
@@ -71,7 +82,7 @@ const SettingPage = () => {
             </div>
             <div className="text-base font-medium">Log out</div>
           </div>
-          <div className="rounded-xl bg-accent flex h-14 items-center cursor-pointer gap-4" onClick={onLogout}>
+          <div className="rounded-xl bg-accent flex h-14 items-center cursor-pointer gap-4" onClick={onRefresh}>
             <div className="ml-8">
               <RefreshCcw />
             </div>

@@ -90,7 +90,7 @@ export const useUserLogin = () => {
   });
 
   return useMemo(
-    () => ({ login, logout, signupMutation, loginMutation }) as const,
+    () => ({ login, logout, signupMutation, loginMutation, loginMutateAsync: loginMutation.mutateAsync }) as const,
     [login, loginMutation, logout, signupMutation]
   );
 };
