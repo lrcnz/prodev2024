@@ -6,24 +6,19 @@ import { ArrowUp, ChartSpline, Eye, EyeOff, Upload } from 'lucide-react';
 
 import Link from 'next/link';
 
-import { useBalance } from 'wagmi';
-
 import { AccountCard } from '@/components/AccountCard';
 import { AppHeader } from '@/components/AppHeader';
 import { ComingSoonItem } from '@/components/ComingSoonItem';
 import { EarnCard } from '@/components/EarnCard';
-import { useCurrentWallet } from '@/hooks/useWallet';
-import { formatNumber } from '@/lib/utils';
+import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { showBalanceAtom } from '@/state/showBalance';
 import { Button } from '@/ui-components/Button';
 
 const HomePage = () => {
-  const { data: wallet } = useCurrentWallet();
   const [showBalance, setShowBalance] = useAtom(showBalanceAtom);
-
-  const { data: balance, isLoading } = useBalance({
-    address: '0x242d7e45f80287Aa0d1353403f9753E25Cc4d920',
-  });
+  const formatBalance = useFormatBalance();
+  const { totalBalance } = useWalletBalance();
 
   return (
     <div className="flex flex-col h-full">
@@ -37,12 +32,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="mt-2 flex items-center text-4xl font-medium">
-            {formatNumber(balance?.value, {
-              prefix: '$ ',
-              decimals: balance?.decimals,
-              mantissa: 2,
-              showBalance,
-            })}
+            {formatBalance(totalBalance, { decimals: 6, postfix: ' USDC' })}
           </div>
           <div className="mt-4 flex gap-8">
             <div className="flex flex-col items-center">

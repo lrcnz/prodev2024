@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
-import { LogOut, X } from 'lucide-react';
+import { LogOut, RefreshCcw, X } from 'lucide-react';
 
 import Link from 'next/link';
 
@@ -13,13 +13,11 @@ import { useState } from 'react';
 import { useUserLogin } from '@/hooks/useUserLogin';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { delay } from '@/lib/utils';
-import { Button } from '@/ui-components/Button';
 import { Loading } from '@/ui-components/Loading';
 import { Toast } from '@/ui-components/Toast';
 
 const SettingPage = () => {
-  const { data } = useCurrentWallet();
-  const [, logout] = useUserLogin();
+  const { logout } = useUserLogin();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -33,6 +31,14 @@ const SettingPage = () => {
     });
     setLoading(false);
     router.push('/');
+  };
+
+  const onRefresh = async () => {
+    setLoading(true);
+    Toast.show({
+      icon: 'success',
+      content: 'Logged out',
+    });
   };
 
   return (
@@ -58,12 +64,18 @@ const SettingPage = () => {
           </div>
           <div className="mt-3 text-2xl font-medium">Tradis App</div>
         </div>
-        <div className="mx-4 mt-16">
+        <div className="mx-4 mt-16 space-y-4">
           <div className="rounded-xl bg-accent flex h-14 items-center cursor-pointer gap-4" onClick={onLogout}>
             <div className="ml-8">
               <LogOut />
             </div>
             <div className="text-base font-medium">Log out</div>
+          </div>
+          <div className="rounded-xl bg-accent flex h-14 items-center cursor-pointer gap-4" onClick={onLogout}>
+            <div className="ml-8">
+              <RefreshCcw />
+            </div>
+            <div className="text-base font-medium">Refresh token</div>
           </div>
         </div>
       </div>

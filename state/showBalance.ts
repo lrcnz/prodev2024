@@ -1,3 +1,3 @@
-import { atomWithStorage } from "jotai/utils";
+import { atomWithStorage } from 'jotai/utils';
 
-export const showBalanceAtom = atomWithStorage<boolean>("show-balance", false);
+export const showBalanceAtom = atomWithStorage<boolean>('show-balance', false);

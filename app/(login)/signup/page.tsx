@@ -2,8 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Label } from '@radix-ui/react-label';
-import { useMutation } from '@tanstack/react-query';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { CircleX, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -13,11 +12,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useUserLogin } from '@/hooks/useUserLogin';
-import { Updater } from '@/state/updater';
-import { userTokenAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui-components/Card';
+import { Card, CardContent, CardFooter } from '@/ui-components/Card';
 import { ErrorAlert } from '@/ui-components/ErrorAlert';
 import { Input } from '@/ui-components/Input';
 import { Loading } from '@/ui-components/Loading';
@@ -38,21 +35,9 @@ const SignUpPage = () => {
     resolver: yupResolver(formSchema),
   });
   const client = useAtomValue(w3sSDKAtom);
-  const [login] = useUserLogin();
+  const { signupMutation } = useUserLogin();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const signupMutation = useMutation({
-    mutationFn: async (data: { email: string; password: string }) => {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      return res.json();
-    },
-  });
 
   const onSubmit = async (data: FormType) => {
     if (!client.sdk || signupMutation.isPending) return;
@@ -62,12 +47,6 @@ const SignUpPage = () => {
       if (res.error) {
         setErrorMsg(res.error?.message || 'Unknown error');
       }
-
-      login({
-        userId: res.result.userId,
-        userToken: res.result.userToken,
-        encryptionKey: res.result.encryptionKey,
-      });
 
       if (res.result.challengeId && client.isAuth) {
         client.sdk.execute(res.result.challengeId, (err, res) => {
