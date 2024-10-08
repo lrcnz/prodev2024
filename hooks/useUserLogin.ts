@@ -22,7 +22,7 @@ export const useUserLogin = () => {
         isAuth: true,
       });
     },
-    [client, setUserToken, setClient]
+    [client.sdk, setUserToken, setClient]
   );
 
   const logout = useCallback(() => {
@@ -32,7 +32,7 @@ export const useUserLogin = () => {
       userToken: '',
       encryptionKey: '',
     });
-  }, [setUserToken, client]);
+  }, [setUserToken, client.sdk]);
 
   return useMemo(() => [login, logout] as const, [login, logout]);
 };

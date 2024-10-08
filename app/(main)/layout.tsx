@@ -6,23 +6,26 @@ import { useEffect } from 'react';
 import { useUser } from '@/hooks/useUser';
 import { useUserLogin } from '@/hooks/useUserLogin';
 import { useCurrentWallet } from '@/hooks/useWallet';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { fetchUserChallenge } from '@/lib/queries';
 import { Updater } from '@/state/updater';
 import { userTokenAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
+  useWalletBalance(true);
+
   const userToken = useAtomValue(userTokenAtom);
   const [login] = useUserLogin();
   const { refetch: refetchWallet } = useCurrentWallet(true);
-  const { data: user, refetch: refetchUser } = useUser(false);
+  const { refetch: refetchUser } = useUser(false);
   const client = useAtomValue(w3sSDKAtom);
 
   useEffect(() => {
     if (userToken) {
       login(userToken);
     }
-  }, [userToken]);
+  }, [login, userToken]);
 
   useEffect(() => {
     if (client.isAuth && client.sdk) {
@@ -43,7 +46,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         }
       });
     }
-  }, [user, userToken, client, refetchWallet]);
+  }, [client.isAuth, client.sdk, refetchUser, refetchWallet]);
 
   return (
     <>
