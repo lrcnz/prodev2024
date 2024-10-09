@@ -1,17 +1,18 @@
 'use client';
 
 import { ArrowDownUp } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+import { parseUnits } from 'viem';
 
 import { InnerHeader } from '@/components/InnerHeader';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useTransfer } from '@/hooks/useTransfer';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { Button } from '@/ui-components/Button';
 import { InputGroup } from '@/ui-components/InputGroup';
-import { useTransfer } from '@/hooks/useTransfer';
 import { Loading } from '@/ui-components/Loading';
-import { parseUnits } from 'viem';
-import { useRouter } from 'next/navigation';
 
 const TransferPage = () => {
   const [transferAmount, setTransferAmount] = useState('0');
@@ -19,7 +20,7 @@ const TransferPage = () => {
   const formatBalance = useFormatBalance();
   const [fromAccount, setFromAccount] = useState<'savings' | 'spending'>('savings');
 
-  const { transferToSavings,transferToSpending,loading} = useTransfer(false)  
+  const { transferToSavings, transferToSpending, loading } = useTransfer(false);
   const router = useRouter();
 
   const maximum = formatBalance(fromAccount === 'savings' ? savingsBalance : currentBalance, { decimals: 6 }) || '0';
@@ -32,17 +33,17 @@ const TransferPage = () => {
   console.log('fromAccount', fromAccount);
 
   const handleTransfer = () => {
-    if(!transferAmount) return;
+    if (!transferAmount) return;
     const amount = parseUnits(transferAmount, 6);
-    if(fromAccount === 'savings') {
+    if (fromAccount === 'savings') {
       transferToSpending(() => {
         router.push('/transfer/success');
-      }, amount)
+      }, amount);
     }
-    if(fromAccount === 'spending') {
+    if (fromAccount === 'spending') {
       transferToSavings(() => {
         router.push('/transfer/success');
-      }, amount)
+      }, amount);
     }
   };
 
@@ -70,14 +71,22 @@ const TransferPage = () => {
           </div>
           <div className="mt-10">
             <label className="mb-2 text-sm text-gray-400">From</label>
-            <InputGroup className="h-12 text-xl w-full font-normal" value={fromAccount === 'savings' ? 'Savings Account' : 'Spending Card' } inputReadonly={true} />
+            <InputGroup
+              className="h-12 text-xl w-full font-normal"
+              value={fromAccount === 'savings' ? 'Savings Account' : 'Spending Card'}
+              inputReadonly={true}
+            />
           </div>
           <button className="self-center mt-2" onClick={handleExchange}>
             <ArrowDownUp size={30} />
           </button>
           <div className="relative -top-4">
             <label className="mb-2 text-sm text-gray-400">To</label>
-            <InputGroup className="h-12 text-xl w-full font-normal" value={fromAccount === 'savings' ?  'Spending Card' : 'Savings Account' } inputReadonly={true} />
+            <InputGroup
+              className="h-12 text-xl w-full font-normal"
+              value={fromAccount === 'savings' ? 'Spending Card' : 'Savings Account'}
+              inputReadonly={true}
+            />
           </div>
           <div className="flex items-center mt-4 flex-col-reverse">
             <Button className="text-lg w-full h-12 rounded-full" onClick={handleTransfer}>
