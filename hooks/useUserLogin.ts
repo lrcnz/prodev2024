@@ -68,13 +68,15 @@ export const useUserLogin = () => {
 
   const onSuccess = useCallback(
     (res: any, variables: any) => {
-      login({
-        userId: res.result.userId,
-        userToken: res.result.userToken,
-        encryptionKey: res.result.encryptionKey,
-        email: variables.email,
-        password: variables.password,
-      });
+      if (res.result) {
+        login({
+          userId: res.result.userId,
+          userToken: res.result.userToken,
+          encryptionKey: res.result.encryptionKey,
+          email: variables.email,
+          password: variables.password,
+        });
+      }
     },
     [login]
   );

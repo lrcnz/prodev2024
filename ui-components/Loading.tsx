@@ -1,12 +1,13 @@
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+
+import LoadingIcon from '@/assets/loading.svg';
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/ui-components/AlertDialog";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import LoadingIcon from "@/assets/loading.svg";
+} from '@/ui-components/AlertDialog';
 
 export const Loading = ({ open }: { open: boolean }) => {
   return (

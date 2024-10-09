@@ -1,13 +1,10 @@
-import { useAtomValue, useSetAtom } from 'jotai';
 import { Info } from 'lucide-react';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useMemo, type MouseEventHandler } from 'react';
 
 import GrowthImg from '@/assets/earn/growth.png';
 import SavingsImg from '@/assets/earn/savings.png';
 import { cn } from '@/lib/utils';
-import { planAtom, switchPlanModalOpenedAtom } from '@/state/plan';
-import { Badge } from '@/ui-components/Badge';
 import { Popover } from '@/ui-components/Popover';
 
 const items = {
@@ -27,24 +24,27 @@ const items = {
   },
 };
 
-export const EarnCard = ({ type }: { type: 'savings' | 'growth' }) => {
+export const EarnCard = ({
+  selected,
+  type,
+  children,
+  onClick,
+}: {
+  selected: boolean;
+  type: 'savings' | 'growth';
+  children?: React.ReactNode;
+  onClick: MouseEventHandler<HTMLDivElement>;
+}) => {
   const item = useMemo(() => items[type], [type]);
-  const openModal = useSetAtom(switchPlanModalOpenedAtom);
-  const plan = useAtomValue(planAtom);
-  const selected = plan === type;
 
   return (
     <div
       className={cn('rounded-lg relative p-3 flex gap-4 cursor-pointer', item.bg, {
         'outline-blue-500 outline': selected,
       })}
-      onClick={() => !selected && openModal(true)}
+      onClick={onClick}
     >
-      {selected && (
-        <Badge variant="secondary" className="absolute top-2 right-2">
-          Selected
-        </Badge>
-      )}
+      {children}
       <div>
         <Image className="h-20 w-20" src={item.img} alt={item.title} />
       </div>

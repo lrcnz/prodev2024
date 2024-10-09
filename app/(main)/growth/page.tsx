@@ -12,7 +12,7 @@ import { useBalance, usePublicClient } from 'wagmi';
 import { useContractExecution } from '@/hooks/useContractExecution';
 import { useErc20Balance } from '@/hooks/useErc20Balance';
 import { useCurrentWallet } from '@/hooks/useWallet';
-import { depositGrowthContract, depositSavingsContract, withdrawSavingsContract } from '@/lib/execution';
+import { depositGrowthContract, withdrawSavingsContract } from '@/lib/execution';
 import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
 import { Input } from '@/ui-components/Input';
@@ -31,7 +31,8 @@ const GrowthPage = () => {
     console.log('submit', amount);
     if (!client.sdk) throw new Error('No client found');
     if (!publicClient) throw new Error('No public client found');
-    const contracts = await depositGrowthContract(publicClient, parseUnits(amount, 6));
+    if (!wallet?.address) throw new Error('No address found');
+    const contracts = await depositGrowthContract(publicClient, wallet?.address);
     console.log(contracts);
     const res = await execution(contracts);
     console.log(res);
@@ -46,8 +47,8 @@ const GrowthPage = () => {
       console.log(result);
       if (err) {
         Toast.show({
-          content: 'Transaction failed',
-          icon: 'error',
+          content: err.message || 'Unknown error',
+          icon: 'fail',
         });
       }
 
@@ -78,8 +79,8 @@ const GrowthPage = () => {
       console.log(result);
       if (err) {
         Toast.show({
-          content: 'Transaction failed',
-          icon: 'error',
+          content: err.message || 'Unknown error',
+          icon: 'fail',
         });
       }
 

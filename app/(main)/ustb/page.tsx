@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { parseUnits } from 'viem';
 import { useBalance, usePublicClient } from 'wagmi';
 
 import { useContractExecution } from '@/hooks/useContractExecution';
@@ -18,7 +17,7 @@ import { Button } from '@/ui-components/Button';
 import { Input } from '@/ui-components/Input';
 import { Toast } from '@/ui-components/Toast';
 
-const ActivitesPage = () => {
+const ActivitiesPage = () => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const { data: wallet } = useCurrentWallet();
@@ -31,7 +30,8 @@ const ActivitesPage = () => {
     console.log('submit', amount);
     if (!client.sdk) throw new Error('No client found');
     if (!publicClient) throw new Error('No public client found');
-    const contracts = await depositSavingsContract(publicClient, parseUnits(amount, 6));
+    if (!wallet?.address) throw new Error('No address found');
+    const contracts = await depositSavingsContract(publicClient, wallet?.address);
     console.log(contracts);
     const res = await execution(contracts);
     console.log(res);
@@ -46,8 +46,8 @@ const ActivitesPage = () => {
       console.log(result);
       if (err) {
         Toast.show({
-          content: 'Transaction failed',
-          icon: 'error',
+          content: err.message || 'Unknown error',
+          icon: 'fail',
         });
       }
 
@@ -78,8 +78,8 @@ const ActivitesPage = () => {
       console.log(result);
       if (err) {
         Toast.show({
-          content: 'Transaction failed',
-          icon: 'error',
+          content: err.message || 'Unknown error',
+          icon: 'fail',
         });
       }
 
@@ -134,4 +134,4 @@ const ActivitesPage = () => {
   );
 };
 
-export default ActivitesPage;
+export default ActivitiesPage;

@@ -17,6 +17,7 @@ export const InputGroup = ({
   onChange,
   onMax,
   icon,
+  inputReadonly,
   inputDisabled,
   decimals,
   type = "number",
@@ -26,10 +27,11 @@ export const InputGroup = ({
   type?: "text" | "number";
   placeholder?: string;
   disabled?: boolean;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   onMax?: () => void;
   postfix?: React.ReactNode;
   icon?: React.ReactNode;
+  inputReadonly?: boolean;
   inputDisabled?: boolean;
   decimals?: number;
   className?: string;
@@ -39,6 +41,7 @@ export const InputGroup = ({
       <input
         inputMode="decimal"
         placeholder={placeholder}
+        readOnly={inputReadonly === undefined ? false : inputReadonly}
         disabled={inputDisabled === undefined ? disabled : inputDisabled}
         onInput={(v: FormEvent<HTMLInputElement>) => {
           if (type === "number") {
@@ -55,7 +58,7 @@ export const InputGroup = ({
           }
         }}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange && onChange(e.target.value)}
         className={cn("h-full flex-1 text-xl outline-none", className, {
           "bg-gray-200": disabled,
         })}

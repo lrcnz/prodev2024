@@ -36,6 +36,7 @@ const SignUpPage = () => {
   });
   const client = useAtomValue(w3sSDKAtom);
   const { signupMutation } = useUserLogin();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -48,14 +49,17 @@ const SignUpPage = () => {
         setErrorMsg(res.error?.message || 'Unknown error');
       }
 
-      if (res.result.challengeId && client.isAuth) {
+      if (res.result.challengeId) {
+        setLoading(true);
         client.sdk.execute(res.result.challengeId, (err, res) => {
           console.log(err, res);
           if (err) {
+            setLoading(false);
             console.error(err);
+            setErrorMsg(err?.message || 'Unknown error');
             return;
           }
-          router.push('/');
+          router.push('/addaccount/success');
         });
       } else {
         router.push('/');
@@ -67,7 +71,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <Loading open={signupMutation.isPending} />
+      <Loading open={signupMutation.isPending || loading} />
       <ErrorAlert message={errorMsg} open={!!errorMsg} onClose={() => setErrorMsg(null)} />
       <header className="h-14 flex justify-center items-center ">
         <div className="text-lg font-semibold relative w-full flex items-center justify-center">
@@ -78,7 +82,7 @@ const SignUpPage = () => {
           </div>
         </div>
       </header>
-      <div className="px-4 text-2xl font-medium">Sign Up</div>
+      <div className="px-4 text-2xl font-medium">Enter your email address and password</div>
       <div className="flex justify-center mt-4">
         <Card className="w-full rounded-none border-none shadow-none space-y-1.5">
           <CardContent>
@@ -128,12 +132,12 @@ const SignUpPage = () => {
           <CardFooter className="flex flex-col">
             <div className="w-full">
               <Button onClick={handleSubmit(onSubmit)} type="submit" className="w-full h-10 rounded-xl">
-                Sign Up
+                Continue
               </Button>
             </div>
             <div className="mt-4 text-muted-foreground">
               Already have an account?
-              <Link className="ml-2 text-blue-600 underline" href="/login">
+              <Link className="ml-2 text-secondary underline" href="/login">
                 Log in
               </Link>
             </div>

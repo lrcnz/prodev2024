@@ -29,4 +29,5 @@ export function getTokenAddress(token?: string) {
 
 export const SWAP_CONTRACT = '0xc532a74256d3db42d0bf7a0400fefdbad7694008';
 export const SHORT_MARKET = '0xF21f7b8d11B2A7E07DE73227D40FCAC2eb8FF6b6';
+export const MOCK_SHORT_MARKET = '0x4f2369426432b3a2a8D2b82bA8F82Eb6E34bb9bF';
 export const LENDING_POOL = '0x8C94c0dCb2f39cb9C39c6CBc39a348F34FBBA90d';

@@ -120,7 +120,7 @@ const LoginPage = () => {
             </div>
             <div className="mt-4 text-muted-foreground">
               Don&apos;t have an account?
-              <Link className="ml-2 text-blue-600 underline" href="/signup">
+              <Link className="ml-2 text-secondary underline" href="/addaccount">
                 Sign up
               </Link>
             </div>
