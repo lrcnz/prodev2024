@@ -2,8 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Label } from '@radix-ui/react-label';
-import { useMutation } from '@tanstack/react-query';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { CircleX, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -13,11 +12,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useUserLogin } from '@/hooks/useUserLogin';
-import { Updater } from '@/state/updater';
-import { userTokenAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui-components/Card';
+import { Card, CardContent, CardFooter } from '@/ui-components/Card';
 import { ErrorAlert } from '@/ui-components/ErrorAlert';
 import { Input } from '@/ui-components/Input';
 import { Loading } from '@/ui-components/Loading';
@@ -38,21 +35,10 @@ const SignUpPage = () => {
     resolver: yupResolver(formSchema),
   });
   const client = useAtomValue(w3sSDKAtom);
-  const [login] = useUserLogin();
+  const { signupMutation } = useUserLogin();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const signupMutation = useMutation({
-    mutationFn: async (data: { email: string; password: string }) => {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      return res.json();
-    },
-  });
 
   const onSubmit = async (data: FormType) => {
     if (!client.sdk || signupMutation.isPending) return;
@@ -63,20 +49,17 @@ const SignUpPage = () => {
         setErrorMsg(res.error?.message || 'Unknown error');
       }
 
-      login({
-        userId: res.result.userId,
-        userToken: res.result.userToken,
-        encryptionKey: res.result.encryptionKey,
-      });
-
-      if (res.result.challengeId && client.isAuth) {
+      if (res.result.challengeId) {
+        setLoading(true);
         client.sdk.execute(res.result.challengeId, (err, res) => {
           console.log(err, res);
           if (err) {
+            setLoading(false);
             console.error(err);
+            setErrorMsg(err?.message || 'Unknown error');
             return;
           }
-          router.push('/');
+          router.push('/addaccount/success');
         });
       } else {
         router.push('/');
@@ -88,7 +71,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <Loading open={signupMutation.isPending} />
+      <Loading open={signupMutation.isPending || loading} />
       <ErrorAlert message={errorMsg} open={!!errorMsg} onClose={() => setErrorMsg(null)} />
       <header className="h-14 flex justify-center items-center ">
         <div className="text-lg font-semibold relative w-full flex items-center justify-center">
@@ -99,7 +82,7 @@ const SignUpPage = () => {
           </div>
         </div>
       </header>
-      <div className="px-4 text-2xl font-medium">Sign Up</div>
+      <div className="px-4 text-2xl font-medium">Enter your email address and password</div>
       <div className="flex justify-center mt-4">
         <Card className="w-full rounded-none border-none shadow-none space-y-1.5">
           <CardContent>
@@ -117,10 +100,10 @@ const SignUpPage = () => {
                     {...register('email')}
                   />
                   {errors.email?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.email?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -137,10 +120,10 @@ const SignUpPage = () => {
                     {...register('password')}
                   />
                   {errors.password?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.password?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -149,12 +132,12 @@ const SignUpPage = () => {
           <CardFooter className="flex flex-col">
             <div className="w-full">
               <Button onClick={handleSubmit(onSubmit)} type="submit" className="w-full h-10 rounded-xl">
-                Sign Up
+                Continue
               </Button>
             </div>
             <div className="mt-4 text-muted-foreground">
               Already have an account?
-              <Link className="ml-2 text-blue-600 underline" href="/login">
+              <Link className="ml-2 text-secondary underline" href="/login">
                 Log in
               </Link>
             </div>

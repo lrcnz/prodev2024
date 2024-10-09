@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/ui-components/AlertDialog';
+} from "@/ui-components/AlertDialog";
 
 export function ErrorAlert({
   open,
@@ -22,7 +22,9 @@ export function ErrorAlert({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Something went wrong</AlertDialogTitle>
-          <AlertDialogDescription>{message || 'Unknown error'}</AlertDialogDescription>
+          <AlertDialogDescription>
+            {message || "Unknown error"}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={onClose}>OK</AlertDialogAction>

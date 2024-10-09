@@ -2,8 +2,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Label } from '@radix-ui/react-label';
-import { useMutation } from '@tanstack/react-query';
-import { useAtomValue } from 'jotai';
 import { CircleX, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -13,9 +11,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useUserLogin } from '@/hooks/useUserLogin';
-import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui-components/Card';
+import { Card, CardContent, CardFooter } from '@/ui-components/Card';
 import { ErrorAlert } from '@/ui-components/ErrorAlert';
 import { Input } from '@/ui-components/Input';
 import { Loading } from '@/ui-components/Loading';
@@ -35,21 +32,9 @@ const LoginPage = () => {
   } = useForm<FormType>({
     resolver: yupResolver(formSchema),
   });
-  const [login] = useUserLogin();
+  const { loginMutation } = useUserLogin();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const loginMutation = useMutation({
-    mutationFn: async (data: { email: string; password: string }) => {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      return res.json();
-    },
-  });
 
   const onSubmit = async (data: FormType) => {
     if (loginMutation.isPending) return;
@@ -60,12 +45,6 @@ const LoginPage = () => {
       if (res.error) {
         setErrorMsg(res.error?.message || 'Unknown error');
       }
-
-      login({
-        userId: res.result.userId,
-        userToken: res.result.userToken,
-        encryptionKey: res.result.encryptionKey,
-      });
 
       router.push('/');
     } catch (e) {
@@ -104,10 +83,10 @@ const LoginPage = () => {
                     {...register('email')}
                   />
                   {errors.email?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.email?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -124,10 +103,10 @@ const LoginPage = () => {
                     {...register('password')}
                   />
                   {errors.password?.message && (
-                    <p className="text-red-600 text-xs flex items-center gap-1 ml-1">
+                    <div className="text-red-600 text-xs flex items-center gap-1 ml-1">
                       <CircleX size="14" className="translate-y-[-1px]" />
                       {errors.password?.message}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -141,7 +120,7 @@ const LoginPage = () => {
             </div>
             <div className="mt-4 text-muted-foreground">
               Don&apos;t have an account?
-              <Link className="ml-2 text-blue-600 underline" href="/signup">
+              <Link className="ml-2 text-secondary underline" href="/addaccount">
                 Sign up
               </Link>
             </div>

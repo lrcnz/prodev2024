@@ -52,14 +52,6 @@ export const useContractExecution = () => {
         ];
       });
 
-      console.log({
-        abiParameters: [[...params]],
-        abiFunctionSignature: 'executeBatch((address,uint,bytes)[])',
-        contractAddress: wallet.address,
-        walletId: wallet.id,
-        feeLevel: options.feeLevel ?? 'LOW',
-      })
-      
       const response = await mutation.mutateAsync({
         abiParameters: [[...params]],
         abiFunctionSignature: 'executeBatch((address,uint,bytes)[])',

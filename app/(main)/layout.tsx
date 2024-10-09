@@ -1,31 +1,62 @@
 'use client';
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'react-use';
+
+import { parseUnits } from 'viem';
+
+import { usePublicClient } from 'wagmi';
 
 import { useUser } from '@/hooks/useUser';
 import { useUserLogin } from '@/hooks/useUserLogin';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
+import { getGrowthAmountEstimate } from '@/lib/execution';
 import { fetchUserChallenge } from '@/lib/queries';
+import { growthBalanceAtom } from '@/state/balance';
 import { Updater } from '@/state/updater';
-import { userTokenAtom } from '@/state/userToken';
+import { userIdAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
+import { Loading } from '@/ui-components/Loading';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
-  useWalletBalance(true);
-
-  const userToken = useAtomValue(userTokenAtom);
-  const [login] = useUserLogin();
-  const { refetch: refetchWallet } = useCurrentWallet(true);
+  const { walletLoading, ustbBalance } = useWalletBalance(true);
+  const userId = useAtomValue(userIdAtom);
+  const { loginMutateAsync, loginMutation } = useUserLogin();
+  const { data: wallet, refetch: refetchWallet } = useCurrentWallet(true);
   const { refetch: refetchUser } = useUser(false);
   const client = useAtomValue(w3sSDKAtom);
+  const [, setGrowthBalance] = useAtom(growthBalanceAtom);
+  const isLoading = walletLoading || loginMutation?.isPending;
+  const [debouncedLoading, setDebouncedLoading] = useState(false);
+  const publicClient = usePublicClient();
+
+  const [, cancel] = useDebounce(
+    () => {
+      setDebouncedLoading(isLoading);
+    },
+    50,
+    [isLoading]
+  );
 
   useEffect(() => {
-    if (userToken) {
-      login(userToken);
-    }
-  }, [login, userToken]);
+    if (!wallet?.address || !publicClient) return;
+
+    getGrowthAmountEstimate(publicClient, wallet.address)
+      .then((res) => {
+        setGrowthBalance(res.trade ? parseUnits(res.trade.outputAmount.toSignificant(), 6) : BigInt(0));
+      })
+      .catch((err) => {
+        console.error(err);
+        setGrowthBalance(BigInt(0));
+      });
+  }, [wallet, publicClient, ustbBalance, setGrowthBalance]);
+
+  useEffect(() => {
+    if (!userId?.email || !userId?.password || client.isAuth) return;
+    loginMutateAsync({ email: userId?.email, password: userId?.password });
+  }, [client.isAuth, userId?.email, userId?.password, loginMutateAsync]);
 
   useEffect(() => {
     if (client.isAuth && client.sdk) {
@@ -50,6 +81,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <>
+      <Loading open={walletLoading || loginMutation.isPending || debouncedLoading} />
       <Updater />
       {children}
     </>

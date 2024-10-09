@@ -11,7 +11,7 @@ const DepositSuccessPage = () => {
       <div className="flex flex-col h-full">
         <div className="flex justify-center flex-col items-center flex-1">
           <div>
-            <CircleCheck color="#ffffff" fill="#15803d" size="96" />
+            <CircleCheck color="#ffffff" fill="#0073C3" size="96" />
           </div>
           <div className="text-2xl font-semibold mt-4">Deposit successful</div>
         </div>

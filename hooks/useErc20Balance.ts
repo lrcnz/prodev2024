@@ -24,6 +24,6 @@ export const useErc20Balance = (
     address: tokenAddress as Address,
     functionName: 'balanceOf',
     args: [walletAddress as Address],
-    query: { enabled: options.enabled ?? !!walletAddress },
+    query: { enabled: !!(walletAddress && (options.enabled ?? true)) },
   });
 };

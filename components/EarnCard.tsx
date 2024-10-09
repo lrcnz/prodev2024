@@ -1,8 +1,7 @@
 import { Info } from 'lucide-react';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useMemo, type MouseEventHandler } from 'react';
 
-import FlexibleImg from '@/assets/earn/flexible.png';
 import GrowthImg from '@/assets/earn/growth.png';
 import SavingsImg from '@/assets/earn/savings.png';
 import { cn } from '@/lib/utils';
@@ -13,30 +12,45 @@ const items = {
     title: 'Savings',
     img: SavingsImg,
     bg: 'bg-[#E4F2F1]',
+    apr: '5.13%',
+    tootlip: 'Withdrawal T+1',
   },
   growth: {
     title: 'Growth',
     img: GrowthImg,
     bg: 'bg-[#F7F9C6]',
-  },
-  flexible: {
-    title: 'Flexible',
-    img: FlexibleImg,
-    bg: 'bg-[#E4E8FC]',
+    apr: '7.73%',
+    tootlip: 'Withdrawal T+1',
   },
 };
 
-export const EarnCard = ({ type }: { type: 'savings' | 'growth' | 'flexible' }) => {
+export const EarnCard = ({
+  selected,
+  type,
+  children,
+  onClick,
+}: {
+  selected: boolean;
+  type: 'savings' | 'growth';
+  children?: React.ReactNode;
+  onClick: MouseEventHandler<HTMLDivElement>;
+}) => {
   const item = useMemo(() => items[type], [type]);
 
   return (
-    <div className={cn('rounded-lg p-3 flex gap-4', item.bg)}>
+    <div
+      className={cn('rounded-lg relative p-3 flex gap-4 cursor-pointer', item.bg, {
+        'outline-blue-500 outline': selected,
+      })}
+      onClick={onClick}
+    >
+      {children}
       <div>
         <Image className="h-20 w-20" src={item.img} alt={item.title} />
       </div>
       <div className="flex flex-col justify-between">
         <div className="text-base">{item.title}</div>
-        <div className="font-semibold text-lg">5.13% APY</div>
+        <div className="font-semibold text-lg">{item.apr} APY</div>
         <div className="text-sm text-muted-foreground flex gap-1.5 items-center">
           Withdrawal T+1
           <Popover
@@ -46,7 +60,7 @@ export const EarnCard = ({ type }: { type: 'savings' | 'growth' | 'flexible' }) 
             }}
             placement="bottom"
             mode="dark"
-            content="Hello"
+            content={item.tootlip}
             trigger="click"
           >
             <div className="cursor-pointer">

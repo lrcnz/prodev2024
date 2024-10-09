@@ -33,6 +33,7 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (e) {
+    console.log(e);
     return Response.json({ result: 'error', message: e }, { status: 400 });
   }
 }
