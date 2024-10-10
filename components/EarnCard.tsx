@@ -29,10 +29,12 @@ export const EarnCard = ({
   type,
   children,
   onClick,
+  disabled,
 }: {
   selected: boolean;
   type: 'savings' | 'growth';
   children?: React.ReactNode;
+  disabled?: boolean;
   onClick: MouseEventHandler<HTMLDivElement>;
 }) => {
   const item = useMemo(() => items[type], [type]);
@@ -40,9 +42,9 @@ export const EarnCard = ({
   return (
     <div
       className={cn('rounded-lg relative p-3 flex gap-4 cursor-pointer', item.bg, {
-        'outline-blue-500 outline': selected,
+        'outline-blue-500 outline': !disabled && selected,
       })}
-      onClick={onClick}
+      onClick={(e) => !disabled && onClick(e)}
     >
       {children}
       <div>

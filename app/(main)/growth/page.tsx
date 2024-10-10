@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { parseUnits } from 'viem';
 import { useBalance, usePublicClient } from 'wagmi';
 
 import { useContractExecution } from '@/hooks/useContractExecution';

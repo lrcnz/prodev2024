@@ -59,7 +59,7 @@ const SignUpPage = () => {
             setErrorMsg(err?.message || 'Unknown error');
             return;
           }
-          router.push('/addaccount/success');
+          router.push('/signup/success');
         });
       } else {
         router.push('/');

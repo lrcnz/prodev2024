@@ -13,6 +13,7 @@ import { EarnCardWrapper } from '@/components/EarnCardWrapper';
 import { Shortcuts } from '@/components/Shortcuts';
 import { SwitchPlanModal } from '@/components/SwitchPlanModal';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { showBalanceAtom } from '@/state/showBalance';
 
@@ -20,6 +21,7 @@ const HomePage = () => {
   const [showBalance, setShowBalance] = useAtom(showBalanceAtom);
   const formatBalance = useFormatBalance();
   const { totalBalance } = useWalletBalance();
+  const { data: wallet } = useCurrentWallet();
 
   return (
     <>
@@ -35,7 +37,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="mt-2 flex items-center text-4xl font-medium">
-              {formatBalance(totalBalance, { decimals: 6, prefix: '$ ', mantissa: 2 })}
+              {wallet?.address ? formatBalance(totalBalance, { decimals: 6, prefix: '$ ', mantissa: 2 }) : '--'}
             </div>
           </div>
           <div className="mt-6">

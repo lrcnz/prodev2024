@@ -1,3 +1,4 @@
+import { useAtomValue } from 'jotai';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,13 +12,13 @@ import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { cn } from '@/lib/utils';
+import { kycAtom } from '@/state/kyc';
 import { Button } from '@/ui-components/Button';
 
 export const AccountCard = ({ balance, className }: { balance?: bigint | number | string; className?: string }) => {
-  const [expended, setExpended] = useState<'saving' | 'current' | 'spending'>();
-
   const { data: wallet } = useCurrentWallet();
   const formatBalance = useFormatBalance();
+  const kyc = useAtomValue(kycAtom);
   const { currentBalance, savingsBalance } = useWalletBalance(false);
 
   return (
@@ -45,7 +46,7 @@ export const AccountCard = ({ balance, className }: { balance?: bigint | number 
           )}
           {!wallet?.address && (
             <div className="flex flex-col items-center relative z-[11]">
-              <Button className="rounded-full h-12 w-12 p-2.5">
+              <Button className="bg-foreground rounded-full h-12 w-12 p-2.5 hover:bg-foreground/90">
                 <Link href="/welcome">
                   <Plus />
                 </Link>
@@ -56,14 +57,26 @@ export const AccountCard = ({ balance, className }: { balance?: bigint | number 
         </div>
       </div>
       <div className={cn('rounded-t-lg px-3 py-2 bg-gradient2 h-16 relative z-30', '-mt-8 max-h-10 overflow-hidden')}>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div className="flex">
             <CardIcon className="mt-0.5 mr-2" />
             <div className="text-sm font-semibold">Spending Card</div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="text-xs text-muted-foreground translate-y-[1px]">Linked</div>
-            <div className="text-sm">{formatBalance(currentBalance, { decimals: 6, postfix: ' USDC' })}</div>
+            {!wallet?.address ? (
+              '--'
+            ) : kyc ? (
+              <>
+                <div className="text-xs text-muted-foreground translate-y-[1px]">Balance</div>
+                <div className="text-sm">{formatBalance(currentBalance, { decimals: 6, postfix: ' USDC' })}</div>
+              </>
+            ) : (
+              <div>
+                <Button className="h-6 py-0.5 text-xs rounded-lg bg-foreground hover:bg-foreground/80" asChild>
+                  <Link href="/kyc">Verify</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

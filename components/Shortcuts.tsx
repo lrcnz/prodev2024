@@ -1,10 +1,15 @@
 'use client';
 
-import { ArchiveRestore, House, ChartLine, ArrowLeftRight } from 'lucide-react';
+import { ArchiveRestore, ArrowLeftRight, House } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+
+import { useCurrentWallet } from '@/hooks/useWallet';
 
 export const Shortcuts = () => {
   const router = useRouter();
+  const { data: wallet } = useCurrentWallet();
+
+  if (!wallet?.address) return null;
 
   return (
     <div className="fixed bg-white rounded-full bottom-14 left-1/2 p-2 grid gap-x-1 grid-cols-3 shadow-[0_6px_20px_0px_rgba(0,0,0,0.14)] text-xs -translate-x-2/4">

@@ -13,6 +13,7 @@ import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { Button } from '@/ui-components/Button';
 import { InputGroup } from '@/ui-components/InputGroup';
 import { Loading } from '@/ui-components/Loading';
+import { Toast } from '@/ui-components/Toast';
 
 const TransferPage = () => {
   const [transferAmount, setTransferAmount] = useState('0');
@@ -30,17 +31,30 @@ const TransferPage = () => {
   const handleExchange = () => {
     setFromAccount(fromAccount === 'savings' ? 'spending' : 'savings');
   };
-  console.log('fromAccount', fromAccount);
 
   const handleTransfer = () => {
     if (!transferAmount) return;
     const amount = parseUnits(transferAmount, 6);
     if (fromAccount === 'savings') {
+      if (!savingsBalance || amount > savingsBalance) {
+        Toast.show({
+          content: 'Insufficient balance',
+          icon: 'fail',
+        });
+        return;
+      }
       transferToSpending(() => {
         router.push('/transfer/success');
       }, amount);
     }
     if (fromAccount === 'spending') {
+      if (!currentBalance || amount > currentBalance) {
+        Toast.show({
+          content: 'Insufficient balance',
+          icon: 'fail',
+        });
+        return;
+      }
       transferToSavings(() => {
         router.push('/transfer/success');
       }, amount);
@@ -77,10 +91,10 @@ const TransferPage = () => {
               inputReadonly={true}
             />
           </div>
-          <button className="self-center mt-2" onClick={handleExchange}>
+          <div className="self-center mt-4" onClick={handleExchange}>
             <ArrowDownUp size={30} />
-          </button>
-          <div className="relative -top-4">
+          </div>
+          <div className="relative mt-1">
             <label className="mb-2 text-sm text-gray-400">To</label>
             <InputGroup
               className="h-12 text-xl w-full font-normal"
