@@ -44,6 +44,7 @@ const LoginPage = () => {
 
       if (res.error) {
         setErrorMsg(res.error?.message || 'Unknown error');
+        return;
       }
 
       router.push('/');
