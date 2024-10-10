@@ -34,6 +34,10 @@ export const useUserLogin = () => {
   const login = useCallback(
     (user: { userId: string; encryptionKey: string; userToken: string; email: string; password: string }) => {
       if (!client.sdk) throw new Error('W3S SDK not initialized');
+      console.log('login', {
+        userToken: user.userToken,
+        encryptionKey: user.encryptionKey,
+      });
       client.sdk.setAuthentication({
         userToken: user.userToken,
         encryptionKey: user.encryptionKey,

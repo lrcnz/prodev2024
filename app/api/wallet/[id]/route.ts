@@ -9,6 +9,8 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
       userId: id,
     });
 
+    console.log(walletListResponse.data)
+
     const wallet = walletListResponse.data?.wallets[0];
 
     return Response.json({

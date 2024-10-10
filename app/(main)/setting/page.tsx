@@ -120,81 +120,84 @@ const SettingPage = () => {
               </div>
             </div>
             {wallet?.address && (
-              <div className="rounded-xl bg-accent flex flex-col gap-4 py-4 px-8">
-                {wallet?.address && (
+              <div>
+                <div className="text-xl font-medium mb-2 mt-8 ml-1">Dev Info</div>
+                <div className="rounded-xl bg-accent flex flex-col gap-4 py-4 px-8">
+                  {wallet?.address && (
+                    <div>
+                      <div className="text-xs text-muted-foreground">Sepolia Address</div>
+                      <div className="text-base break-all">{wallet?.address}</div>
+                    </div>
+                  )}
                   <div>
-                    <div className="text-xs text-muted-foreground">Sepolia Address</div>
-                    <div className="text-base break-all">{wallet?.address}</div>
+                    <div className="text-xs text-muted-foreground">Sepolia Eth Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(sepoliaETHBalance?.value, {
+                        decimals: 18,
+                        postfix: ' sepoliaETH',
+                        mantissa: 18,
+                      })}
+                    </div>
                   </div>
-                )}
-                <div>
-                  <div className="text-xs text-muted-foreground">Sepolia Eth Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(sepoliaETHBalance?.value, {
-                      decimals: 18,
-                      postfix: ' sepoliaETH',
-                      mantissa: 18,
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">USDC Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(currentBalance, {
+                        decimals: 6,
+                        mantissa: 6,
+                        postfix: ' USDC',
+                      })}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">USDC Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(currentBalance, {
-                      decimals: 6,
-                      mantissa: 6,
-                      postfix: ' USDC',
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">USTB Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(ustbBalance, {
+                        decimals: 6,
+                        mantissa: 6,
+                        postfix: ' USTB',
+                      })}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">USTB Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(ustbBalance, {
-                      decimals: 6,
-                      mantissa: 6,
-                      postfix: ' USTB',
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">stETH Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(stETHBalance, {
+                        decimals: 18,
+                        mantissa: 18,
+                        postfix: ' stETH',
+                      })}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">stETH Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(stETHBalance, {
-                      decimals: 18,
-                      mantissa: 18,
-                      postfix: ' stETH',
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">ezETH Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(ezETHBalance, {
+                        decimals: 18,
+                        mantissa: 18,
+                        postfix: ' ezETH',
+                      })}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">ezETH Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(ezETHBalance, {
-                      decimals: 18,
-                      mantissa: 18,
-                      postfix: ' ezETH',
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">WETH Balance</div>
+                    <div className="text-base break-all">
+                      {formatBalance(wETHBalance, {
+                        decimals: 18,
+                        mantissa: 18,
+                        postfix: ' WETH',
+                      })}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">WETH Balance</div>
-                  <div className="text-base break-all">
-                    {formatBalance(wETHBalance, {
-                      decimals: 18,
-                      mantissa: 18,
-                      postfix: ' WETH',
-                    })}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">positions deposit</div>
-                  <div className="text-base break-all">
-                    {formatBalance(positions?.[1], {
-                      decimals: 18,
-                      mantissa: 18,
-                      postfix: ' WETH',
-                    })}
+                  <div>
+                    <div className="text-xs text-muted-foreground">positions deposit</div>
+                    <div className="text-base break-all">
+                      {formatBalance(positions?.[1], {
+                        decimals: 18,
+                        mantissa: 18,
+                        postfix: ' WETH',
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

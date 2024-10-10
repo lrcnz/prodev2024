@@ -6,7 +6,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   try {
     const res = await userControlledWalletsClient.createUserPinWithWallets({
       userId: id,
-      blockchains: ['ETH-SEPOLIA'],
+      blockchains: ['ETH-SEPOLIA', 'ARB-SEPOLIA'],
       accountType: 'SCA',
     });
 

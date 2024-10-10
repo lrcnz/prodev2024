@@ -13,14 +13,14 @@ const items = {
     img: SavingsImg,
     bg: 'bg-[#E4F2F1]',
     apr: '5.13%',
-    tootlip: 'Withdrawal T+1',
+    tootlip: 'Withdrawal T+0',
   },
   growth: {
     title: 'Growth',
     img: GrowthImg,
     bg: 'bg-[#F7F9C6]',
     apr: '7.73%',
-    tootlip: 'Withdrawal T+1',
+    tootlip: 'Withdrawal T+0',
   },
 };
 
@@ -54,7 +54,7 @@ export const EarnCard = ({
         <div className="text-base">{item.title}</div>
         <div className="font-semibold text-lg">{item.apr} APY</div>
         <div className="text-sm text-muted-foreground flex gap-1.5 items-center">
-          Withdrawal T+1
+          Withdrawal T+0
           <Popover
             style={{
               transform: 'translateY(5px)',

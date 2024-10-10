@@ -62,7 +62,7 @@ const HomePage = () => {
               <ComingSoonItem variant="remittence" />
               <ComingSoonItem variant="payment" />
               <ComingSoonItem variant="loan" />
-              <ComingSoonItem variant="stake" />
+              <ComingSoonItem variant="exchange" />
             </div>
           </div>
           <div className="flex justify-center items-center mt-8 mb-40">

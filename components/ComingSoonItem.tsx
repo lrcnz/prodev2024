@@ -19,13 +19,13 @@ const items = {
     title: 'Remittence',
     img: RemittenceImg,
   },
-  stake: {
-    title: 'Stake',
+  exchange: {
+    title: 'Exchange',
     img: StakeImg,
   },
 };
 
-export const ComingSoonItem = ({ variant }: { variant: 'loan' | 'payment' | 'remittence' | 'stake' }) => {
+export const ComingSoonItem = ({ variant }: { variant: 'loan' | 'payment' | 'remittence' | 'exchange' }) => {
   const item = useMemo(() => items[variant], [variant]);
   return (
     <div className="flex items-center justify-center flex-col">

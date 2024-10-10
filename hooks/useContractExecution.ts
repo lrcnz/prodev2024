@@ -56,7 +56,7 @@ export const useContractExecution = () => {
         abiParameters: [[...params]],
         abiFunctionSignature: 'executeBatch((address,uint,bytes)[])',
         contractAddress: wallet.address,
-        walletId: wallet.id,
+        walletId: '14379b6e-4e0d-58ae-a0c9-bcc6e86592e0',
         feeLevel: options.feeLevel ?? 'LOW',
       });
 
