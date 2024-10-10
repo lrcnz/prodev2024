@@ -12,27 +12,16 @@ import { SHORT_MARKET_ABI } from '@/lib/abis/short-market';
 import { UNISWAP_INTERFACE } from '@/lib/abis/uniswap-interface';
 import { UNI_SWAP_PAIR } from '@/lib/abis/uniswap-pair';
 import { WETH_ABI } from '@/lib/abis/weth';
-import {
-  EZ_ETH_ADDRESS,
-  MOCK_SHORT_MARKET,
-  ST_ETH_ADDRESS,
-  SWAP_CONTRACT,
-  UNI_WETH_ADDRESS,
-  USDT_ADDRESS,
-} from '@/lib/contracts';
+import { EZ_ETH_ADDRESS, MOCK_SHORT_MARKET, ST_ETH_ADDRESS, SWAP_CONTRACT, UNI_WETH_ADDRESS } from '@/lib/contracts';
 
 const WETH = new Token(ChainId.SEPOLIA, UNI_WETH_ADDRESS, 18, 'WETH');
-const stETH = new Token(ChainId.SEPOLIA, ST_ETH_ADDRESS, 18, 'stETH');
 const USDC = new Token(ChainId.SEPOLIA, USDC_ADDRESS, 6, 'USDC');
-const usdt = new Token(ChainId.SEPOLIA, USDT_ADDRESS, 6, 'USDT');
 
 const PAIR_ADDRESS: Record<string, string> = {
   'stETH-WETH': '0x3F5a1F590034Bdf7fa8f02D21e6F95625DA79330',
   'WETH-USDC': '0xC4b215aFEa0333350B5807a734042f785715Ab4a',
   'USDT-USDC': '0x1f01DC7394B6eD5AfeEe969d3F7B7De17e5a958e',
 };
-
-const USDC_AMOUNT = BigInt(1000000);
 
 async function createPair(publicClient: PublicClient, tokenA: Token, tokenB: Token): Promise<[Address, Pair]> {
   // const pairAddress = Pair.getAddress(tokenA, tokenB)

@@ -32,7 +32,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const [debouncedLoading, setDebouncedLoading] = useState(false);
   const publicClient = usePublicClient();
 
-  const [, cancel] = useDebounce(
+  useDebounce(
     () => {
       setDebouncedLoading(isLoading);
     },

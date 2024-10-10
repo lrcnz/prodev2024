@@ -19,7 +19,6 @@ import { Toast } from '@/ui-components/Toast';
 
 const ActivitiesPage = () => {
   const [amount, setAmount] = useState('');
-  const [loading, setLoading] = useState(false);
   const { data: wallet } = useCurrentWallet();
   const client = useAtomValue(w3sSDKAtom);
 
@@ -27,7 +26,6 @@ const ActivitiesPage = () => {
   const publicClient = usePublicClient();
 
   const onDeposit = async () => {
-    console.log('submit', amount);
     if (!client.sdk) throw new Error('No client found');
     if (!publicClient) throw new Error('No public client found');
     if (!wallet?.address) throw new Error('No address found');

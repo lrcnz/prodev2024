@@ -1,5 +1,3 @@
-import { headers } from 'next/headers';
-
 import { userControlledWalletsClient } from '@/lib/walletClient';
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {

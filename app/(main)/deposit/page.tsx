@@ -2,7 +2,6 @@
 
 import { Label } from '@radix-ui/react-label';
 
-import { useAtomValue } from 'jotai';
 import { Copy, X } from 'lucide-react';
 
 import Image from 'next/image';
@@ -20,7 +19,6 @@ import ApplePayIcon from '@/assets/apple_pay.svg?url';
 import { useTransfer } from '@/hooks/useTransfer';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { delay } from '@/lib/utils';
-import { planAtom } from '@/state/plan';
 import { Button } from '@/ui-components/Button';
 import { Checkbox } from '@/ui-components/Checkbox';
 import { InputGroup } from '@/ui-components/InputGroup';

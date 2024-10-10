@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
 
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 import Passport from '@/assets/kyc/passport.png';
 import { InnerHeader } from '@/components/InnerHeader';

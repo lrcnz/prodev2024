@@ -2,7 +2,6 @@ import { useAtomValue } from 'jotai';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import CardIcon from '@/assets/icons/Card';
 import PigIcon from '@/assets/icons/Pig';
@@ -15,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { kycAtom } from '@/state/kyc';
 import { Button } from '@/ui-components/Button';
 
-export const AccountCard = ({ balance, className }: { balance?: bigint | number | string; className?: string }) => {
+export const AccountCard = ({ className }: { className?: string }) => {
   const { data: wallet } = useCurrentWallet();
   const formatBalance = useFormatBalance();
   const kyc = useAtomValue(kycAtom);

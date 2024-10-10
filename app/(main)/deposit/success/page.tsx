@@ -1,6 +1,6 @@
 'use client';
 
-import { BadgeCheck, CircleCheck } from 'lucide-react';
+import { CircleCheck } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/ui-components/Button';

@@ -20,7 +20,7 @@ import { useUserLogin } from '@/hooks/useUserLogin';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { SHORT_MARKET_ABI } from '@/lib/abis/short-market';
-import { MOCK_SHORT_MARKET, SHORT_MARKET, UNI_WETH_ADDRESS, WETH_ADDRESS } from '@/lib/contracts';
+import { MOCK_SHORT_MARKET, UNI_WETH_ADDRESS } from '@/lib/contracts';
 import { delay } from '@/lib/utils';
 import { userIdAtom } from '@/state/userToken';
 import { Button } from '@/ui-components/Button';

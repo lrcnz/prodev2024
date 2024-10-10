@@ -19,7 +19,6 @@ import { Toast } from '@/ui-components/Toast';
 
 const GrowthPage = () => {
   const [amount, setAmount] = useState('');
-  const [loading, setLoading] = useState(false);
   const { data: wallet } = useCurrentWallet();
   const client = useAtomValue(w3sSDKAtom);
 
