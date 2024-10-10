@@ -1,11 +1,9 @@
 'use client';
 import { W3SSdk } from '@circle-fin/w3s-pw-web-sdk';
-import { useAtom, useSetAtom } from 'jotai';
-import { useEffect, useMemo } from 'react';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
 import { w3sSDKAtom } from './w3s';
-
-import { useCurrentWallet } from '@/hooks/useWallet';
 
 export const Updater = () => {
   const setW3sSDK = useSetAtom(w3sSDKAtom);
@@ -13,7 +11,7 @@ export const Updater = () => {
   useEffect(() => {
     const sdk = new W3SSdk();
 
-    sdk.setAppSettings({ appId: process.env.NEXT_APP_ID! });
+    sdk.setAppSettings({ appId: process.env.NEXT_PUBLIC_APP_ID! });
 
     setW3sSDK({
       sdk,
