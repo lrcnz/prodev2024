@@ -1,20 +1,22 @@
+import { type NextRequest } from 'next/server';
+
 import { userControlledWalletsClient } from '@/lib/walletClient';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function POST(req: NextRequest) {
+  const body = await req.json();
 
   try {
     // circle-sdk: get user's wallet
-    const walletListResponse = await userControlledWalletsClient.listWallets({
-      userId: id,
+    const createWalletPinRes = await userControlledWalletsClient.createWallet({
+      userId: body.userId,
+      blockchains: ['ARB-SEPOLIA'],
+      accountType: 'SCA',
     });
 
-    console.log(walletListResponse.data);
-
-    const wallets = walletListResponse.data?.wallets;
-
     return Response.json({
-      result: wallets || null,
+      result: {
+        challengeId: createWalletPinRes.data?.challengeId,
+      },
     });
   } catch (error: any) {
     let status = 500;

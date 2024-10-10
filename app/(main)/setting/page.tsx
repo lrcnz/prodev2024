@@ -17,7 +17,7 @@ import { useBalance, useReadContract } from 'wagmi';
 import { useErc20Balance } from '@/hooks/useErc20Balance';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useUserLogin } from '@/hooks/useUserLogin';
-import { useCurrentWallet } from '@/hooks/useWallet';
+import { useArbWallet, useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { SHORT_MARKET_ABI } from '@/lib/abis/short-market';
 import { MOCK_SHORT_MARKET, UNI_WETH_ADDRESS } from '@/lib/contracts';
@@ -32,6 +32,7 @@ const SettingPage = () => {
   const userId = useAtomValue(userIdAtom);
   const formatBalance = useFormatBalance();
   const { data: wallet } = useCurrentWallet();
+  const { data: arbWallet } = useArbWallet();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { data: sepoliaETHBalance } = useBalance({
@@ -129,6 +130,10 @@ const SettingPage = () => {
                       <div className="text-base break-all">{wallet?.address}</div>
                     </div>
                   )}
+                  <div>
+                    <div className="text-xs text-muted-foreground">Arb Sepolia Address</div>
+                    <div className="text-base break-all">{arbWallet?.address}</div>
+                  </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Sepolia Eth Balance</div>
                     <div className="text-base break-all">

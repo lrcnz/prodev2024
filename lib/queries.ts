@@ -6,19 +6,21 @@ export const fetchWallet = async ({
 }: {
   userToken: string;
   userId: string;
-}): Promise<{
-  accountType: string;
-  address: string;
-  blockchain: string;
-  createDate: string;
-  custodyType: string;
-  id: string;
-  scaCore: string;
-  state: string;
-  updateDate: string;
-  userId: string;
-  walletSetId: string;
-}> => {
+}): Promise<
+  {
+    accountType: string;
+    address: string;
+    blockchain: string;
+    createDate: string;
+    custodyType: string;
+    id: string;
+    scaCore: string;
+    state: string;
+    updateDate: string;
+    userId: string;
+    walletSetId: string;
+  }[]
+> => {
   const res = await fetch(`/api/wallet/${userId}`, {
     headers: { token: userToken },
   }).then((res) => res.json());
