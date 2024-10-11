@@ -59,7 +59,7 @@ const getSwapArgs = async (
   const router = new Route([pair], token0, token1);
   const trade = new Trade(router, CurrencyAmount.fromRawAmount(token0, amount.toString()), TradeType.EXACT_INPUT);
 
-  const slippageTolerance = new Percent('500', '10000'); // 5%
+  const slippageTolerance = new Percent('0', '100'); // 0%
 
   const amountOutMin = trade.minimumAmountOut(slippageTolerance).toExact(); // needs to be converted to e.g. decimal string
   const path = [token0.address, token1.address];
@@ -137,16 +137,7 @@ export const withdrawSavingsContract = async (
   ];
 };
 
-export const depositGrowthContract = async (publicClient: PublicClient, walletAddress: string, usdcAmount?: bigint) => {
-  if (!usdcAmount) {
-    usdcAmount = await publicClient.readContract({
-      address: USDC_ADDRESS,
-      abi: ERC20_ABI,
-      functionName: 'balanceOf',
-      args: [walletAddress as Address],
-    });
-  }
-
+export const depositGrowthContract = async (publicClient: PublicClient, walletAddress: string, usdcAmount: bigint) => {
   const swapArgs = await getSwapArgs(publicClient, walletAddress as Address, USDC, WETH, usdcAmount);
   const minEth = swapArgs[1];
   const halfEth = BigInt(minEth as any) / BigInt(2);
@@ -230,41 +221,47 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
     address: walletAddress as Address,
   });
 
-  const ethAmount = wethBalance + positions[0] + ezBalance + maxEthbalance;
+  const balance = BigInt(wethBalance + ezBalance + (positions[0] ? ezBalance : BigInt(0)) + maxEthbalance);
 
-  const trade = !ethAmount
-    ? undefined
-    : await getTrade(
-        publicClient,
-        WETH,
-        USDC,
-        CurrencyAmount.fromRawAmount(WETH, ethAmount.toString()),
-        TradeType.EXACT_INPUT
-      );
+  if (!balance) {
+    return {
+      usdcAmount: BigInt(0),
+      ethAmount: balance,
+      wethBalance,
+      depositBalance: positions[0] ? ezBalance : BigInt(0),
+      positionDeposit: positions[0],
+      ezBalance,
+      swapArgs: null,
+    };
+  }
+
+  const swapArgs = await getSwapArgs(publicClient, walletAddress as Address, WETH, USDC, balance);
 
   return {
-    trade,
+    usdcAmount: swapArgs[1] as bigint,
+    ethAmount: swapArgs[0],
     wethBalance,
+    depositBalance: positions[0] ? ezBalance : BigInt(0),
     positionDeposit: positions[0],
     ezBalance,
+    swapArgs,
   };
 };
 
-export const withdrawGrowthContract = async (
-  publicClient: PublicClient,
-  walletAddress: string,
-  usdcAmount?: bigint
-) => {
-  const { wethBalance, positionDeposit, ezBalance } = await getGrowthAmountEstimate(publicClient, walletAddress);
+export const withdrawGrowthContract = async (publicClient: PublicClient, walletAddress: string) => {
+  const { wethBalance, depositBalance, ezBalance, swapArgs } = await getGrowthAmountEstimate(
+    publicClient,
+    walletAddress
+  );
   const maxEthBalance = await publicClient.getBalance({
     address: walletAddress as Address,
   });
 
   let contracts: any[] = [];
 
-  const wethAmount = positionDeposit + wethBalance;
+  const wethAmount = depositBalance + wethBalance;
 
-  if (positionDeposit) {
+  if (depositBalance) {
     contracts = contracts.concat([
       {
         address: MOCK_SHORT_MARKET,
@@ -301,39 +298,17 @@ export const withdrawGrowthContract = async (
         args: [ezBalance],
       },
     ]);
-
-    if (usdcAmount) {
-      contracts = contracts.concat([
-        {
-          address: SWAP_CONTRACT,
-          abi: UNISWAP_INTERFACE,
-          value: maxEthBalance,
-          functionName: 'swapETHForExactTokens',
-          args: [usdcAmount, [WETH.address, USDC.address], walletAddress, Math.floor(Date.now() / 1000) + 60 * 20],
-        },
-      ]);
-    }
-
-    if (!usdcAmount) {
-      const swapArgs = await getSwapArgs(
-        publicClient,
-        walletAddress as Address,
-        WETH,
-        USDC,
-        BigInt(wethBalance + ezBalance + positionDeposit)
-      );
-
-      contracts = contracts.concat([
-        {
-          address: SWAP_CONTRACT,
-          abi: UNISWAP_INTERFACE,
-          value: maxEthBalance,
-          functionName: 'swapExactETHForTokens',
-          args: swapArgs.slice(1),
-        },
-      ]);
-    }
   }
+
+  contracts = contracts.concat([
+    {
+      address: SWAP_CONTRACT,
+      abi: UNISWAP_INTERFACE,
+      value: BigInt(wethBalance + ezBalance + depositBalance + maxEthBalance),
+      functionName: 'swapExactETHForTokens',
+      args: swapArgs?.slice(1),
+    },
+  ]);
 
   return contracts;
 };

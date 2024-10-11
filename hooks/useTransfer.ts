@@ -99,10 +99,9 @@ export const useTransfer = (showSuccess = true) => {
       }
 
       if (plan === 'growth') {
-        const { trade } = await getGrowthAmountEstimate(publicClient, wallet.address);
-        const usdcAmount = parseUnits(trade?.outputAmount ? trade.outputAmount.toSignificant() : '0', 6);
+        const { usdcAmount } = await getGrowthAmountEstimate(publicClient, wallet.address);
 
-        contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address, usdcAmount)));
+        contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address)));
         contracts.push(...(await depositGrowthContract(publicClient, wallet.address, usdcAmount + amount)));
       }
 
@@ -131,8 +130,7 @@ export const useTransfer = (showSuccess = true) => {
         maxAmount = await getErc20Balance(USTB_ADDRESS);
       }
       if (plan === 'growth') {
-        const { trade } = await getGrowthAmountEstimate(publicClient, wallet.address);
-        const usdcAmount = parseUnits(trade?.outputAmount ? trade.outputAmount.toSignificant() : '0', 6);
+        const { usdcAmount } = await getGrowthAmountEstimate(publicClient, wallet.address);
         maxAmount = usdcAmount;
       }
 
@@ -156,7 +154,9 @@ export const useTransfer = (showSuccess = true) => {
       }
 
       if (plan === 'growth') {
-        contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address, amount)));
+        const { usdcAmount } = await getGrowthAmountEstimate(publicClient, wallet.address);
+        contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address)));
+        contracts.push(...(await depositGrowthContract(publicClient, wallet.address, usdcAmount - amount)));
       }
 
       const res = await execution(contracts);
@@ -183,21 +183,32 @@ export const useTransfer = (showSuccess = true) => {
 
       if (plan === 'savings') {
         const amount = await getErc20Balance(USTB_ADDRESS);
+        console.log('to growth', amount);
         contracts.push(...(await withdrawSavingsContract(publicClient, wallet.address, amount)));
         contracts.push(...(await depositGrowthContract(publicClient, wallet.address, amount)));
       }
 
       if (plan === 'growth') {
-        const { trade } = await getGrowthAmountEstimate(publicClient, wallet.address);
-        const usdcAmount = parseUnits(trade?.outputAmount ? trade.outputAmount.toSignificant() : '0', 6);
-        console.log('usdcAmount', usdcAmount);
-        contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address, usdcAmount)));
-        contracts.push(...(await depositSavingsContract(publicClient, wallet.address, usdcAmount)));
+        const { usdcAmount } = await getGrowthAmountEstimate(publicClient, wallet.address);
+        console.log('to savings', usdcAmount);
+        if (usdcAmount) {
+          contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address)));
+          contracts.push(...(await depositSavingsContract(publicClient, wallet.address, usdcAmount)));
+        }
       }
 
-      const res = await execution(contracts);
+      if (contracts.length === 0) {
+        Toast.show({
+          content: 'Operation Successful',
+          icon: 'success',
+        });
+        callback();
+        setLoading(false);
+      } else {
+        const res = await execution(contracts);
 
-      execute(callback, res.data.challengeId);
+        execute(callback, res.data.challengeId);
+      }
     } catch (error) {
       setLoading(false);
       console.error(error);

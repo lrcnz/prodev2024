@@ -2,6 +2,7 @@
 
 import { useAtomValue } from 'jotai';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { type Address } from 'viem';
 import { usePublicClient } from 'wagmi';
@@ -16,6 +17,7 @@ import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
 
 import { Toast } from '@/ui-components/Toast';
+import { withdrawGrowthContract } from '@/lib/execution';
 
 const Page = () => {
   const { data: wallet } = useCurrentWallet();
@@ -71,15 +73,8 @@ const Page = () => {
       setLoading(true);
       let contracts: any[] = [];
 
-      contracts = contracts.concat([
-        {
-          address: MOCK_SHORT_MARKET,
-          abi: SHORT_MARKET_ABI,
-          functionName: 'closePosition',
-          args: [UNI_WETH_ADDRESS, wallet.address],
-        },
-      ]);
-
+      contracts = await withdrawGrowthContract(publicClient, wallet.address)
+      console.log('contracts', contracts);
       const res = await execution(contracts);
 
       execute(() => {}, res.data.challengeId);
@@ -96,6 +91,12 @@ const Page = () => {
   return (
     <>
       <div className="flex flex-col h-full">
+        <Link href="/">BACK</Link>
+        <div className="mt-auto p-4">
+          <Button className="rounded-3xl h-12 w-full text-lg" onClick={closePosition}>
+            Swap ETH
+          </Button>
+        </div>
         <div className="mt-auto p-4">
           <Button className="rounded-3xl h-12 w-full text-lg" onClick={closePosition}>
             Close Position

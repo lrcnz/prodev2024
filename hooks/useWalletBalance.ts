@@ -29,7 +29,7 @@ export const useWalletBalance = (enabled: boolean = false) => {
 
     getGrowthAmountEstimate(publicClient, wallet.address)
       .then((res) => {
-        setGrowthBalance(res.trade ? parseUnits(res.trade.outputAmount.toSignificant(), 6) : BigInt(0));
+        setGrowthBalance(res.usdcAmount);
       })
       .catch((err) => {
         console.error(err);
