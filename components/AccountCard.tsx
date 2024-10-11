@@ -107,18 +107,10 @@ export const AccountCard = ({ className }: { className?: string }) => {
                       {formatBalance(currentBalance, { decimals: 6, postfix: ' USDC', mantissa: 2 })}
                     </div>
                   </div>
-                  <Button className="h-6 py-0.5 text-xs rounded-lg bg-foreground hover:bg-foreground/80" asChild>
-                    <Link href="/kyc">Activate</Link>
-                  </Button>
                 </div>
                 <div className="flex justify-end mt-1.5">
                   <Button className="h-6 py-0.5 text-xs rounded-lg bg-foreground hover:bg-foreground/80" asChild>
-                    <div>
-                      Add Card to
-                      <span className="ml-1 translate-y-[0.5px]">
-                        <ApplePay />
-                      </span>
-                    </div>
+                    <Link href="/kyc">Activate</Link>
                   </Button>
                 </div>
               </div>
