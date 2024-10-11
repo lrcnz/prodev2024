@@ -192,7 +192,6 @@ const DepositPage = () => {
   };
 
   const onCctpRedeem = async () => {
-    if (!ccptAmount) return;
     if (!userToken?.userToken) return;
     if (!message) return;
 
