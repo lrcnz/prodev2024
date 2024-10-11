@@ -8,7 +8,7 @@ import { userControlledWalletsClient } from '@/lib/walletClient';
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.prodev_User.findFirst({
     where: { email: email },
   });
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     const uuid = randomUUID();
 
     await prisma.$transaction(async (prisma) => {
-      await prisma.user.create({
+      await prisma.prodev_User.create({
         data: { userId: uuid, email: email, password: password },
       });
 

@@ -1,5 +1,7 @@
 import { type NextRequest } from 'next/server';
 
+
+
 import { prisma } from '@/lib/prisma';
 import { userControlledWalletsClient } from '@/lib/walletClient';
 
@@ -7,7 +9,7 @@ export async function POST(req: NextRequest) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { email, password } = await req.json();
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.prodev_User.findFirst({
     where: { email: email },
   });
 
