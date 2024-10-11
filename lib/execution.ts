@@ -226,7 +226,11 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
     args: [walletAddress as any],
   });
 
-  const ethAmount = wethBalance + positions[0] + ezBalance;
+  const maxEthbalance = await publicClient.getBalance({
+    address: walletAddress as Address,
+  });
+
+  const ethAmount = wethBalance + positions[0] + ezBalance + maxEthbalance;
 
   const trade = !ethAmount
     ? undefined

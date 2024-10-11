@@ -17,10 +17,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import { set } from 'react-hook-form';
 import { formatUnits, parseUnits, type Address } from 'viem';
 import { arbitrumSepolia } from 'viem/chains';
-import { usePublicClient, useReadContract } from 'wagmi';
+import { usePublicClient } from 'wagmi';
 
 import ApplePayIcon from '@/assets/apple_pay.svg?url';
 import useCctp from '@/hooks/useCctp';
@@ -122,10 +121,10 @@ const DepositPage = () => {
             Toast.clear();
             console.error(err);
             setInProgress(false);
-          })
+          });
       }
     }
-  }, [txData]);
+  }, [arbPublicClient, txData]);
 
   useEffect(() => {
     if (inProgress) {
