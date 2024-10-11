@@ -90,10 +90,10 @@ const Page = () => {
             <div className="text-xs text-muted-foreground">Create Arbitrum wallet</div>
             <div>
               {walletCreated ? (
-                <Button className="mt-1 rounded min-w-48 bg-primary/50 hover:bg-primary/50">Create</Button>
+                <Button className="mt-1 rounded min-w-48 bg-primary/50 hover:bg-primary/50">Done</Button>
               ) : (
                 <Button onClick={onSubmit} className="mt-1 rounded min-w-48">
-                  Done
+                  Create
                 </Button>
               )}
             </div>
