@@ -45,7 +45,7 @@ export const useWalletBalance = (enabled: boolean = false) => {
   }, [refetchUSDC, refetchUSTB, refetchWallet]);
 
   return useMemo(() => {
-    const savingsBalance = plan === 'savings' ? ustbBalance : growthBalance;
+    const savingsBalance = (ustbBalance || BigInt('0')) + (growthBalance || BigInt('0'));
     return {
       totalBalance: (usdcBalance || BigInt(0)) + (growthBalance || BigInt(0)) + (ustbBalance || BigInt(0)),
       currentBalance: usdcBalance,
@@ -54,5 +54,5 @@ export const useWalletBalance = (enabled: boolean = false) => {
       refetch: refetchBalance,
       walletLoading: isLoading,
     };
-  }, [plan, ustbBalance, usdcBalance, growthBalance, isLoading, refetchBalance]);
+  }, [ustbBalance, usdcBalance, growthBalance, isLoading, refetchBalance]);
 };
