@@ -155,8 +155,12 @@ export const useTransfer = (showSuccess = true) => {
 
       if (plan === 'growth') {
         const { usdcAmount } = await getGrowthAmountEstimate(publicClient, wallet.address);
+        console.log('total', usdcAmount);
+        console.log('to growth', usdcAmount - amount);
         contracts.push(...(await withdrawGrowthContract(publicClient, wallet.address)));
-        contracts.push(...(await depositGrowthContract(publicClient, wallet.address, usdcAmount - amount)));
+        if (usdcAmount > amount) {
+          contracts.push(...(await depositGrowthContract(publicClient, wallet.address, usdcAmount - amount)));
+        }
       }
 
       const res = await execution(contracts);
