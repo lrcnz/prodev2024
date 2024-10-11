@@ -1,5 +1,7 @@
 'use client';
 
+import { type Transaction } from 'viem';
+
 export const fetchWallet = async ({
   userToken,
   userId,
@@ -61,4 +63,46 @@ export const fetchUserChallenge = async ({
   const res = await fetch(`/api/user/challenge/${userId}`).then((res) => res.json());
 
   return res.result;
+};
+
+export const fetchUserChallengeTx = async ({
+  challengeId,
+  userToken,
+}: {
+  challengeId: string;
+  userToken: string;
+}): Promise<Transaction> => {
+  const res = await fetch(`/api/user/challenges/tx/${challengeId}`, {
+    headers: { token: userToken },
+  }).then((res) => res.json());
+
+  return res.result;
+};
+
+export const fetchAttestations = async (messageHash: string): Promise<Transaction> => {
+  const res = await fetch(`https://iris-api-sandbox.circle.com/attestations/${messageHash}`).then((res) => res.json());
+
+  return res;
+};
+
+export const pollAttestations = async (messageHash: string) => {
+  if (!messageHash) return;
+  return new Promise((resolve, reject) => {
+    const polling = async () => {
+      try {
+        const result: any = await fetchAttestations(messageHash);
+
+        if (result.status !== 'complete') {
+          throw new Error('Attestation is pending');
+        }
+
+        clearInterval(pollingInterval);
+        resolve(result);
+      } catch (error) {
+        console.error(`fetch attestations ${messageHash}`, error);
+      }
+    };
+
+    const pollingInterval = setInterval(polling, 6000);
+  });
 };

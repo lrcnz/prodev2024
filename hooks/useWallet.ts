@@ -25,7 +25,7 @@ export const useArbWallet = (queryEnabled = false) => {
   const currentUser = useAtomValue(userTokenAtom);
 
   return useQuery({
-    queryKey: ['wallet', currentUser?.userToken, currentUser?.userId],
+    queryKey: ['wallet-arb', currentUser?.userToken, currentUser?.userId],
     queryFn: async ({ queryKey }) => {
       const [, userToken, userId] = queryKey;
       if (!userToken || !userId) throw new Error('User not logged in');

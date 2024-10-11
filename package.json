@@ -31,7 +31,7 @@
     "antd-mobile": "^5.37.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "ethers": "^6.13.3",
+    "ethers": "^5.7.2",
     "jotai": "^2.10.0",
     "jotai-immer": "^0.4.1",
     "lucide-react": "^0.447.0",

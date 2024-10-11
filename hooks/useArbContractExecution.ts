@@ -6,13 +6,13 @@ import { useCallback } from 'react';
 
 import { encodeFunctionData } from 'viem';
 
-import { useCurrentWallet } from './useWallet';
+import { useArbWallet } from './useWallet';
 
 import { userTokenAtom } from '@/state/userToken';
 
-export const useContractExecution = () => {
+export const useArbContractExecution = () => {
   const currentUser = useAtomValue(userTokenAtom);
-  const { data: wallet } = useCurrentWallet();
+  const { data: wallet } = useArbWallet(true);
 
   const mutation = useMutation({
     mutationKey: ['send-tx'],

@@ -93,7 +93,7 @@ const Page = () => {
                 <Button className="mt-1 rounded min-w-48 bg-primary/50 hover:bg-primary/50">Create</Button>
               ) : (
                 <Button onClick={onSubmit} className="mt-1 rounded min-w-48">
-                  Create
+                  Done
                 </Button>
               )}
             </div>
