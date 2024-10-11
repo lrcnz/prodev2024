@@ -4,10 +4,9 @@ import { ArrowDownUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { parseUnits } from 'viem';
+import { formatUnits, parseUnits } from 'viem';
 
 import { InnerHeader } from '@/components/InnerHeader';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useTransfer } from '@/hooks/useTransfer';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { Button } from '@/ui-components/Button';
@@ -18,13 +17,12 @@ import { Toast } from '@/ui-components/Toast';
 const TransferPage = () => {
   const [transferAmount, setTransferAmount] = useState('0');
   const { savingsBalance, currentBalance } = useWalletBalance();
-  const formatBalance = useFormatBalance();
   const [fromAccount, setFromAccount] = useState<'savings' | 'spending'>('savings');
 
   const { transferToSavings, transferToSpending, loading } = useTransfer(false);
   const router = useRouter();
 
-  const maximum = formatBalance(fromAccount === 'savings' ? savingsBalance : currentBalance, { decimals: 6 }) || '0';
+  const maximum = formatUnits((fromAccount === 'savings' ? savingsBalance : currentBalance) || BigInt(0), 6);
   const handleMaximise = () => {
     setTransferAmount(maximum);
   };
