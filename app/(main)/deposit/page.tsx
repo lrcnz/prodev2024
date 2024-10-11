@@ -105,6 +105,12 @@ const DepositPage = () => {
                 attestation: (res as any).attestation,
                 messageBytes,
               });
+              setCcptAmount('');
+              Toast.clear();
+              Toast.show({
+                content: 'Transfer successful',
+                icon: 'success',
+              });
             } else {
               Toast.show({
                 content: 'Unkown error',
@@ -113,12 +119,10 @@ const DepositPage = () => {
             }
           })
           .catch((err) => {
+            Toast.clear();
             console.error(err);
             setInProgress(false);
           })
-          .finally(() => {
-            Toast.clear();
-          });
       }
     }
   }, [txData]);
@@ -128,7 +132,7 @@ const DepositPage = () => {
       console.log('cctp in progress');
       Toast.clear();
       Toast.show({
-        content: 'CCTP in progress',
+        content: 'Transferring...',
         duration: 0,
         icon: 'loading',
       });
