@@ -127,12 +127,20 @@ const SettingPage = () => {
                   {wallet?.address && (
                     <div>
                       <div className="text-xs text-muted-foreground">Sepolia Address</div>
-                      <div className="text-base break-all">{wallet?.address}</div>
+                      <div className="text-base break-all">
+                        <Link target="_blank" href={`https://sepolia.etherscan.io/address/${wallet?.address}`}>
+                          {wallet?.address}
+                        </Link>
+                      </div>
                     </div>
                   )}
                   <div>
                     <div className="text-xs text-muted-foreground">Arb Sepolia Address</div>
-                    <div className="text-base break-all">{arbWallet?.address}</div>
+                    <div className="text-base break-all">
+                      <Link target="_blank" href={`https://sepolia.arbiscan.io/address/${arbWallet?.address}`}>
+                        {arbWallet?.address}
+                      </Link>
+                    </div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Sepolia Eth Balance</div>

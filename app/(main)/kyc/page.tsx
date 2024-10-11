@@ -10,6 +10,7 @@ import { useState } from 'react';
 
 import Passport from '@/assets/kyc/passport.png';
 import { InnerHeader } from '@/components/InnerHeader';
+import { useCurrentWallet } from '@/hooks/useWallet';
 import { delay } from '@/lib/utils';
 import { kycAtom } from '@/state/kyc';
 import { Button } from '@/ui-components/Button';
@@ -19,12 +20,16 @@ const KYCPage = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const setKyc = useSetAtom(kycAtom);
+  const { data: wallet } = useCurrentWallet();
 
   const handleSubmit = async () => {
+    if (!wallet?.address) return;
     setLoading(true);
     await delay(2000);
     setLoading(false);
-    setKyc(true);
+    setKyc((result) => {
+      return { ...result, [wallet.address]: true };
+    });
     router.push('/kyc/success');
   };
 

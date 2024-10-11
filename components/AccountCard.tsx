@@ -79,7 +79,7 @@ export const AccountCard = ({ className }: { className?: string }) => {
           <div className="flex items-center gap-2">
             {!wallet?.address ? (
               ''
-            ) : kyc ? (
+            ) : kyc[wallet?.address] ? (
               <div>
                 <div className="flex items-center gap-1 justify-end">
                   <div className="text-xs text-muted-foreground translate-y-[0.5px]">Balance</div>
