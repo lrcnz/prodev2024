@@ -32,7 +32,7 @@ const SettingPage = () => {
   const userId = useAtomValue(userIdAtom);
   const formatBalance = useFormatBalance();
   const { data: wallet } = useCurrentWallet();
-  const { data: arbWallet } = useArbWallet();
+  const { data: arbWallet } = useArbWallet(true);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { data: sepoliaETHBalance } = useBalance({
@@ -134,14 +134,16 @@ const SettingPage = () => {
                       </div>
                     </div>
                   )}
-                  <div>
-                    <div className="text-xs text-muted-foreground">Arb Sepolia Address</div>
-                    <div className="text-base break-all">
-                      <Link target="_blank" href={`https://sepolia.arbiscan.io/address/${arbWallet?.address}`}>
-                        {arbWallet?.address}
-                      </Link>
+                  {arbWallet?.address && (
+                    <div>
+                      <div className="text-xs text-muted-foreground">Arb Sepolia Address</div>
+                      <div className="text-base break-all">
+                        <Link target="_blank" href={`https://sepolia.arbiscan.io/address/${arbWallet?.address}`}>
+                          {arbWallet?.address}
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div>
                     <div className="text-xs text-muted-foreground">Sepolia Eth Balance</div>
                     <div className="text-base break-all">
