@@ -260,7 +260,6 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
       usdcAmount: BigInt(0),
       ethAmount: balance,
       wethBalance,
-      depositBalance: positions[0] ? ezBalance : BigInt(0),
       positionShared: positions[0],
       positionBalance,
       ezBalance,
