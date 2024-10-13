@@ -221,7 +221,39 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
     address: walletAddress as Address,
   });
 
-  const balance = BigInt(wethBalance + ezBalance + (positions[0] ? ezBalance : BigInt(0)) + maxEthbalance);
+  let positionBalance = BigInt(0);
+
+  if (positions[0]) {
+    const [depositAmount, openPrice, leverage] = await publicClient.readContract({
+      address: MOCK_SHORT_MARKET,
+      abi: SHORT_MARKET_ABI,
+      functionName: 'positions',
+      args: [UNI_WETH_ADDRESS, walletAddress as Address],
+    });
+    const [price] = await publicClient.readContract({
+      address: MOCK_SHORT_MARKET,
+      abi: SHORT_MARKET_ABI,
+      functionName: 'getPrice',
+      args: [UNI_WETH_ADDRESS],
+    });
+
+    if (openPrice >= price) {
+      const priceDifference = openPrice - price;
+      const profit = (priceDifference * depositAmount * leverage) / price;
+
+      positionBalance = profit + depositAmount;
+    } else {
+      const priceDifference = price - openPrice;
+      const loss = (priceDifference * depositAmount * leverage) / price;
+
+      if (loss < depositAmount) {
+        const remain = depositAmount - loss;
+        positionBalance = remain;
+      }
+    }
+  }
+
+  const balance = BigInt(wethBalance + ezBalance + positionBalance + maxEthbalance);
 
   if (!balance) {
     return {
@@ -229,7 +261,8 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
       ethAmount: balance,
       wethBalance,
       depositBalance: positions[0] ? ezBalance : BigInt(0),
-      positionDeposit: positions[0],
+      positionShared: positions[0],
+      positionBalance,
       ezBalance,
       swapArgs: null,
     };
@@ -241,15 +274,15 @@ export const getGrowthAmountEstimate = async (publicClient: PublicClient, wallet
     usdcAmount: swapArgs[1] as bigint,
     ethAmount: swapArgs[0],
     wethBalance,
-    depositBalance: positions[0] ? ezBalance : BigInt(0),
-    positionDeposit: positions[0],
+    positionBalance,
+    positionShared: positions[0],
     ezBalance,
     swapArgs,
   };
 };
 
 export const withdrawGrowthContract = async (publicClient: PublicClient, walletAddress: string) => {
-  const { wethBalance, depositBalance, ezBalance, swapArgs } = await getGrowthAmountEstimate(
+  const { wethBalance, positionBalance, ezBalance, swapArgs } = await getGrowthAmountEstimate(
     publicClient,
     walletAddress
   );
@@ -259,9 +292,9 @@ export const withdrawGrowthContract = async (publicClient: PublicClient, walletA
 
   let contracts: any[] = [];
 
-  const wethAmount = depositBalance + wethBalance;
+  const wethAmount = positionBalance + wethBalance;
 
-  if (depositBalance) {
+  if (positionBalance) {
     contracts = contracts.concat([
       {
         address: MOCK_SHORT_MARKET,
@@ -304,7 +337,7 @@ export const withdrawGrowthContract = async (publicClient: PublicClient, walletA
     {
       address: SWAP_CONTRACT,
       abi: UNISWAP_INTERFACE,
-      value: BigInt(wethBalance + ezBalance + depositBalance + maxEthBalance),
+      value: BigInt(wethBalance + ezBalance + positionBalance + maxEthBalance),
       functionName: 'swapExactETHForTokens',
       args: swapArgs?.slice(1),
     },
