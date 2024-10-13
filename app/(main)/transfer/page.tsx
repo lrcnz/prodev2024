@@ -73,7 +73,7 @@ const TransferPage = () => {
   return (
     <>
       <Loading open={loading} />
-      <ErrorAlert message={errorMsg} open={!!errorMsg} onClose={() => setErrorMsg(null)} />
+      <ErrorAlert title="" message={errorMsg} open={!!errorMsg} onClose={() => setErrorMsg(null)} />
       <div className="flex flex-col h-full">
         <InnerHeader title="Transfer" />
         <div className="flex flex-col h-full p-4">

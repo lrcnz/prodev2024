@@ -12,16 +12,18 @@ export function ErrorAlert({
   open,
   onClose,
   message,
+  title,
 }: {
   open: boolean;
   onClose?: () => void;
   message?: React.ReactNode;
+  title?: string;
 }) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Something went wrong</AlertDialogTitle>
+          <AlertDialogTitle>{title ?? 'Something went wrong'}</AlertDialogTitle>
           <AlertDialogDescription>{message || 'Unknown error'}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
