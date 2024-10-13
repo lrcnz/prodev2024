@@ -1,7 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
 
-import { parseUnits } from 'viem';
 import { usePublicClient } from 'wagmi';
 
 import { useErc20Balance } from './useErc20Balance';
@@ -22,6 +21,7 @@ export const useWalletBalance = (enabled: boolean = false) => {
     enabled,
   });
   const [growthBalance, setGrowthBalance] = useAtom(growthBalanceAtom);
+  const [positionBalance, setPositionBalance] = useAtom(growthBalanceAtom);
   const [sig, refetch] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
@@ -30,12 +30,13 @@ export const useWalletBalance = (enabled: boolean = false) => {
     getGrowthAmountEstimate(publicClient, wallet.address)
       .then((res) => {
         setGrowthBalance(res.usdcAmount);
+        setPositionBalance(res.positionBalance);
       })
       .catch((err) => {
         console.error(err);
         setGrowthBalance(BigInt(0));
       });
-  }, [wallet, publicClient, ustbBalance, plan, sig, setGrowthBalance, ustbBalance]);
+  }, [wallet, publicClient, ustbBalance, plan, sig, setGrowthBalance, setPositionBalance]);
 
   const refetchBalance = useCallback(() => {
     refetch();
@@ -50,9 +51,10 @@ export const useWalletBalance = (enabled: boolean = false) => {
       totalBalance: (usdcBalance || BigInt(0)) + (growthBalance || BigInt(0)) + (ustbBalance || BigInt(0)),
       currentBalance: usdcBalance,
       savingsBalance,
+      positionBalance,
       ustbBalance,
       refetch: refetchBalance,
       walletLoading: isLoading,
     };
-  }, [ustbBalance, usdcBalance, growthBalance, isLoading, refetchBalance]);
+  }, [ustbBalance, growthBalance, usdcBalance, positionBalance, refetchBalance, isLoading]);
 };

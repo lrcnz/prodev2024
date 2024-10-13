@@ -39,18 +39,11 @@ const SettingPage = () => {
     address: wallet?.address as any,
     query: { enabled: !!wallet?.address },
   });
-  const { currentBalance } = useWalletBalance();
+  const { currentBalance, positionBalance } = useWalletBalance();
   const { data: ustbBalance } = useErc20Balance('USTB', wallet?.address);
   const { data: stETHBalance } = useErc20Balance('stETH', wallet?.address);
   const { data: ezETHBalance } = useErc20Balance('ezETH', wallet?.address);
   const { data: wETHBalance } = useErc20Balance('WETH', wallet?.address);
-  const { data: positions } = useReadContract({
-    abi: SHORT_MARKET_ABI,
-    address: MOCK_SHORT_MARKET as Address,
-    functionName: 'positions',
-    args: [UNI_WETH_ADDRESS as Address, wallet?.address as Address],
-    query: { enabled: !!wallet?.address },
-  });
 
   const onLogout = async () => {
     setLoading(true);
@@ -205,9 +198,9 @@ const SettingPage = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-muted-foreground">positions deposit</div>
+                    <div className="text-xs text-muted-foreground">Short Position</div>
                     <div className="text-base break-all">
-                      {formatBalance(positions?.[1], {
+                      {formatBalance(positionBalance, {
                         decimals: 18,
                         mantissa: 18,
                         postfix: ' WETH',
