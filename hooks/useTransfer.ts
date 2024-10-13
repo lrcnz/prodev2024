@@ -188,8 +188,10 @@ export const useTransfer = (showSuccess = true) => {
       if (plan === 'savings') {
         const amount = await getErc20Balance(USTB_ADDRESS);
         console.log('to growth', amount);
-        contracts.push(...(await withdrawSavingsContract(publicClient, wallet.address, amount)));
-        contracts.push(...(await depositGrowthContract(publicClient, wallet.address, amount)));
+        if (amount) {
+          contracts.push(...(await withdrawSavingsContract(publicClient, wallet.address, amount)));
+          contracts.push(...(await depositGrowthContract(publicClient, wallet.address, amount)));
+        }
       }
 
       if (plan === 'growth') {
