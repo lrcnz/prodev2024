@@ -70,8 +70,8 @@ export const SwitchPlanModal = () => {
             {plan === 'savings' ? growth : savings}
           </div>
           <div className="mt-3 text-center text-muted-foreground">Confirm your new Earn plan</div>
-          <AlertDialogFooter>
-            <Button variant="outline" className="mt-2" onClick={onCancel}>
+          <AlertDialogFooter className="flex gap-2">
+            <Button variant="outline" onClick={onCancel}>
               Cancel
             </Button>
             <Button onClick={onConfirm}>Confirm</Button>

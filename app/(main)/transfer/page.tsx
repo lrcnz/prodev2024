@@ -1,5 +1,6 @@
 'use client';
 
+import { useAtomValue } from 'jotai';
 import { ArrowDownUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -9,18 +10,22 @@ import { formatUnits, parseUnits } from 'viem';
 import { InnerHeader } from '@/components/InnerHeader';
 import { useTransfer } from '@/hooks/useTransfer';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
+import { planAtom } from '@/state/plan';
 import { Button } from '@/ui-components/Button';
+import { ErrorAlert } from '@/ui-components/ErrorAlert';
 import { InputGroup } from '@/ui-components/InputGroup';
 import { Loading } from '@/ui-components/Loading';
 import { Toast } from '@/ui-components/Toast';
 
 const TransferPage = () => {
   const [transferAmount, setTransferAmount] = useState('0');
+  const plan = useAtomValue(planAtom);
   const { savingsBalance, currentBalance } = useWalletBalance();
   const [fromAccount, setFromAccount] = useState<'savings' | 'spending'>('savings');
 
   const { transferToSavings, transferToSpending, loading } = useTransfer(false);
   const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const maximum = formatUnits((fromAccount === 'savings' ? savingsBalance : currentBalance) || BigInt(0), 6);
   const handleMaximise = () => {
@@ -32,6 +37,12 @@ const TransferPage = () => {
 
   const handleTransfer = () => {
     if (!transferAmount) return;
+    if (plan === 'growth') {
+      setErrorMsg(
+        'Transfer from Growth plan is not well tested, please first switch to Savings plan then attemp Transfer'
+      );
+      return;
+    }
     const amount = parseUnits(transferAmount, 6);
     if (fromAccount === 'savings') {
       if (!savingsBalance || amount > savingsBalance) {
@@ -62,6 +73,7 @@ const TransferPage = () => {
   return (
     <>
       <Loading open={loading} />
+      <ErrorAlert message={errorMsg} open={!!errorMsg} onClose={() => setErrorMsg(null)} />
       <div className="flex flex-col h-full">
         <InnerHeader title="Transfer" />
         <div className="flex flex-col h-full p-4">

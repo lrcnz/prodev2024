@@ -58,7 +58,7 @@ export const AccountCard = ({ className }: { className?: string }) => {
           )}
           {!wallet?.address && (
             <div className="flex flex-col items-center relative z-[11]">
-              <Button className="bg-foreground rounded-full h-12 w-12 p-2.5 hover:bg-foreground/90">
+              <Button asChild className="bg-foreground rounded-full h-12 w-12 p-2.5 hover:bg-foreground/90">
                 <Link href="/welcome">
                   <Plus />
                 </Link>
