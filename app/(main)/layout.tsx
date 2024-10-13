@@ -14,7 +14,7 @@ import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { getGrowthAmountEstimate } from '@/lib/execution';
 import { fetchUserChallenge } from '@/lib/queries';
-import { growthBalanceAtom } from '@/state/balance';
+import { growthBalanceAtom, positionBalanceAtom } from '@/state/balance';
 import { Updater } from '@/state/updater';
 import { userIdAtom } from '@/state/userToken';
 import { w3sSDKAtom } from '@/state/w3s';
@@ -28,6 +28,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const { refetch: refetchUser } = useUser(false);
   const client = useAtomValue(w3sSDKAtom);
   const [, setGrowthBalance] = useAtom(growthBalanceAtom);
+  const [, setPositionBalance] = useAtom(positionBalanceAtom);
   const isLoading = walletLoading || loginMutation?.isPending;
   const [debouncedLoading, setDebouncedLoading] = useState(false);
   const publicClient = usePublicClient();
@@ -46,12 +47,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     getGrowthAmountEstimate(publicClient, wallet.address)
       .then((res) => {
         setGrowthBalance(res.usdcAmount);
+        setPositionBalance(res.positionBalance);
       })
       .catch((err) => {
         console.error(err);
         setGrowthBalance(BigInt(0));
+        setPositionBalance(BigInt(0));
       });
-  }, [wallet, publicClient, ustbBalance, setGrowthBalance]);
+  }, [wallet, publicClient, ustbBalance, setGrowthBalance, setPositionBalance]);
 
   useEffect(() => {
     if (!userId?.email || !userId?.password || client.isAuth) return;

@@ -7,7 +7,7 @@ import { useErc20Balance } from './useErc20Balance';
 import { useCurrentWallet } from './useWallet';
 
 import { getGrowthAmountEstimate } from '@/lib/execution';
-import { growthBalanceAtom } from '@/state/balance';
+import { growthBalanceAtom, positionBalanceAtom } from '@/state/balance';
 import { planAtom } from '@/state/plan';
 
 export const useWalletBalance = (enabled: boolean = false) => {
@@ -21,7 +21,7 @@ export const useWalletBalance = (enabled: boolean = false) => {
     enabled,
   });
   const [growthBalance, setGrowthBalance] = useAtom(growthBalanceAtom);
-  const [positionBalance, setPositionBalance] = useAtom(growthBalanceAtom);
+  const [positionBalance, setPositionBalance] = useAtom(positionBalanceAtom);
   const [sig, refetch] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
@@ -29,12 +29,14 @@ export const useWalletBalance = (enabled: boolean = false) => {
 
     getGrowthAmountEstimate(publicClient, wallet.address)
       .then((res) => {
+        console.log('growth balance', res);
         setGrowthBalance(res.usdcAmount);
         setPositionBalance(res.positionBalance);
       })
       .catch((err) => {
         console.error(err);
         setGrowthBalance(BigInt(0));
+        setPositionBalance(BigInt(0));
       });
   }, [wallet, publicClient, ustbBalance, plan, sig, setGrowthBalance, setPositionBalance]);
 

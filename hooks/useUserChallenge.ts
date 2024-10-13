@@ -10,7 +10,7 @@ export const useUserChallenge = (queryEnabled = false) => {
   const currentUser = useAtomValue(userTokenAtom);
 
   return useQuery({
-    queryKey: ['user', currentUser?.userId],
+    queryKey: ['user-challenge', currentUser?.userId],
     queryFn: ({ queryKey }) => {
       const [, userId] = queryKey;
       if (!userId) throw new Error('User not logged in');
