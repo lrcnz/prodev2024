@@ -4,6 +4,8 @@ import { useAtom } from 'jotai';
 
 import { Eye, EyeOff } from 'lucide-react';
 
+import { type Viewport } from 'next';
+
 import ComingSoonIcon from '@/assets/icons/ComingSoon';
 import StarIcon from '@/assets/icons/Star';
 import { AccountCard } from '@/components/AccountCard';
@@ -16,6 +18,10 @@ import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { showBalanceAtom } from '@/state/showBalance';
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+};
 
 const HomePage = () => {
   const [showBalance, setShowBalance] = useAtom(showBalanceAtom);

@@ -29,7 +29,6 @@ export const useWalletBalance = (enabled: boolean = false) => {
 
     getGrowthAmountEstimate(publicClient, wallet.address)
       .then((res) => {
-        console.log('growth balance', res);
         setGrowthBalance(res.usdcAmount);
         setPositionBalance(res.positionBalance);
       })

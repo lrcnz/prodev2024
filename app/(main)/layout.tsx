@@ -4,8 +4,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 
-import { parseUnits } from 'viem';
-
 import { usePublicClient } from 'wagmi';
 
 import { useUser } from '@/hooks/useUser';
