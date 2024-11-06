@@ -69,7 +69,7 @@ export const HomeMain = () => {
         <div className="text-2xl font-bold">Coming Soon</div>
         <div className="text-right text-[#007aff] text-base">See All</div>
       </div>
-      <div className="grid grid-cols-3 gap-3 my-3">
+      <div className="grid grid-cols-3 gap-3 my-3 mb-32">
         {[
           {
             title: 'Remittence',

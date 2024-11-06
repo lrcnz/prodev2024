@@ -7,6 +7,7 @@ import SendIcon from '../assets/footer/send.svg';
 import SpendIcon from '../assets/footer/spend.svg';
 
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spend' }) => {
   return (
@@ -16,29 +17,34 @@ export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spen
           {
             title: 'Earn',
             key: 'earn',
+            link: '/pwa',
             activeIcon: EarnActiveIcon,
             inactiveIcon: EarnInActiveIcon,
           },
           {
             title: 'Send',
             key: 'send',
+            link: '/pwa',
             activeIcon: SendIcon,
             inactiveIcon: SendIcon,
           },
           {
             title: 'Spend',
             key: 'spend',
+            link: '/pwa',
             activeIcon: SpendIcon,
             inactiveIcon: SpendIcon,
           },
           {
             title: 'Account',
             key: 'account',
+            link: '/pwa/account',
             activeIcon: AccountIcon,
             inactiveIcon: AccountIcon,
           },
         ].map((item) => (
-          <div
+          <Link
+            href={item.link}
             key={item.key}
             className={cn('pt-2 flex-col gap-1 flex justify-center items-center', {
               'text-[#200e32]/50': item.key !== active,
@@ -47,7 +53,7 @@ export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spen
           >
             <div>{item.key === active ? <item.activeIcon /> : <item.inactiveIcon />}</div>
             <div className="text-center text-xs font-medium">{item.title}</div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

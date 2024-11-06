@@ -5,13 +5,9 @@ import { type Viewport } from 'next';
 
 import Link from 'next/link';
 
-import { useState } from 'react';
-
 import ApyIcon from '../assets/icons/apy.svg';
 import AumIcon from '../assets/icons/aum.svg';
 import SaversIcon from '../assets/icons/savers.svg';
-
-import { Login } from '../components/Login';
 
 import { Chart } from './Chart';
 
