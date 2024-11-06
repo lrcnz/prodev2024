@@ -23,7 +23,6 @@ import {
   UNI_WETH_ADDRESS,
   USDC_ADDRESS,
   USDT_ADDRESS,
-  WETH_ADDRESS,
 } from '@/lib/contracts';
 import { delay } from '@/lib/utils';
 import { w3sSDKAtom } from '@/state/w3s';

@@ -122,12 +122,9 @@ const Page = () => {
         </div>
 
         <div className="mt-auto mb-8 px-4">
-          <div
-            onClick={() => setOpened('login')}
-            className="h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
-          >
+          <Link href="/pwa/account" className="h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex">
             <div className="ml-1.5 text-center text-white text-lg font-semibold">View My Account</div>
-          </div>
+          </Link>
         </div>
       </div>
     </>

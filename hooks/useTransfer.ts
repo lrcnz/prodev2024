@@ -176,7 +176,7 @@ export const useTransfer = (showSuccess = true) => {
     }
   };
 
-  const switchPlan = async (callback: () => void) => {
+  const switchPlan = async (callback: () => void, options?: { hideToast?: boolean; beforeChallenge?: () => void }) => {
     if (!client.sdk) throw new Error('No client found');
     if (!publicClient) throw new Error('No public client found');
     if (!wallet?.address) throw new Error('No wallet address found');
@@ -184,8 +184,8 @@ export const useTransfer = (showSuccess = true) => {
     try {
       setLoading(true);
       const contracts: any[] = [];
-
       if (plan === 'savings') {
+        console.log('switching plan', plan);
         const amount = await getErc20Balance(USTB_ADDRESS);
         console.log('to growth', amount);
         if (amount) {
@@ -203,11 +203,17 @@ export const useTransfer = (showSuccess = true) => {
         }
       }
 
+      if (options?.beforeChallenge) {
+        options.beforeChallenge();
+      }
       if (contracts.length === 0) {
-        Toast.show({
-          content: 'Operation Successful',
-          icon: 'success',
-        });
+        if (!options?.hideToast) {
+          Toast.show({
+            content: 'Operation Successful',
+            icon: 'success',
+          });
+        }
+
         callback();
         setLoading(false);
       } else {

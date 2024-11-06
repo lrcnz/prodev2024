@@ -3,6 +3,8 @@ import { useSetAtom } from 'jotai';
 import { AlignJustify } from 'lucide-react';
 import Image from 'next/image';
 
+import Link from 'next/link';
+
 import GrowthImg from '../assets/growth-img.svg';
 import SavingsIcon from '../assets/icons/savings.png';
 
@@ -16,10 +18,10 @@ export const HomeHeader = () => {
       <div className="absolute right-5 top-[60px]">
         <GrowthImg />
       </div>
-      <div className="flex justify-center relative w-full">
+      <Link href="/" className="flex justify-center relative w-full">
         <AlignJustify className="w-6 h-6 absolute left-0 top-0.5" />
         <span className="text-lg font-semibold">Tardis Money</span>
-      </div>
+      </Link>
       <div className="ml-1">
         <div className="inline-flex mt-8 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
           <div className="text-center text-xs font-medium">12,510 Savers</div>

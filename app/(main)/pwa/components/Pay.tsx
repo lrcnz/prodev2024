@@ -4,22 +4,54 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 
 import { ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { useTransfer } from '@/hooks/useTransfer';
 import { openedModalAtom } from '@/state/modal';
+import { planAtom } from '@/state/plan';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
+import { Toast } from '@/ui-components/Toast';
 
 export const Pay = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [done, setDone] = useState(false);
-
+  const { switchPlan } = useTransfer(false);
+  const router = useRouter();
+  const [isInProcess, setIsInProcess] = useState(false);
+  const [plan, setPlan] = useAtom(planAtom);
   useEffect(() => {
-    if (openedModal === 'pay') {
+    if (openedModal === 'pay' && !isInProcess) {
+      setIsInProcess(true);
       setTimeout(() => {
         setDone(true);
-      }, 3000);
+        Toast.show({
+          icon: 'loading',
+          duration: 0,
+          content: 'loading...',
+        });
+        switchPlan(
+          () => {
+            Toast.clear();
+            setPlan(plan === 'growth' ? 'savings' : 'growth');
+            router.push('/pwa/successful');
+          },
+          {
+            hideToast: true,
+            beforeChallenge: () => {
+              setOpenedModal(undefined);
+            },
+          }
+        );
+      }, 2000);
     } else {
       setDone(false);
+    }
+  }, [isInProcess, openedModal, plan, router, setOpenedModal, setPlan, switchPlan]);
+
+  useEffect(() => {
+    if (openedModal !== 'pay') {
+      setIsInProcess(false);
     }
   }, [openedModal]);
 
@@ -41,7 +73,7 @@ export const Pay = () => {
               {!done && (
                 <div className="fixed top-24 right-0">
                   <svg width="131" height="105" viewBox="0 0 131 105" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_510_2806)">
+                    <g clipPath="url(#clip0_510_2806)">
                       <path
                         d="M121.643 5C121.643 2.23857 123.881 0 126.643 0H131V104.653H126.643C123.881 104.653 121.643 102.415 121.643 99.6535V5Z"
                         fill="white"
