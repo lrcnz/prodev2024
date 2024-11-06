@@ -21,7 +21,6 @@ const Menu = () => {
               fill="black"
             />
           </svg>
-
           <div className="w-[120px] text-[#111111] text-base leading-none">Apple Pay</div>
         </div>
         <div className="justify-end items-center gap-1 flex">
@@ -190,7 +189,6 @@ export const Deposit = () => {
                           fill="black"
                         />
                       </svg>
-
                       <div className="text-[#111111] text-sm">Apple Pay</div>
                     </div>
                   </div>

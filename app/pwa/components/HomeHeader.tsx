@@ -1,10 +1,16 @@
+'use client';
+import { useSetAtom } from 'jotai';
 import { AlignJustify } from 'lucide-react';
 import Image from 'next/image';
 
 import GrowthImg from '../assets/growth-img.svg';
 import SavingsIcon from '../assets/icons/savings.png';
 
+import { openedModalAtom } from '@/state/modal';
+
 export const HomeHeader = () => {
+  const setOpenedModal = useSetAtom(openedModalAtom);
+
   return (
     <div className="bg-gradient4 px-4 pt-2 relative flex flex-col">
       <div className="absolute right-5 top-[60px]">
@@ -28,7 +34,9 @@ export const HomeHeader = () => {
         <div className="my-5 px-5 py-4 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
           <div className="text-base font-semibold">Super Savings</div>
           <div className="px-3 py-1.5 bg-[#f7f6f0] rounded-2xl justify-center items-center flex">
-            <div className="text-center text-[#111111] text-base font-medium">JOIN</div>
+            <div onClick={() => setOpenedModal('login')} className="text-center text-[#111111] text-base font-medium">
+              JOIN
+            </div>
           </div>
         </div>
       </div>
