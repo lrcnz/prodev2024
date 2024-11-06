@@ -1,9 +1,8 @@
-import { AlignJustify, ChevronsDown } from 'lucide-react';
+import { AlignJustify } from 'lucide-react';
 import { type Viewport } from 'next';
 
 import CreditCard from '../assets/card.svg';
 import { Footer } from '../components/Footer';
-import { HomeMain } from '../components/HomeMain';
 
 export const viewport: Viewport = {
   themeColor: '#f7f6f1',
@@ -18,7 +17,7 @@ const Page = () => {
           <span className="text-lg font-semibold">Account</span>
         </div>
       </div>
-      <div className="px-4">
+      <div className="px-4 flex flex-col">
         <div className="relative bg-white rounded-xl flex-col gap-2 flex mt-6">
           <div className="justify-between items-center px-4 py-6 flex">
             <div className="text-black text-[32px] font-medium">$1,205.0</div>
@@ -243,7 +242,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-[120px]">
           <div className="text-[#111111] text-2xl font-bold">Card</div>
           <div className="flex justify-center mt-2">
             <CreditCard className="w-full" />
