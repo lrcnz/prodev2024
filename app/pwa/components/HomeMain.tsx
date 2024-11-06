@@ -1,4 +1,7 @@
+'use client'
 import Image from 'next/image';
+
+import { useRouter } from 'next/navigation';
 
 import GrowthIcon from '../assets/icons/growth.png';
 import InsuranceIcon from '../assets/icons/insurance.png';
@@ -14,15 +17,18 @@ const Card = ({
   describe,
   apr,
   className,
+  onClick,
 }: {
   className?: string;
   icon?: any;
   title: React.ReactNode;
   describe: React.ReactNode;
   apr: React.ReactNode;
+  onClick?: () => void;
 }) => {
   return (
     <div
+      onClick={onClick}
       className={cn('text-[#111111] justify-between p-3 bg-white rounded-xl items-center gap-5 inline-flex', className)}
     >
       <div className="h-12 items-center gap-2 flex">
@@ -42,6 +48,7 @@ const Card = ({
 };
 
 export const HomeMain = () => {
+  const router = useRouter();
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
       <div className="flex items-center justify-between mt-6">
@@ -49,7 +56,13 @@ export const HomeMain = () => {
         <div className="text-right text-[#007aff] text-base">See All</div>
       </div>
       <div className="flex flex-col gap-3 mt-3">
-        <Card icon={SavingsIcon} title="Super Savings" describe="SuperState" apr="5.60%" />
+        <Card
+          onClick={() => router.push('/pwa/savings')}
+          icon={SavingsIcon}
+          title="Super Savings"
+          describe="SuperState"
+          apr="5.60%"
+        />
         <Card icon={GrowthIcon} title="Super Growth" describe="Tardis Protocol" apr="8.50%" />
       </div>
       <div className="flex items-center justify-between mt-6">

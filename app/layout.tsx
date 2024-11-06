@@ -6,6 +6,7 @@ import { DynamicComponents } from '@/components/Dynamic';
 import Providers from '@/components/Providers';
 
 import './globals.css';
+import Head from 'next/head';
 
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'], variable: '--font-roboto' });
 const geistMono = localFont({
