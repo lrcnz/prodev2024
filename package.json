@@ -29,6 +29,8 @@
     "@uniswap/sdk-core": "^5.8.1",
     "@uniswap/v2-sdk": "^4.6.1",
     "antd-mobile": "^5.37.1",
+    "browser-sync": "^3.0.3",
+    "browser-sync-webpack-plugin": "^2.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "ethers": "^5.7.2",

@@ -6,6 +6,22 @@ html,
 body {
   height: 100%;
   --adm-color-white: #fff;
+  background-color: #f7f6f1;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-overflow-scrolling: touch;
 }
 
 @layer utilities {

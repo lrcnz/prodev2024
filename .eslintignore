@@ -1,1 +1,3 @@
 **/node_module/**
+next.config.mjs
+browsersync.js

@@ -15,10 +15,12 @@ const config: Config = {
         gradient1: 'linear-gradient(231deg, #E4E8FC 41.63%, #BFC6F4 105.9%)',
         gradient2: 'linear-gradient(231deg, #E1FFF4 2.18%, #8FF 105.9%)',
         gradient3: 'linear-gradient(231deg, #FFDFE0 2.18%, #FFF7E3 105.9%)',
+        gradient4: 'linear-gradient(to bottom, #3270ef, #47059d)',
       },
       fontFamily: {
         ...defaultTheme.fontFamily,
-        sans: ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-roboto)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
       },
       colors: {
         background: 'hsl(var(--background))',
