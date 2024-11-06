@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
 import { useAtomValue } from 'jotai';
-import { LogOut, RefreshCcw, X } from 'lucide-react';
+import { ExternalLink, LogOut, RefreshCcw, X } from 'lucide-react';
 
 import Link from 'next/link';
 
@@ -111,6 +111,14 @@ const SettingPage = () => {
                   <RefreshCcw />
                 </div>
                 <div className="text-base font-medium">Refresh token</div>
+              </div>
+              <div className="flex h-14 items-center cursor-pointer gap-4" onClick={onRefresh}>
+                <div className="ml-8">
+                  <ExternalLink />
+                </div>
+                <Link href="/pwa" className="text-base font-medium">
+                  Go to
+                </Link>
               </div>
             </div>
             {wallet?.address && (
