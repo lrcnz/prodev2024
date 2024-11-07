@@ -27,6 +27,7 @@ export const Pay = () => {
 
   useEffect(() => {
     if (openedModal === 'pay' && !isInProcess) {
+      console.log('pay....');
       setIsInProcess(true);
       setTimeout(() => {
         setDone(true);
@@ -49,13 +50,12 @@ export const Pay = () => {
           }
         );
       }, 2000);
-    } else {
-      setDone(false);
     }
   }, [isInProcess, openedModal, plan, router, setOpenedModal, setPlan, switchPlan]);
 
   useEffect(() => {
     if (openedModal !== 'pay') {
+      setDone(false);
       setIsInProcess(false);
     }
   }, [openedModal]);

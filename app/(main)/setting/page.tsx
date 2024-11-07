@@ -112,7 +112,7 @@ const SettingPage = () => {
                 </div>
                 <div className="text-base font-medium">Refresh token</div>
               </div>
-              <div className="flex h-14 items-center cursor-pointer gap-4" onClick={onRefresh}>
+              <div className="flex h-14 items-center cursor-pointer gap-4">
                 <div className="ml-8">
                   <ExternalLink />
                 </div>
