@@ -7,7 +7,9 @@ import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useTransfer } from '@/hooks/useTransfer';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { openedModalAtom } from '@/state/modal';
 import { planAtom } from '@/state/plan';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
@@ -20,6 +22,9 @@ export const Pay = () => {
   const router = useRouter();
   const [isInProcess, setIsInProcess] = useState(false);
   const [plan, setPlan] = useAtom(planAtom);
+  const { totalBalance } = useWalletBalance();
+  const formatBalance = useFormatBalance({ show: true });
+
   useEffect(() => {
     if (openedModal === 'pay' && !isInProcess) {
       setIsInProcess(true);
@@ -161,7 +166,9 @@ export const Pay = () => {
                 <div className="mt-1 flex w-full justify-between items-center p-4">
                   <div>
                     <div className=" text-[#3c3c43]/60 text-base text-left">Pay</div>
-                    <div className="text-black text-3xl font-medium">$1200.00</div>
+                    <div className="text-black text-3xl font-medium">
+                      {formatBalance(totalBalance, { decimals: 6, prefix: '$ ', mantissa: 0 })}
+                    </div>
                   </div>
                   <div>
                     <ChevronRight size={24} />

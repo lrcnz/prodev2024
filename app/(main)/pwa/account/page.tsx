@@ -17,7 +17,9 @@ export const viewport: Viewport = {
 
 const Page = () => {
   const { totalBalance } = useWalletBalance();
-  const formatBalance = useFormatBalance();
+  const formatBalance = useFormatBalance({
+    show: true,
+  });
   const { data: wallet } = useCurrentWallet();
 
   return (
