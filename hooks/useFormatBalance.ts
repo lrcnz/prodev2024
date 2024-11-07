@@ -5,13 +5,17 @@ import { useCallback } from 'react';
 import { formatNumber, type FormatOptions } from '@/lib/utils';
 import { showBalanceAtom } from '@/state/showBalance';
 
-export const useFormatBalance = () => {
+export const useFormatBalance = ({
+  show,
+}: {
+  show?: boolean;
+} = {}) => {
   const showBalance = useAtomValue(showBalanceAtom);
 
   return useCallback(
     (value: string | number | undefined | bigint, options?: FormatOptions) => {
-      return showBalance ? formatNumber(value, options) : '******';
+      return (show != null ? show : showBalance) ? formatNumber(value, options) : '******';
     },
-    [showBalance]
+    [show, showBalance]
   );
 };

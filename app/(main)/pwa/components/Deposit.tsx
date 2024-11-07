@@ -1,12 +1,16 @@
 'use client';
+import { format } from 'path';
+
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
 
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { openedModalAtom } from '@/state/modal';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
 
@@ -136,6 +140,10 @@ const Digit = ({ value }: { value?: string }) => {
 export const Deposit = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [menuOpened, setMenuOpened] = useState(false);
+  const { totalBalance } = useWalletBalance();
+  const formatBalance = useFormatBalance({
+    show: true,
+  });
 
   useEffect(() => {
     if (!openedModal) {
@@ -177,7 +185,9 @@ export const Deposit = () => {
               </div>
               <div className="flex flex-col p-4">
                 <div className="border-b flex-col">
-                  <div className="text-[#111111] text-4xl font-bold ">1200.00</div>
+                  <div className="text-[#111111] text-4xl font-bold ">
+                    {formatBalance(totalBalance, { decimals: 6, thousandSeparated: false, mantissa: 0 })}
+                  </div>
                 </div>
                 <div className="flex items-center mt-4 justify-between">
                   <div className="items-center gap-2 flex">
