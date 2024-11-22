@@ -134,7 +134,7 @@ export const Pay = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-black text-lg leading-snug">Circle Card</div>
+                    <div className="text-black text-lg leading-snug">Credit Card</div>
                     <div className="text-[#3c3c43]/60 text-base leading-tight">•••• 1234</div>
                     <div className="text-[#3c3c43]/60 text-base leading-tight overflow-hidden whitespace-nowrap text-ellipsis">
                       27 Fredrick Butte Rd, Brothers O...

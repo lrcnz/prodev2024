@@ -152,7 +152,7 @@ const FaceId = ({ onNext }: { onNext: () => void }) => {
         <FaceIdKeyIcon />
       </div>
       <div className="text-center text-black text-sm px-2">
-        Do you want to sign in to “www.tardis-money.com” with your saved passkey for “alixdaricewilliams@gmail.com”?
+        Do you want to sign in to “www.gluon-money.com” with your saved passkey for “alixdaricewilliams@gmail.com”?
       </div>
       <div onClick={() => setOpened(true)} className="mt-8 flex justify-center items-center flex-col">
         {done ? (

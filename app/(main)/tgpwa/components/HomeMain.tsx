@@ -63,7 +63,7 @@ export const HomeMain = () => {
           describe="SuperState"
           apr="5.60%"
         />
-        <Card icon={GrowthIcon} title="Super Growth" describe="Tardis Protocol" apr="8.50%" />
+        <Card icon={GrowthIcon} title="Super Growth" describe="Gluon Protocol" apr="8.50%" />
       </div>
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Coming Soon</div>

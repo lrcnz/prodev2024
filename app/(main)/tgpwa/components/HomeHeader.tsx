@@ -18,9 +18,9 @@ export const HomeHeader = () => {
       <div className="absolute right-5 top-[60px]">
         <GrowthImg />
       </div>
-      <Link href="/" className="flex justify-center relative w-full">
+      <Link href="/tgpwa" className="flex justify-center relative w-full">
         <AlignJustify className="w-6 h-6 absolute left-0 top-0.5" />
-        <span className="text-lg font-semibold">Tardis Money</span>
+        <span className="text-lg font-semibold">Gluon Money</span>
       </Link>
       <div className="ml-1">
         <div className="inline-flex mt-8 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
