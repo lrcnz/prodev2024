@@ -4,7 +4,7 @@ import { type Viewport } from 'next';
 
 import Link from 'next/link';
 
-import CreditCard from '../assets/card.svg';
+import CreditCard from '../assets/gluon-card.svg';
 import { Footer } from '../components/Footer';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
