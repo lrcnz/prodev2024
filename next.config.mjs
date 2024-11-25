@@ -28,21 +28,6 @@ const nextConfig = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i
 
-    // BrowserSyncPlugin
-    const serverSideOrProd = isServer || !dev
-    if (!serverSideOrProd)
-      config.plugins.push(
-        new BrowserSyncPlugin(
-          {
-            host: '0.0.0.0',
-            port: 4000,
-            open: false,
-            proxy: 'http://localhost:3000/',
-            notify: false
-          },
-        ),
-      )
-
     return config
   },
   experimental: {

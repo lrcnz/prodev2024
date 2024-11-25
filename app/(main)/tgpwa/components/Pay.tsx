@@ -37,14 +37,9 @@ export const Pay = () => {
           duration: 0,
           content: 'loading...',
         });
-        delay(2000).then(() => {
-          setOpenedModal(undefined);
+        delay(1000).then(() => {
           Toast.clear();
-          Toast.show({
-            icon: 'success',
-            content: 'Success',
-          });
-          router.push('/tgpwa/successful');
+          setOpenedModal('ton');
         });
       }, 2000);
     }

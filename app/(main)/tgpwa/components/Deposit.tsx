@@ -5,12 +5,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
 
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
+import { cn } from '@/lib/utils';
 import { openedModalAtom } from '@/state/modal';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
 
@@ -117,12 +118,18 @@ const Menu = () => {
   );
 };
 
-const Digit = ({ value }: { value?: string }) => {
+export const Digit = ({ value, onClick, type }: { value?: string; onClick?: () => void; type?: string }) => {
   return (
-    <div className="h-[56px] bg-[#f3f3f7] rounded-2xl flex-col justify-center items-center gap-3 flex">
+    <div
+      onClick={onClick}
+      className={cn('flex-col justify-center items-center gap-3 flex', {
+        'rounded-2xl bg-[#f3f3f7] h-[56px]': !type,
+        'justify-self-center	rounded-full w-[72px] h-[72px] bg-gray-200': type === 'rounded',
+      })}
+    >
       {value ? (
         <div className="text-center text-black text-[28px]">{value}</div>
-      ) : (
+      ) : type !== 'rounded' ? (
         <svg width="116" height="56" viewBox="0 0 116 56" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="116" height="56" rx="16" fill="#F4F4F7" />
           <path
@@ -132,6 +139,8 @@ const Digit = ({ value }: { value?: string }) => {
             fill="#007AFF"
           />
         </svg>
+      ) : (
+        <X />
       )}
     </div>
   );
@@ -140,10 +149,6 @@ const Digit = ({ value }: { value?: string }) => {
 export const Deposit = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [menuOpened, setMenuOpened] = useState(false);
-  const { totalBalance } = useWalletBalance();
-  const formatBalance = useFormatBalance({
-    show: true,
-  });
 
   useEffect(() => {
     if (!openedModal) {

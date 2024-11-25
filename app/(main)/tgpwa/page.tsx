@@ -1,4 +1,4 @@
-import { type Viewport } from 'next';
+import { type Metadata, type Viewport } from 'next';
 
 import { Footer } from './components/Footer';
 import { HomeHeader } from './components/HomeHeader';
@@ -10,6 +10,11 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+};
+
+export const metadata: Metadata = {
+  title: 'Gluon Money',
+  description: 'Gluon Money',
 };
 
 const PWAPage = () => {
