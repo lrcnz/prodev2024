@@ -70,7 +70,7 @@ const Page = () => {
         </div>
         <div className="mt-auto mb-8 px-4">
           <div
-            onClick={() => setOpened('login')}
+            onClick={() => setOpened('deposit')}
             className="h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
           >
             <div>
