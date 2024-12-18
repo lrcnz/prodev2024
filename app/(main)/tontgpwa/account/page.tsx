@@ -1,4 +1,5 @@
 'use client';
+import { useTonAddress } from '@tonconnect/ui-react';
 import { AlignJustify } from 'lucide-react';
 import { type Viewport } from 'next';
 
@@ -6,6 +7,8 @@ import Link from 'next/link';
 
 import CreditCard from '../assets/gluon-card.svg';
 import { Footer } from '../components/Footer';
+
+import { useJettonBalance } from '../hooks/useJettonsBalance';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useCurrentWallet } from '@/hooks/useWallet';
@@ -17,10 +20,11 @@ export const viewport: Viewport = {
 
 const Page = () => {
   const { totalBalance } = useWalletBalance();
+  const userFriendlyAddress = useTonAddress();
+  const { balance } = useJettonBalance(userFriendlyAddress);
   const formatBalance = useFormatBalance({
     show: true,
   });
-  const { data: wallet } = useCurrentWallet();
 
   return (
     <div className="text-[#111111] select-none">
@@ -33,7 +37,9 @@ const Page = () => {
       <div className="px-4 flex flex-col">
         <div className="relative bg-white rounded-xl flex-col gap-2 flex mt-6">
           <div className="justify-between items-center px-4 py-6 flex">
-            <div className="text-black text-[32px] font-medium">$1205</div>
+            <div className="text-black text-[32px] font-medium">
+              {formatBalance(balance, { decimals: 6, prefix: '$ ', mantissa: 2 })}
+            </div>
             <div className="text-right">
               <div className="text-[hsl(119,100%,40%)] text-xs font-bold">+$5</div>
               <div className="text-[#04ce00] text-xs font-normal">Yesterday</div>

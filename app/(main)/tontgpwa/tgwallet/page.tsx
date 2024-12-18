@@ -1,12 +1,12 @@
 'use client';
 import { useSetAtom } from 'jotai';
-import { ArrowDown, ArrowLeft, BadgeInfo, Check, ChevronRight, Orbit } from 'lucide-react';
+import { ArrowLeft, Check, Orbit } from 'lucide-react';
 import { type Viewport } from 'next';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import GluonImg from '../assets/gluon-img.png';

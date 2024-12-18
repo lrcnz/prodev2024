@@ -1,5 +1,6 @@
 {
   "url": "https://prodev2024.vercel.app/",
   "name": "Gluon",
-  "iconUrl": "https://placehold.co/40"
+  "iconUrl": "https://placehold.co/40",
+  "networks": ["testnet"]
 }

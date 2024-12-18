@@ -8,7 +8,7 @@ import { TonWallet } from './components/TonWallet';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <TonConnectUIProvider manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
       <main className="h-full">{children}</main>
       <Login />
       <Deposit />

@@ -52,9 +52,6 @@ export const HomeMain = () => {
   const router = useRouter();
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
-      <div>
-        <TonConnectButton />
-      </div>
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Featured Products</div>
         <div className="text-right text-[#007aff] text-base">See All</div>
