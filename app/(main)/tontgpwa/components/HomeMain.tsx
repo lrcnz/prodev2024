@@ -1,4 +1,5 @@
 'use client';
+import { TonConnectButton } from '@tonconnect/ui-react';
 import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
@@ -51,13 +52,16 @@ export const HomeMain = () => {
   const router = useRouter();
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
+      <div>
+        <TonConnectButton />
+      </div>
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Featured Products</div>
         <div className="text-right text-[#007aff] text-base">See All</div>
       </div>
       <div className="flex flex-col gap-3 mt-3">
         <Card
-          onClick={() => router.push('/tgpwa/savings')}
+          onClick={() => router.push('/tontgpwa/savings')}
           icon={SavingsIcon}
           title="Super Savings"
           describe="SuperState"
