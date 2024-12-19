@@ -166,8 +166,10 @@ export const Deposit = () => {
   const formatBalance = useFormatBalance({
     show: true,
   });
+  console.log('walletAddress:', walletAddress);
 
   const wallet = useTonWallet();
+  console.log('Wallet:', wallet);
 
   const [isLoading, setIsLoading] = useState(false);
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
@@ -192,8 +194,8 @@ export const Deposit = () => {
         .storeUint(0xf8a7ea5, 32) // jetton transfer op code
         .storeUint(0, 64) // query_id:uint64
         .storeCoins(toNano('0.001')) // amount:(VarUInteger 16) -  Jetton amount for transfer (decimals = 6 - USDT, 9 - default). Function toNano use decimals = 9 (remember it)
-        .storeAddress(Address.parse('0QDiRlZ2LdF-6HOcaPcIerdtoDweXi2kkn6F3yr3WD7_UJ9b')) // destination:MsgAddress
-        .storeAddress(Address.parse(userFriendlyAddress)) // response_destination:MsgAddress
+        .storeAddress(Address.parse('EQBMU6PCYVSVoycXxqev98k6S95BzNxr-5X1ECA6TInC_dqE')) // destination:MsgAddress
+        .storeAddress(Address.parse('EQDMS8rwtddx5siZNBWboMphTbU6h3Hxx1J6ELPjQEzBaiJv')) // response_destination:MsgAddress
         .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
         .storeCoins(toNano('0.05')) // forward_ton_amount:(VarUInteger 16) - if >0, will send notification message
         .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
@@ -204,7 +206,7 @@ export const Deposit = () => {
         validUntil: Math.floor(Date.now() / 1000) + 360,
         messages: [
           {
-            address: walletAddress?.toString(),
+            address: 'EQDMS8rwtddx5siZNBWboMphTbU6h3Hxx1J6ELPjQEzBaiJv',
             amount: '0',
             payload: body.toBoc().toString('base64'),
           },

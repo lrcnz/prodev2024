@@ -8,6 +8,7 @@ import Link from 'next/link';
 import ApyIcon from '../assets/icons/apy.svg';
 import AumIcon from '../assets/icons/aum.svg';
 import SaversIcon from '../assets/icons/savers.svg';
+import { useConnectAndDeposit } from '../hooks/useConnectAndDeposit';
 
 import { Chart } from './Chart';
 
@@ -35,6 +36,7 @@ const Card = ({ title, value, icon, className }: { title: string; value: string;
 
 const Page = () => {
   const setOpened = useSetAtom(openedModalAtom);
+  const connectAndDeposit = useConnectAndDeposit();
 
   return (
     <>
@@ -70,7 +72,7 @@ const Page = () => {
         </div>
         <div className="mt-auto mb-8 px-4">
           <div
-            onClick={() => setOpened('deposit')}
+            onClick={() => connectAndDeposit()}
             className="h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
           >
             <div>
