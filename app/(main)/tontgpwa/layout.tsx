@@ -8,7 +8,7 @@ import { TonWallet } from './components/TonWallet';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="https://prodev2024.vercel.app/tonconnect-manifest.json">
       <main className="h-full">{children}</main>
       <Login />
       <Deposit />
