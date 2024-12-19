@@ -1,7 +1,7 @@
 'use client';
-import { format } from 'path';
 
-import { useTonAddress } from '@tonconnect/ui-react';
+import { Address, beginCell, toNano } from '@ton/ton';
+import { useTonAddress, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
@@ -15,7 +15,6 @@ import { depositValueAtom } from '../hooks/atoms';
 import { useJettonBalance } from '../hooks/useJettonsBalance';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { cn } from '@/lib/utils';
 import { openedModalAtom } from '@/state/modal';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
@@ -159,7 +158,67 @@ export const Digit = ({ value, onClick, type }: { value?: string; onClick?: () =
 export const Deposit = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [tonConnectUI] = useTonConnectUI();
   const [value, setValue] = useAtom(depositValueAtom);
+
+  const userFriendlyAddress = useTonAddress();
+  const { balance, walletAddress } = useJettonBalance(userFriendlyAddress);
+  const formatBalance = useFormatBalance({
+    show: true,
+  });
+
+  const wallet = useTonWallet();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleTransfer = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      if (!wallet) {
+        throw new Error('not connected');
+      }
+
+      if (!walletAddress || !value) {
+        throw new Error('recipient address and amount are required');
+      }
+
+      const jettonTransferAmount = BigInt(value) * BigInt(10 ** 6);
+
+      const body = beginCell()
+        .storeUint(0xf8a7ea5, 32) // jetton transfer op code
+        .storeUint(0, 64) // query_id:uint64
+        .storeCoins(toNano('0.001')) // amount:(VarUInteger 16) -  Jetton amount for transfer (decimals = 6 - USDT, 9 - default). Function toNano use decimals = 9 (remember it)
+        .storeAddress(Address.parse('0QDiRlZ2LdF-6HOcaPcIerdtoDweXi2kkn6F3yr3WD7_UJ9b')) // destination:MsgAddress
+        .storeAddress(Address.parse(userFriendlyAddress)) // response_destination:MsgAddress
+        .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
+        .storeCoins(toNano('0.05')) // forward_ton_amount:(VarUInteger 16) - if >0, will send notification message
+        .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
+        .endCell();
+
+      // 通过 TonConnect 发送交易
+      const result = await tonConnectUI.sendTransaction({
+        validUntil: Math.floor(Date.now() / 1000) + 360,
+        messages: [
+          {
+            address: walletAddress?.toString(),
+            amount: '0',
+            payload: body.toBoc().toString('base64'),
+          },
+        ],
+      });
+      console.log('Transaction Result:', result);
+    } catch (err: any) {
+      console.error('Error:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!openedModal) {
       setValue('0');
@@ -244,7 +303,7 @@ export const Deposit = () => {
                   </div>
                 )}
                 <div
-                  onClick={() => setOpenedModal('pay')}
+                  onClick={() => handleTransfer()}
                   className="mb-8 mt-4 m-2 h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
                 >
                   <div className="w-1.5 relative" />

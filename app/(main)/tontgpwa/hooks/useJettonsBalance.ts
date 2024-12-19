@@ -4,24 +4,23 @@ import { useEffect, useState } from 'react';
 import TonWeb from 'tonweb';
 const jettonMasterAddress = '0:cfedd26ebc685f10c7d553a985c9d0571f73f802725489ccd694485aeb78d2d0';
 
-export const useJettonBalance = (walletAddress: string) => {
+export const useJettonBalance = (_userAddress: string) => {
   const [balance, setBalance] = useState<bigint>();
+  const [address, setAddress] = useState<Address>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
-      if (!walletAddress) return;
-      console.log('walletAddress', walletAddress);
+      if (!_userAddress) return;
       try {
         setIsLoading(true);
 
         const client = new TonClient4({
           endpoint: 'https://testnet-v4.tonhubapi.com', // 测试网节点
         });
-        console.log(walletAddress);
 
-        const userAddress = Address.parse(walletAddress);
+        const userAddress = Address.parse(_userAddress);
         const masterAddress = Address.parse(jettonMasterAddress);
         const contract = JettonMaster.create(masterAddress);
         const jettonMaster = client.open(contract);
@@ -33,6 +32,7 @@ export const useJettonBalance = (walletAddress: string) => {
         });
 
         const data = await jettonWallet.getData();
+        setAddress(jettonWalletAddress);
         setBalance(BigInt(data.balance.toString()));
       } catch (err: any) {
         console.error(err);
@@ -43,7 +43,7 @@ export const useJettonBalance = (walletAddress: string) => {
     };
 
     fetchBalance();
-  }, [walletAddress]);
+  }, [_userAddress]);
 
-  return { balance, isLoading, error };
+  return { balance, walletAddress: address, isLoading, error };
 };
