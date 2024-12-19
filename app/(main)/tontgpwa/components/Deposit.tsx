@@ -1,6 +1,7 @@
 'use client';
 import { format } from 'path';
 
+import { useTonAddress } from '@tonconnect/ui-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
@@ -9,6 +10,10 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
+import { depositValueAtom } from '../hooks/atoms';
+
+import { useJettonBalance } from '../hooks/useJettonsBalance';
+
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { cn } from '@/lib/utils';
@@ -16,9 +21,33 @@ import { openedModalAtom } from '@/state/modal';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
 
 const Menu = () => {
+  const userFriendlyAddress = useTonAddress();
+  const { balance } = useJettonBalance(userFriendlyAddress);
+  const formatBalance = useFormatBalance({
+    show: true,
+  });
+
   return (
     <div className="flex flex-col gap-4 mt-6 mb-6">
-      <div className="h-10 px-4 py-2 bg-[#f7f6f0] rounded-lg border-2 border-[#111111] justify-between items-center flex">
+      <div className="h-12 px-4 py-2 bg-[#f7f6f0] rounded-lg  border-2 border-[#111111] justify-between items-center flex">
+        <div className="justify-start items-center gap-2 flex">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20.1036 0H3.89543C0.915315 0 -0.973467 3.21456 0.525742 5.81325L10.5288 23.1509C11.1816 24.283 12.8174 24.283 13.4702 23.1509L23.4753 5.81325C24.9726 3.21871 23.0837 0 20.1057 0H20.1036ZM10.5207 17.9516L8.3422 13.7355L3.08568 4.33442C2.73891 3.73271 3.16722 2.96163 3.89339 2.96163H10.5187V17.9537L10.5207 17.9516ZM20.9093 4.33239L15.6548 13.7376L13.4763 17.9516V2.9596H20.1016C20.8278 2.9596 21.2561 3.73067 20.9093 4.33239Z"
+              fill="#111111"
+            />
+          </svg>
+
+          <div className="w-[120px] text-[#111111] text-base leading-none">Balance on Ton Wallet</div>
+        </div>
+        <div className="justify-end items-center gap-1 flex">
+          <div className="text-center text-[#111111] text-base font-semibold">
+            {formatBalance(balance, { decimals: 6, mantissa: 2 })}
+          </div>
+          <div className="text-center text-[#111111]/60 text-base">USDT</div>
+        </div>
+      </div>
+      <div className="h-10 px-4 py-2 bg-[#f7f6f0] rounded-lg border border-[#111111]/10 justify-between items-center flex">
         <div className="justify-start items-center gap-2 flex">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -30,30 +59,11 @@ const Menu = () => {
         </div>
         <div className="justify-end items-center gap-1 flex">
           <div className="text-center text-[#111111]/60 text-base">Up to</div>
-          <div className="text-center text-[#111111] text-base font-semibold">$4,000 </div>
+          <div className="text-center text-[#111111] text-base font-semibold">4,000</div>
           <div className="text-center text-[#111111]/60 text-base">USD</div>
         </div>
       </div>
-      <div className="h-12 px-4 py-2 bg-[#f7f6f0] rounded-lg border border-[#111111]/10 justify-between items-center flex">
-        <div className="justify-start items-center gap-2 flex">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M18.1286 13.6127C18.0593 13.5296 17.964 13.4723 17.858 13.4501C17.7521 13.428 17.6417 13.4423 17.5449 13.4908L12 16.2633L6.45503 13.4908C6.35833 13.4423 6.2481 13.428 6.14221 13.45C6.03631 13.4721 5.94097 13.5292 5.87163 13.6122C5.80229 13.6952 5.76301 13.7992 5.76018 13.9073C5.75734 14.0155 5.7911 14.1214 5.85599 14.2079L11.616 21.8879C11.6218 21.8956 11.6314 21.8985 11.6381 21.9062C11.6701 21.944 11.708 21.9764 11.7504 22.0022C11.7656 22.0139 11.7816 22.0245 11.7984 22.0338C11.8609 22.0654 11.93 22.0818 12 22.0818C12.07 22.0818 12.1391 22.0654 12.2016 22.0338C12.2184 22.0245 12.2344 22.0139 12.2496 22.0022C12.292 21.9764 12.3299 21.944 12.3619 21.9062C12.3686 21.8985 12.3782 21.8956 12.384 21.8879L18.144 14.2079C18.2088 14.1215 18.2425 14.0157 18.2397 13.9076C18.237 13.7996 18.1978 13.6957 18.1286 13.6127ZM11.52 17.0966V20.1599L7.84415 15.2639L11.52 17.0966ZM12.48 20.1599V17.0966L16.1558 15.2639L12.48 20.1599Z"
-              fill="black"
-            />
-            <path
-              d="M5.77345 12.0556C5.77298 12.082 5.77491 12.1084 5.77921 12.1344C5.78401 12.1497 5.79553 12.1612 5.80129 12.1756C5.80358 12.189 5.80679 12.2021 5.81089 12.215C5.81665 12.2275 5.83105 12.2323 5.83777 12.2438C5.86993 12.2971 5.91235 12.3434 5.96257 12.3801C5.97889 12.3916 5.99041 12.4051 6.00673 12.4147C6.02305 12.4243 6.01825 12.4262 6.02497 12.4291L11.785 15.3091H11.7984C11.8611 15.34 11.9301 15.3561 12 15.3561C12.0699 15.3561 12.1389 15.34 12.2016 15.3091H12.2151L17.9751 12.4291C17.9891 12.4194 18.0026 12.4088 18.0154 12.3974C18.0454 12.3786 18.0731 12.3564 18.0979 12.3312C18.1192 12.3095 18.1381 12.2857 18.1546 12.2601C18.1669 12.2457 18.1785 12.2307 18.1891 12.215C18.1959 12.2006 18.1949 12.1862 18.2007 12.1728C18.2081 12.1604 18.2148 12.1475 18.2208 12.1344C18.2222 12.1171 18.2222 12.0998 18.2208 12.0825C18.2276 12.0494 18.2302 12.0155 18.2285 11.9817C18.2274 11.9536 18.2239 11.9257 18.2179 11.8982C18.21 11.865 18.1985 11.8328 18.1834 11.8022C18.1793 11.7868 18.1741 11.7718 18.168 11.7571L12.408 2.15709C12.4013 2.14653 12.3888 2.14269 12.3821 2.13309C12.3401 2.06972 12.283 2.01774 12.216 1.98178C12.149 1.94582 12.0741 1.927 11.9981 1.927C11.922 1.927 11.8472 1.94582 11.7802 1.98178C11.7132 2.01774 11.6561 2.06972 11.6141 2.13309C11.6074 2.14269 11.5949 2.14653 11.5882 2.15709L5.82817 11.7571C5.78986 11.8252 5.76877 11.9017 5.76673 11.9798C5.76673 11.9884 5.76001 11.9952 5.76001 12.0038C5.7634 12.0213 5.76789 12.0387 5.77345 12.0556ZM11.52 14.1033L7.31329 12L11.52 9.89661V14.1033ZM12.48 9.89661L16.6867 12L12.48 14.1033V9.89661ZM12.48 8.82333V4.13277L16.4995 10.8326L12.48 8.82333ZM11.52 8.82333L7.49953 10.8336L11.52 4.13277V8.82333Z"
-              fill="black"
-            />
-          </svg>
 
-          <div className="w-[120px] text-[#111111] text-base leading-none">Balance on Etherum</div>
-        </div>
-        <div className="justify-end items-center gap-1 flex">
-          <div className="text-center text-[#111111] text-base font-semibold">2,150</div>
-          <div className="text-center text-[#111111]/60 text-base">USDT</div>
-        </div>
-      </div>
       <div className="h-12 px-4 py-2 bg-[#f7f6f0] rounded-lg border border-[#111111]/10 justify-between items-center flex">
         <div className="justify-start items-center gap-2 flex">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,8 +102,8 @@ const Menu = () => {
               strokeLinejoin="round"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M7.74766 3H16.3911C19.2892 3 21.6388 5.34951 21.6388 8.24766V15.4247C21.6388 18.3229 19.2892 20.6724 16.3911 20.6724H7.74766C4.84951 20.6724 2.5 18.3229 2.5 15.4247V8.24766C2.5 5.34951 4.84951 3 7.74766 3Z"
               stroke="#200E32"
               strokeWidth="1.5"
@@ -149,12 +159,13 @@ export const Digit = ({ value, onClick, type }: { value?: string; onClick?: () =
 export const Deposit = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [menuOpened, setMenuOpened] = useState(false);
-
+  const [value, setValue] = useAtom(depositValueAtom);
   useEffect(() => {
     if (!openedModal) {
+      setValue('0');
       setMenuOpened(false);
     }
-  }, [openedModal]);
+  }, [openedModal, setValue]);
 
   return (
     <AnimatePresence>
@@ -190,7 +201,7 @@ export const Deposit = () => {
               </div>
               <div className="flex flex-col p-4">
                 <div className="border-b flex-col">
-                  <div className="text-[#111111] text-4xl font-bold ">{1200}</div>
+                  <div className="text-[#111111] text-4xl font-bold ">{value}</div>
                 </div>
                 <div className="flex items-center mt-4 justify-between">
                   <div className="items-center gap-2 flex">
@@ -214,18 +225,22 @@ export const Deposit = () => {
                   <Menu />
                 ) : (
                   <div className="grid grid-cols-3 gap-3 mt-10">
-                    <Digit value="1" />
-                    <Digit value="2" />
-                    <Digit value="3" />
-                    <Digit value="4" />
-                    <Digit value="5" />
-                    <Digit value="6" />
-                    <Digit value="7" />
-                    <Digit value="8" />
-                    <Digit value="9" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '1').toString())} value="1" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '2').toString())} value="2" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '3').toString())} value="3" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '4').toString())} value="4" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '5').toString())} value="5" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '6').toString())} value="6" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '7').toString())} value="7" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '8').toString())} value="8" />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '9').toString())} value="9" />
                     <div />
-                    <Digit value="0" />
-                    <Digit />
+                    <Digit onClick={() => setValue((val) => parseInt(val + '0').toString())} value="0" />
+                    <Digit
+                      onClick={() =>
+                        setValue((val) => (val.slice(0, -1) ? parseInt(val.slice(0, -1)).toString() : '0'))
+                      }
+                    />
                   </div>
                 )}
                 <div

@@ -1,20 +1,20 @@
 'use client';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { depositValueAtom } from '../hooks/atoms';
+
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useTransfer } from '@/hooks/useTransfer';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
-import { delay } from '@/lib/utils';
 import { openedModalAtom } from '@/state/modal';
 import { planAtom } from '@/state/plan';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';
-import { Toast } from '@/ui-components/Toast';
 
 export const Pay = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
@@ -23,25 +23,12 @@ export const Pay = () => {
   const router = useRouter();
   const [isInProcess, setIsInProcess] = useState(false);
   const [plan, setPlan] = useAtom(planAtom);
-  const { totalBalance } = useWalletBalance();
-  const formatBalance = useFormatBalance({ show: true });
+  const depositValue = useAtomValue(depositValueAtom);
 
   useEffect(() => {
     if (openedModal === 'pay' && !isInProcess) {
       console.log('pay....');
       setIsInProcess(true);
-      setTimeout(() => {
-        setDone(true);
-        Toast.show({
-          icon: 'loading',
-          duration: 0,
-          content: 'loading...',
-        });
-        delay(1000).then(() => {
-          Toast.clear();
-          setOpenedModal('ton');
-        });
-      }, 2000);
     }
   }, [isInProcess, openedModal, plan, router, setOpenedModal, setPlan, switchPlan]);
 
@@ -146,7 +133,7 @@ export const Pay = () => {
                 <div className="mt-1 flex w-full justify-between items-center p-4">
                   <div>
                     <div className=" text-[#3c3c43]/60 text-base text-left">Pay</div>
-                    <div className="text-black text-3xl font-medium">{1200}</div>
+                    <div className="text-black text-3xl font-medium">{depositValue}</div>
                   </div>
                   <div>
                     <ChevronRight size={24} />
