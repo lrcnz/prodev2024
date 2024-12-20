@@ -10,6 +10,8 @@ import { Footer } from '../components/Footer';
 
 import { useJettonBalance } from '../hooks/useJettonsBalance';
 
+import { useShare } from '../hooks/useShare';
+
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { useCurrentWallet } from '@/hooks/useWallet';
 import { useWalletBalance } from '@/hooks/useWalletBalance';
@@ -22,6 +24,7 @@ const Page = () => {
   const { totalBalance } = useWalletBalance();
   const userFriendlyAddress = useTonAddress();
   const { balance } = useJettonBalance(userFriendlyAddress);
+  useShare();
   const formatBalance = useFormatBalance({
     show: true,
   });

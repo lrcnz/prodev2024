@@ -54,29 +54,25 @@ export const useTransfer = () => {
 
   const handleCompletePayment = useCallback(
     async (amount: any) => {
-      try {
-        if (!tonClient || !walletAddress) return;
+      if (!tonClient || !walletAddress) return;
 
-        const jettonMaster = tonClient.open(
-          JettonMaster.create(Address.parse('0:cfedd26ebc685f10c7d553a985c9d0571f73f802725489ccd694485aeb78d2d0'))
-        );
-        const usersUsdtAddress = await jettonMaster.getWalletAddress(walletAddress);
+      const jettonMaster = tonClient.open(
+        JettonMaster.create(Address.parse('0:cfedd26ebc685f10c7d553a985c9d0571f73f802725489ccd694485aeb78d2d0'))
+      );
+      const usersUsdtAddress = await jettonMaster.getWalletAddress(walletAddress);
 
-        // creating and opening jetton wallet instance.
-        // First argument (provider) will be automatically substituted in methods, which names starts with 'get' or 'send'
-        const jettonWallet = tonClient.open(JettonWallet.createFromAddress(usersUsdtAddress));
+      // creating and opening jetton wallet instance.
+      // First argument (provider) will be automatically substituted in methods, which names starts with 'get' or 'send'
+      const jettonWallet = tonClient.open(JettonWallet.createFromAddress(usersUsdtAddress));
 
-        await jettonWallet.sendTransfer(sender, {
-          fwdAmount: toNano(0.05),
-          jettonAmount: amount,
-          toAddress: INVOICE_WALLET_ADDRESS,
-          value: JETTON_TRANSFER_GAS_FEES,
-        });
+      await jettonWallet.sendTransfer(sender, {
+        fwdAmount: toNano(0.01),
+        jettonAmount: amount,
+        toAddress: INVOICE_WALLET_ADDRESS,
+        value: JETTON_TRANSFER_GAS_FEES,
+      });
 
-        console.log(`See transaction at https://testnet.tonviewer.com/${usersUsdtAddress.toString()}`);
-      } catch (error) {
-        console.log('Error during transaction check:', error);
-      }
+      console.log(`See transaction at https://testnet.tonviewer.com/${usersUsdtAddress.toString()}`);
     },
     [tonClient, walletAddress, sender]
   );
