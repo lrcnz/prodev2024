@@ -1,18 +1,21 @@
 'use client';
 
-import { Address, beginCell, toNano } from '@ton/ton';
-import { useTonAddress, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
+import { useTonAddress, useTonWallet } from '@tonconnect/ui-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
 
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { depositValueAtom } from '../hooks/atoms';
 
 import { useJettonBalance } from '../hooks/useJettonsBalance';
+
+import { useTonClient } from '../hooks/useTonClient';
+import { useTransfer } from '../hooks/useTransfer';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 import { cn } from '@/lib/utils';
@@ -158,67 +161,23 @@ export const Digit = ({ value, onClick, type }: { value?: string; onClick?: () =
 export const Deposit = () => {
   const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
   const [menuOpened, setMenuOpened] = useState(false);
-  const [tonConnectUI] = useTonConnectUI();
+
   const [value, setValue] = useAtom(depositValueAtom);
 
   const userFriendlyAddress = useTonAddress();
   const { balance, walletAddress } = useJettonBalance(userFriendlyAddress);
-  const formatBalance = useFormatBalance({
-    show: true,
-  });
-  console.log('walletAddress:', walletAddress);
 
+  const client = useTonClient();
   const wallet = useTonWallet();
-  console.log('Wallet:', wallet);
+  const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [transactionHash, setTransactionHash] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const handleTransfer = useTransfer();
 
-  const handleTransfer = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      if (!wallet) {
-        throw new Error('not connected');
-      }
-
-      if (!walletAddress || !value) {
-        throw new Error('recipient address and amount are required');
-      }
-
-      const jettonTransferAmount = BigInt(value) * BigInt(10 ** 6);
-
-      const body = beginCell()
-        .storeUint(0xf8a7ea5, 32) // jetton transfer op code
-        .storeUint(0, 64) // query_id:uint64
-        .storeCoins(toNano('0.001')) // amount:(VarUInteger 16) -  Jetton amount for transfer (decimals = 6 - USDT, 9 - default). Function toNano use decimals = 9 (remember it)
-        .storeAddress(Address.parse('EQBMU6PCYVSVoycXxqev98k6S95BzNxr-5X1ECA6TInC_dqE')) // destination:MsgAddress
-        .storeAddress(Address.parse('EQDMS8rwtddx5siZNBWboMphTbU6h3Hxx1J6ELPjQEzBaiJv')) // response_destination:MsgAddress
-        .storeUint(0, 1) // custom_payload:(Maybe ^Cell)
-        .storeCoins(toNano('0.05')) // forward_ton_amount:(VarUInteger 16) - if >0, will send notification message
-        .storeUint(0, 1) // forward_payload:(Either Cell ^Cell)
-        .endCell();
-
-      // 通过 TonConnect 发送交易
-      const result = await tonConnectUI.sendTransaction({
-        validUntil: Math.floor(Date.now() / 1000) + 360,
-        messages: [
-          {
-            address: 'EQDMS8rwtddx5siZNBWboMphTbU6h3Hxx1J6ELPjQEzBaiJv',
-            amount: '0',
-            payload: body.toBoc().toString('base64'),
-          },
-        ],
-      });
-      console.log('Transaction Result:', result);
-    } catch (err: any) {
-      console.error('Error:', err);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleDeposit = async () => {
+    await handleTransfer(parseInt(value) * 10 ** 6);
+    setOpenedModal(undefined);
+    console.log('Deposited');
+    router.push('/tontgpwa/successful');
   };
 
   useEffect(() => {
@@ -305,7 +264,7 @@ export const Deposit = () => {
                   </div>
                 )}
                 <div
-                  onClick={() => handleTransfer()}
+                  onClick={() => handleDeposit()}
                   className="mb-8 mt-4 m-2 h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
                 >
                   <div className="w-1.5 relative" />

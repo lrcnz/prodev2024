@@ -25,8 +25,6 @@ export const useJettonBalance = (_userAddress: string) => {
         const contract = JettonMaster.create(masterAddress);
         const jettonMaster = client.open(contract);
         const jettonWalletAddress = await jettonMaster.getWalletAddress(userAddress);
-        const jettonWalletAddress1 = await jettonMaster.getWalletAddress(Address.parse('0QAIcr_MRLBdwEQsiHJglwfi_3cCbdAbbCcJzckzeh9TNH17'));
-        console.log('jettonWalletAddress1', jettonWalletAddress1.toString())
         const tonweb = new TonWeb(new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC'));
 
         const jettonWallet = new TonWeb.token.jetton.JettonWallet(tonweb.provider, {

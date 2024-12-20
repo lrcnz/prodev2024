@@ -17,6 +17,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@18.3.1))
+      '@orbs-network/ton-access':
+        specifier: ^2.3.3
+        version: 2.3.3
       '@prisma/client':
         specifier: ^5.20.0
         version: 5.20.0(prisma@5.20.0)
@@ -65,6 +68,9 @@ importers:
       '@ton/ton':
         specifier: ^15.1.0
         version: 15.1.0(@ton/core@0.59.0(@ton/crypto@3.3.0))(@ton/crypto@3.3.0)
+      '@tonconnect/ui':
+        specifier: ^2.0.9
+        version: 2.0.9
       '@tonconnect/ui-react':
         specifier: ^2.0.9
         version: 2.0.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -146,6 +152,9 @@ importers:
       typechain:
         specifier: ^8.3.2
         version: 8.3.2(typescript@5.6.2)
+      uuid:
+        specifier: ^11.0.3
+        version: 11.0.3
       viem:
         specifier: ^2.21.19
         version: 2.21.19(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)(zod@3.24.1)
@@ -8036,6 +8045,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
+
+  uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
+    hasBin: true
 
   uuid@7.0.3:
     resolution: {integrity: sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==}
@@ -18963,6 +18976,8 @@ snapshots:
       which-typed-array: 1.1.15
 
   utils-merge@1.0.1: {}
+
+  uuid@11.0.3: {}
 
   uuid@7.0.3:
     optional: true
