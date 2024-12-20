@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 const Page = () => {
   const userFriendlyAddress = useTonAddress();
   const { balance } = useJettonBalance(userFriendlyAddress);
-  useShare();
+  const { share } = useShare();
   const formatBalance = useFormatBalance({
     show: true,
   });
@@ -29,7 +29,7 @@ const Page = () => {
   return (
     <div className="text-[#111111] select-none">
       <div className="px-4 pt-2 relative flex flex-col">
-        <Link href="/" className="flex justify-center relative w-full">
+        <Link href="/tontgpwa/setting" className="flex justify-center relative w-full">
           <AlignJustify className="w-6 h-6 absolute left-0 top-0.5" />
           <span className="text-lg font-semibold">Account</span>
         </Link>
@@ -38,7 +38,7 @@ const Page = () => {
         <div className="relative bg-white rounded-xl flex-col gap-2 flex mt-6">
           <div className="justify-between items-center px-4 py-6 flex">
             <div className="text-black text-[32px] font-medium">
-              {formatBalance(balance, { decimals: 6, prefix: '$ ', mantissa: 2 })}
+              {formatBalance(share || undefined, { decimals: 6, prefix: '$ ', mantissa: 2 })}
             </div>
             <div className="text-right">
               <div className="text-[hsl(119,100%,40%)] text-xs font-bold">+$5</div>

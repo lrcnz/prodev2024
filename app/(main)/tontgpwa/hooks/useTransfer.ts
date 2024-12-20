@@ -18,7 +18,7 @@ export const useGenerateId = () => {
 };
 
 export const USDT_MASTER_ADDRESS = Address.parse('kQD0GKBM8ZbryVk2aESmzfU6b9b_8era_IkvBSELujFZPsyy');
-export const INVOICE_WALLET_ADDRESS = Address.parse('kQAvbmVWzh2zt8S2eP4f12WY5XhA7pKOJ0taL39auJ63vVJ1');
+export const INVOICE_WALLET_ADDRESS = Address.parse('kQA_PwJcE6KoLTdOzIujYj3eJ20gdumhVpA6ycq0hZATkFCk');
 export const JETTON_TRANSFER_GAS_FEES = toNano('0.1');
 
 export const separateTonAddress = (address: string) => `${address.slice(0, 4)}...${address.slice(-4)}`;

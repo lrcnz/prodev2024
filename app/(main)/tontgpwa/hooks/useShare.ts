@@ -1,25 +1,32 @@
-import { Address } from '@ton/ton';
+import { Address, TupleBuilder } from '@ton/ton';
 
 import { useEffect, useState } from 'react';
 
 import { useTonClient } from './useTonClient';
-const contractAddress = 'kQAvbmVWzh2zt8S2eP4f12WY5XhA7pKOJ0taL39auJ63vVJ1';
+
+const contractAddress = 'kQA_PwJcE6KoLTdOzIujYj3eJ20gdumhVpA6ycq0hZATkFCk';
+
+import { useTonConnect } from './useTonConnect';
 
 export const useShare = () => {
   const client = useTonClient();
-
+  const [share, setShare] = useState<bigint | null>(null);
+  const { walletAddress } = useTonConnect();
   useEffect(() => {
-    if (!client) return;
+    if (!client || !walletAddress) return;
 
     async function readContract() {
-      if (!client) return;
+      if (!client || !walletAddress) return;
+      const builder = new TupleBuilder();
 
-      const data = await client.runMethod(Address.parse(contractAddress), 'share_of', []);
-      console.log('data', data);
+      builder.writeAddress(walletAddress);
+
+      const data = await client.runMethod(Address.parse(contractAddress), 'shareOf', builder.build());
+      setShare(data.stack.readBigNumberOpt());
     }
 
     readContract();
-  }, [client]);
+  }, [client, walletAddress]);
 
-  return { a: 1 };
+  return { share };
 };
