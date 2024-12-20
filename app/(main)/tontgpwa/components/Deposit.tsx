@@ -45,7 +45,7 @@ const Menu = () => {
           <div className="text-center text-[#111111] text-base font-semibold">
             {formatBalance(balance, { decimals: 6, mantissa: 2 })}
           </div>
-          <div className="text-center text-[#111111]/60 text-base">USDT</div>
+          <div className="text-center text-[#111111]/60 text-base">USDC</div>
         </div>
       </div>
       <div className="h-10 px-4 py-2 bg-[#f7f6f0] rounded-lg border border-[#111111]/10 justify-between items-center flex">
@@ -82,7 +82,7 @@ const Menu = () => {
         </div>
         <div className="justify-end items-center gap-1 flex">
           <div className="text-center text-[#111111] text-base font-semibold">1,000</div>
-          <div className="text-center text-[#111111]/60 text-base">USDT</div>
+          <div className="text-center text-[#111111]/60 text-base">USDC</div>
         </div>
       </div>
       <div className="h-10 px-4 py-2 bg-[#f7f6f0] rounded-lg border border-[#111111]/10 justify-between items-center flex">

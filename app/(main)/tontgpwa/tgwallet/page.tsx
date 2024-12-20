@@ -79,7 +79,7 @@ const Page = () => {
                 <div className="text-gray-500">UQCH...5_0f</div>
               </div>
               <div className="mr-4 text-right">
-                <div>1200 USDT</div>
+                <div>1200 USDC</div>
                 <div className="text-gray-500">Today</div>
               </div>
             </div>

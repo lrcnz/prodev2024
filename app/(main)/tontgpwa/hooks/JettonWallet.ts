@@ -45,7 +45,7 @@ export class JettonWallet implements Contract {
     const builder = beginCell()
       .storeUint(JettonWallet.OPCODES.TRANSFER, 32) // opcode for transfer. 0xf8a7ea5 is used
       .storeUint(opts.queryId ?? 0, 64)
-      .storeCoins(opts.jettonAmount) // jetton amount to transfer. Be aware of decimals. Almost all jettons has 9, but USDT has 6. More about decimals https://docs.ton.org/develop/dapps/asset-processing/metadata#jetton-metadata-attributes
+      .storeCoins(opts.jettonAmount) // jetton amount to transfer. Be aware of decimals. Almost all jettons has 9, but USDC has 6. More about decimals https://docs.ton.org/develop/dapps/asset-processing/metadata#jetton-metadata-attributes
       .storeAddress(opts.toAddress) // jetton destination address. Use wallet address, not jetton address itself
       .storeAddress(via.address) // excesses address. Extra tons, sent with message, will be transferred here.
       .storeUint(0, 1) // custom payload. Empty in standard jettons
