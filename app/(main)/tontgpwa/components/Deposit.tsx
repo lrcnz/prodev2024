@@ -177,9 +177,9 @@ export const Deposit = () => {
     try {
       const aa = await handleTransfer(parseInt(value) * 10 ** 6);
       console.log(aa);
+      router.push('/tontgpwa/successful');
       setOpenedModal(undefined);
       console.log('Deposited');
-      router.push('/tontgpwa/successful');
     } catch (e) {
       console.log(e);
     }
