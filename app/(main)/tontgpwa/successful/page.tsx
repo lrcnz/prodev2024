@@ -5,6 +5,8 @@ import { type Viewport } from 'next';
 
 import Link from 'next/link';
 
+import { useSearchParams } from 'next/navigation';
+
 import ApyIcon from '../assets/icons/apy.svg';
 import AumIcon from '../assets/icons/aum.svg';
 import SaversIcon from '../assets/icons/savers.svg';
@@ -33,6 +35,7 @@ const Card = ({ title, value, icon, className }: { title: string; value: string;
 
 const Page = () => {
   const setOpened = useSetAtom(openedModalAtom);
+  const searchParams = useSearchParams();
 
   return (
     <>
@@ -128,6 +131,15 @@ const Page = () => {
           >
             <div className="ml-1.5 text-center text-white text-lg font-semibold">View My Account</div>
           </Link>
+          <div className="mt-4 text-center">
+            <Link
+              href={`https://testnet.tonviewer.com/${searchParams.get('address')}`}
+              target="_blank"
+              className="text-center text-md"
+            >
+              Transaction
+            </Link>
+          </div>
         </div>
       </div>
     </>

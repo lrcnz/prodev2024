@@ -1,6 +1,6 @@
 'use client';
 
-import { useTonAddress, useTonWallet } from '@tonconnect/ui-react';
+import { useTonAddress } from '@tonconnect/ui-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useAtom } from 'jotai';
@@ -14,7 +14,6 @@ import { depositValueAtom } from '../hooks/atoms';
 
 import { useJettonBalance } from '../hooks/useJettonsBalance';
 
-import { useTonClient } from '../hooks/useTonClient';
 import { useTransfer } from '../hooks/useTransfer';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
@@ -167,19 +166,18 @@ export const Deposit = () => {
   const userFriendlyAddress = useTonAddress();
   const { balance, walletAddress } = useJettonBalance(userFriendlyAddress);
 
-  const client = useTonClient();
-  const wallet = useTonWallet();
   const router = useRouter();
 
   const handleTransfer = useTransfer();
 
   const handleDeposit = async () => {
     try {
-      const aa = await handleTransfer(parseInt(value) * 10 ** 6);
-      console.log(aa);
-      router.push('/tontgpwa/successful');
-      setOpenedModal(undefined);
-      console.log('Deposited');
+      const result = await handleTransfer(parseInt(value) * 10 ** 6);
+      if (result) {
+        router.push(`/tontgpwa/successful?address=${encodeURIComponent(result?.toString())}`);
+        setOpenedModal(undefined);
+        console.log('Deposited');
+      }
     } catch (e) {
       console.log(e);
     }

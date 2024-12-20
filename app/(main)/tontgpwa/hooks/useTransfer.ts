@@ -66,13 +66,12 @@ export const useTransfer = () => {
       const jettonWallet = tonClient.open(JettonWallet.createFromAddress(usersUsdtAddress));
 
       await jettonWallet.sendTransfer(sender, {
-        fwdAmount: toNano(0.01),
+        fwdAmount: toNano(0.05),
         jettonAmount: amount,
         toAddress: INVOICE_WALLET_ADDRESS,
         value: JETTON_TRANSFER_GAS_FEES,
       });
-
-      console.log(`See transaction at https://testnet.tonviewer.com/${usersUsdtAddress.toString()}`);
+      return usersUsdtAddress;
     },
     [tonClient, walletAddress, sender]
   );

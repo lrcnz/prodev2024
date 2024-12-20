@@ -7,8 +7,12 @@ import { ExternalLink, X } from 'lucide-react';
 
 import Link from 'next/link';
 
+import { useTonConnect } from '../hooks/useTonConnect';
+
 const SettingPage = () => {
   const [tonConnectUI] = useTonConnectUI();
+  const { sender, walletAddress, tonClient } = useTonConnect();
+  console.log('walletAddress', walletAddress);
 
   return (
     <>
@@ -33,6 +37,20 @@ const SettingPage = () => {
           <div className="mt-3 text-2xl font-medium">Gluon App</div>
         </div>
         <div className="mx-4 mt-8 space-y-4">
+          <div className="rounded-xl bg-accent flex flex-col py-2">
+            <div className="flex h-14 items-center cursor-pointer gap-4">
+              <div className="ml-8">
+                <ExternalLink />
+              </div>
+              <Link
+                href={`https://testnet.tonviewer.com/${walletAddress?.toString()}}`}
+                target="_blank"
+                className="text-center text-md text-ellipsis whitespace-nowrap overflow-hidden pr-16"
+              >
+                {walletAddress?.toString()}
+              </Link>
+            </div>
+          </div>
           <div className="rounded-xl bg-accent flex flex-col py-2">
             <div className="flex h-14 items-center cursor-pointer gap-4">
               <div className="ml-8">

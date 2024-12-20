@@ -13,15 +13,12 @@ import { useJettonBalance } from '../hooks/useJettonsBalance';
 import { useShare } from '../hooks/useShare';
 
 import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useCurrentWallet } from '@/hooks/useWallet';
-import { useWalletBalance } from '@/hooks/useWalletBalance';
 
 export const viewport: Viewport = {
   themeColor: '#f7f6f1',
 };
 
 const Page = () => {
-  const { totalBalance } = useWalletBalance();
   const userFriendlyAddress = useTonAddress();
   const { balance } = useJettonBalance(userFriendlyAddress);
   useShare();
