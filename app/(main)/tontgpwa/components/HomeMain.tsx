@@ -1,8 +1,10 @@
 'use client';
-import { TonConnectButton } from '@tonconnect/ui-react';
+import WebApp from '@twa-dev/sdk';
 import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
+
+import { useEffect } from 'react';
 
 import GrowthIcon from '../assets/icons/growth.png';
 import InsuranceIcon from '../assets/icons/insurance.png';
@@ -50,12 +52,22 @@ const Card = ({
 
 export const HomeMain = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    const param = WebApp.initDataUnsafe.start_param;
+    alert(param);
+    if (param) {
+      router.push(`/tontgpwa/${param}`);
+    }
+  }, [router]);
+
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Featured Products</div>
         <div className="text-right text-[#007aff] text-base">See All</div>
       </div>
+
       <div className="flex flex-col gap-3 mt-3">
         <Card
           onClick={() => router.push('/tontgpwa/savings')}
@@ -64,7 +76,13 @@ export const HomeMain = () => {
           describe="SuperState"
           apr="5.60%"
         />
-        <Card icon={GrowthIcon} title="Super Growth" describe="Gluon Protocol" apr="8.50%" />
+        <Card
+          onClick={() => router.push('/tontgpwa/growth')}
+          icon={GrowthIcon}
+          title="Super Growth"
+          describe="Gluon Protocol"
+          apr="8.50%"
+        />
       </div>
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Coming Soon</div>

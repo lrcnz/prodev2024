@@ -1,17 +1,19 @@
 import Image from 'next/image';
 
+import Link from 'next/link';
+
 import AccountIcon from '../assets/footer/account.svg';
 import EarnActiveIcon from '../assets/footer/earn-active.svg';
 import EarnInActiveIcon from '../assets/footer/earn-inactive.svg';
+import SendActiveIcon from '../assets/footer/send-active.svg';
 import SendIcon from '../assets/footer/send.svg';
 import SpendIcon from '../assets/footer/spend.svg';
 
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 
 export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spend' }) => {
   return (
-    <div className="fixed bottom-0 bg-[#fff] w-full px-8 pt-2 pb-8">
+    <div className="fixed bottom-0 bg-[#fff] w-full px-8 pt-2 pb-8 border-t">
       <div className="flex justify-between w-full">
         {[
           {
@@ -24,8 +26,8 @@ export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spen
           {
             title: 'Send',
             key: 'send',
-            link: '/tontgpwa',
-            activeIcon: SendIcon,
+            link: '/tontgpwa/send',
+            activeIcon: SendActiveIcon,
             inactiveIcon: SendIcon,
           },
           {

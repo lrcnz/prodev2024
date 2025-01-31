@@ -1,7 +1,10 @@
 'use client';
+import WebApp from '@twa-dev/sdk';
 import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
+
+import { useEffect } from 'react';
 
 import GrowthIcon from '../assets/icons/growth.png';
 import InsuranceIcon from '../assets/icons/insurance.png';
@@ -49,6 +52,15 @@ const Card = ({
 
 export const HomeMain = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    const param = WebApp.initDataUnsafe.start_param;
+    alert(param);
+    if (param) {
+      router.push(`/tgpwa/welcome`);
+    }
+  }, [router]);
+
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
       <div className="flex items-center justify-between mt-6">
@@ -63,7 +75,13 @@ export const HomeMain = () => {
           describe="SuperState"
           apr="5.60%"
         />
-        <Card icon={GrowthIcon} title="Super Growth" describe="Gluon Protocol" apr="8.50%" />
+        <Card
+          onClick={() => router.push('/tgpwa/growth')}
+          icon={GrowthIcon}
+          title="Super Growth"
+          describe="Gluon Protocol"
+          apr="8.50%"
+        />
       </div>
       <div className="flex items-center justify-between mt-6">
         <div className="text-2xl font-bold">Coming Soon</div>
