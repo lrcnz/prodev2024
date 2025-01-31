@@ -1,10 +1,11 @@
 'use client';
 import WebApp from '@twa-dev/sdk';
+import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import GrowthIcon from '../assets/icons/growth.png';
 import InsuranceIcon from '../assets/icons/insurance.png';
@@ -50,15 +51,19 @@ const Card = ({
   );
 };
 
+const skipAtom = atom(false);
+
 export const HomeMain = () => {
   const router = useRouter();
+  const [skip, setSkip] = useAtom(skipAtom);
 
   useEffect(() => {
     const param = WebApp.initDataUnsafe.start_param;
-    if (param) {
+    if (param && skip) {
+      setSkip(true);
       router.push(`/tgpwa/welcome`);
     }
-  }, [router]);
+  }, [router, setSkip, skip]);
 
   return (
     <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
