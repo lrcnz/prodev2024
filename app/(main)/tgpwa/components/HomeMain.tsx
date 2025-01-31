@@ -55,7 +55,6 @@ export const HomeMain = () => {
 
   useEffect(() => {
     const param = WebApp.initDataUnsafe.start_param;
-    alert(param);
     if (param) {
       router.push(`/tgpwa/welcome`);
     }
