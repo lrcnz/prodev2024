@@ -92,7 +92,7 @@ const SendCrypto: React.FC = () => {
 
   const handleSelectContact = async () => {
     try {
-      window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=t.me/GluonMoneyBot/webapp?startapp=send`);
+      window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=t.me/GluonMoneyBot/gluon?startapp=send`);
     } catch (e) {
       console.error('switchInlineQuery error:', e);
       alert(`error ${e}`);

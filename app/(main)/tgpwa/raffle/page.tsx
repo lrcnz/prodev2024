@@ -67,7 +67,7 @@ export default function RafflePage() {
           onClick={() => {
             try {
               window.Telegram.WebApp.openTelegramLink(
-                `https://t.me/share/url?url=t.me/GluonMoneyBot/webapp?startapp=raffle`
+                `https://t.me/share/url?url=t.me/GluonMoneyBot/gluon?startapp=raffle`
               );
             } catch (e) {
               console.error('switchInlineQuery error:', e);

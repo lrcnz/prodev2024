@@ -144,14 +144,13 @@ const SuperGrowthComponent = () => {
             </div>
           </div>
         </div>
-
         <div className="mt-auto">
           <button
             className="w-full bg-blue-500 text-white rounded-xl py-4 font-medium"
             onClick={() => {
               try {
                 window.Telegram.WebApp.openTelegramLink(
-                  `https://t.me/share/url?url=t.me/GluonMoneyBot/webapp?startapp=growth`
+                  `https://t.me/share/url?url=t.me/GluonMoneyBot/gluon?startapp=growth`
                 );
               } catch (e) {
                 console.error('switchInlineQuery error:', e);
