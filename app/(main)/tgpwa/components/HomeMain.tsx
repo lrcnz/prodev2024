@@ -59,7 +59,7 @@ export const HomeMain = () => {
 
   useEffect(() => {
     const param = WebApp.initDataUnsafe.start_param;
-    if (param && skip) {
+    if (param && !skip) {
       setSkip(true);
       router.push(`/tgpwa/welcome`);
     }
