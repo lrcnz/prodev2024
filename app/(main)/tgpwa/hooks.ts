@@ -1,5 +1,4 @@
 'use client';
-import WebApp from '@twa-dev/sdk';
 import { useEffect, useMemo, useState } from 'react';
 
 export const useStartParam = () => {
@@ -11,7 +10,7 @@ export const useStartParam = () => {
     import('@twa-dev/sdk')
       .then((mod) => {
         const Webapp = mod.default;
-        WebApp.ready();
+        Webapp.ready();
         return Webapp.initDataUnsafe.start_param || '';
       })
       .then((start_param) => {
