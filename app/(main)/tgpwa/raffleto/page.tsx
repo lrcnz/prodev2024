@@ -13,14 +13,12 @@ export default function RafflePage() {
 
   const handleSelectContact = async () => {
     if (typeof window === 'undefined') return;
-    import('@twa-dev/sdk').then((mod) =>
-      mod.default.switchInlineQuery(`share ${btoa(`raffle-${parseInt(amount || '200')}`)}`, [
-        'groups',
-        'channels',
-        'users',
-        'bots',
-      ])
-    );
+    (window as any).Telegram.WebApp.switchInlineQuery.switchInlineQuery(`share ${btoa(`raffle-${parseInt(amount || '200')}`)}`, [
+      'groups',
+      'channels',
+      'users',
+      'bots',
+    ])
   };
 
   return (

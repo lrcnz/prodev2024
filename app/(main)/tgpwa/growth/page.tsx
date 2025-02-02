@@ -6,14 +6,13 @@ import React from "react";
 export default function SuperGrowth() {
   const handleSelectContact = async () => {
     if (typeof window === 'undefined') return;
-    import('@twa-dev/sdk').then((mod) =>
-      mod.default.switchInlineQuery(`share ${btoa(`earn`)}`, [
-        'groups',
-        'channels',
-        'users',
-        'bots',
-      ])
-    );
+    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`earn`)}`, [
+      'groups',
+      'channels',
+      'users',
+      'bots',
+    ])
+
   };
 
   return (
