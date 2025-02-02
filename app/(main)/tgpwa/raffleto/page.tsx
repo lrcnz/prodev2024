@@ -13,7 +13,7 @@ export default function RafflePage() {
 
   const handleSelectContact = async () => {
     if (typeof window === 'undefined') return;
-    (window as any).Telegram.WebApp.switchInlineQuery.switchInlineQuery(`share ${btoa(`raffle-${parseInt(amount || '200')}`)}`, [
+    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`raffle-${parseInt(amount || '200')}`)}`, [
       'groups',
       'channels',
       'users',
