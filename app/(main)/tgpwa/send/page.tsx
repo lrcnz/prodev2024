@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Footer } from '../components/Footer';
+import { useStartParam } from '../hooks';
 
 interface WalletBalanceProps {
   balance: string;
@@ -20,9 +21,9 @@ interface CryptoItemProps {
 }
 
 const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, change }) => (
-  <div className="bg-[#E8FFDB] rounded-xl p-4 mb-6">
-    <div className="text-xl font-bold mb-1">Wallet</div>
-    <div className="flex items-baseline">
+  <div className="flex justify-between items-center mb-6">
+    <div className="text-2xl font-bold flex items-center">Wallet</div>
+    <div className="bg-[#E8FFDB] rounded-xl p-4 flex items-baseline">
       <span className="text-2xl font-bold">${balance}</span>
       <span className="text-sm text-green-600 ml-2">+${change} Yesterday</span>
     </div>
@@ -83,9 +84,9 @@ interface CryptoData {
 
 const cryptoData: CryptoData[] = [
   {
-    id: 'usdt',
-    name: 'USDt',
-    symbol: 'USDC',
+    id: 'USDT',
+    name: 'USDT',
+    symbol: 'USDT',
     amount: '2,168',
     subtitle: 'Earning 6.2%',
   },
@@ -107,20 +108,12 @@ const cryptoData: CryptoData[] = [
 const CryptoWallet: React.FC = () => {
   const renderCryptoIcon = (id: string): React.ReactNode => {
     switch (id) {
-      case 'usdt':
-        return <div className="w-full h-full bg-emerald-500 flex items-center justify-center text-white">₮</div>;
+      case 'USDT':
+        return <img width={48} height={48} src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" />;
       case 'ton':
-        return (
-          <div className="w-full h-full bg-blue-500 flex items-center justify-center">
-            <div className="w-6 h-6 border-2 border-white rotate-45" />
-          </div>
-        );
+        return <img width={48} height={48} src="https://cryptologos.cc/logos/toncoin-ton-logo.png" alt="TON" />;
       case 'sol':
-        return (
-          <div className="w-full h-full bg-purple-900 flex items-center justify-center">
-            <div className="text-white text-sm">SOL</div>
-          </div>
-        );
+        return <img width={48} height={48} src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" />;
       default:
         return null;
     }
@@ -150,20 +143,78 @@ const CryptoWallet: React.FC = () => {
   );
 };
 
+const SendWallet: React.FC = () => {
+  const { amount } = useStartParam();
+  const renderCryptoIcon = (id: string): React.ReactNode => {
+    switch (id) {
+      case 'USDT':
+        return <div className="w-full h-full bg-emerald-500 flex items-center justify-center text-white">₮</div>;
+      case 'ton':
+        return (
+          <div className="w-full h-full bg-blue-500 flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-white rotate-45" />
+          </div>
+        );
+      case 'sol':
+        return (
+          <div className="w-full h-full bg-purple-900 flex items-center justify-center">
+            <div className="text-white text-sm">SOL</div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="p-4 flex flex-col flex-1">
+      <div className="flex justify-between items-center mb-6">
+        <div className="text-2xl font-bold flex items-center">Wallet</div>
+        {/* <div className="bg-[#E8FFDB] rounded-xl p-4 flex items-baseline">
+          <span className="text-2xl font-bold">${balance}</span>
+          <span className="text-sm text-green-600 ml-2">+${change} Yesterday</span>
+        </div> */}
+      </div>
+
+      <div className="space-y-2">
+        {[cryptoData[0]].map((crypto) => (
+          <CryptoItem
+            key={crypto.id}
+            icon={renderCryptoIcon(crypto.id)}
+            name={crypto.name}
+            subtitle={crypto.subtitle}
+            amount={amount?.toString() || '20'}
+            symbol={crypto.symbol}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Page = () => {
+  const { startapp } = useStartParam();
+
+  const isSend = startapp === 'send';
   return (
     <>
       <div className="bg-white flex flex-col h-full">
-        <div className="h-11 flex-col flex">
+        {/* <div className="h-11 flex-col flex">
           <div className="relative flex w-full justify-center items-center pt-2">
             <Link href="/tgpwa" className="absolute left-3">
               <ChevronLeft size={28} />
             </Link>
-            <div className="text-center text-[#111111] text-lg font-semibold">Send</div>
           </div>
-        </div>
-        <CryptoWallet />
-        <div className="h-[1px] w-full bg-gray-100" />
+        </div> */}
+
+        {isSend ? (
+          <SendWallet />
+        ) : (
+          <>
+            <CryptoWallet />
+            <div className="h-[1px] w-full bg-gray-100" />
+          </>
+        )}
         <Footer active="send" />
       </div>
     </>

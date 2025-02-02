@@ -1,9 +1,10 @@
 'use client';
-import WebApp from '@twa-dev/sdk';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+
 import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
@@ -13,7 +14,12 @@ import MicroLendingIcon from '../assets/icons/micro-lending.png';
 import RemittenceIcon from '../assets/icons/remittence.png';
 import SavingsIcon from '../assets/icons/savings.png';
 
+import { useStartParam } from '../hooks';
+
 import { cn } from '@/lib/utils';
+import { openedModalAtom } from '@/state/modal';
+import { RaffleModal } from './RaffleModal';
+
 
 const Card = ({
   icon,
@@ -51,69 +57,87 @@ const Card = ({
   );
 };
 
+
+
 const skipAtom = atom(false);
 
 export const HomeMain = () => {
   const router = useRouter();
+  const searchParams = useSearchParams()
   const [skip, setSkip] = useAtom(skipAtom);
+  const { startapp, amount, loading } = useStartParam();
+  const showRaffle = searchParams.get('rafflesuccess');
+  const [openedModal, setOpenedModal] = useAtom(openedModalAtom);
 
   useEffect(() => {
-    const param = WebApp.initDataUnsafe.start_param;
-    if (param && !skip) {
+    if (startapp && !skip) {
       setSkip(true);
       router.push(`/tgpwa/welcome`);
     }
-  }, [router, setSkip, skip]);
+  }, [router, setSkip, skip, startapp]);
+
+  useEffect(() => {
+    if (showRaffle) {
+      setOpenedModal('raffle')
+    }
+  }, [showRaffle])
+
+  if (!loading) {
+    return null;
+  }
 
   return (
-    <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
-      <div className="flex items-center justify-between mt-6">
-        <div className="text-2xl font-bold">Featured Products</div>
-        <div className="text-right text-[#007aff] text-base">See All</div>
-      </div>
-      <div className="flex flex-col gap-3 mt-3">
-        <Card
-          onClick={() => router.push('/tgpwa/savings')}
-          icon={SavingsIcon}
-          title="Super Savings"
-          describe="SuperState"
-          apr="5.60%"
-        />
-        <Card
-          onClick={() => router.push('/tgpwa/growth')}
-          icon={GrowthIcon}
-          title="Super Growth"
-          describe="Gluon Protocol"
-          apr="8.50%"
-        />
-      </div>
-      <div className="flex items-center justify-between mt-6">
-        <div className="text-2xl font-bold">Coming Soon</div>
-        <div className="text-right text-[#007aff] text-base">See All</div>
-      </div>
-      <div className="grid grid-cols-3 gap-3 my-3 mb-32">
-        {[
-          {
-            title: 'Remittence',
-            icon: RemittenceIcon,
-          },
-          {
-            title: 'Insurance',
-            icon: InsuranceIcon,
-          },
-          {
-            title: 'Micro Lending',
-            icon: MicroLendingIcon,
-          },
-        ].map(({ title, icon }, i) => (
-          <div key={i} className="py-3 bg-white rounded-xl flex-col justify-center items-center gap-2 flex">
-            <div className="justify-center items-center inline-flex">
-              <Image src={icon} alt={title} className="w-12 h-12 relative" />
+    <>
+      <RaffleModal />
+      <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
+        <div className="flex items-center justify-between mt-6">
+          <div className="text-2xl font-bold">Featured Products</div>
+          <div className="text-right text-[#007aff] text-base">See All</div>
+        </div>
+        <div className="flex flex-col gap-3 mt-3">
+          <Card
+            onClick={() => router.push('/tgpwa/savings')}
+            icon={SavingsIcon}
+            title="Super Savings"
+            describe="SuperState"
+            apr="5.60%"
+          />
+          <Card
+            onClick={() => router.push('/tgpwa/growth')}
+            icon={GrowthIcon}
+            title="Super Growth"
+            describe="Gluon Protocol"
+            apr="8.50%"
+          />
+        </div>
+        <div className="flex items-center justify-between mt-6">
+          <div className="text-2xl font-bold">Coming Soon</div>
+          <div className="text-right text-[#007aff] text-base">See All</div>
+        </div>
+        <div className="grid grid-cols-3 gap-3 my-3 mb-32">
+          {[
+            {
+              title: 'Remittence',
+              icon: RemittenceIcon,
+            },
+            {
+              title: 'Insurance',
+              icon: InsuranceIcon,
+            },
+            {
+              title: 'Micro Lending',
+              icon: MicroLendingIcon,
+            },
+          ].map(({ title, icon }, i) => (
+            <div key={i} className="py-3 bg-white rounded-xl flex-col justify-center items-center gap-2 flex">
+              <div className="justify-center items-center inline-flex">
+                <Image src={icon} alt={title} className="w-12 h-12 relative" />
+              </div>
+              <div className="text-center text-[#333333] text-sm">{title}</div>
             </div>
-            <div className="text-center text-[#333333] text-sm">{title}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

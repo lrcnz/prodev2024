@@ -1,7 +1,15 @@
 'use client';
 import Link from 'next/link';
 
+import { useStartParam } from '../hooks';
+
 const Page = () => {
+  const { startapp, amount } = useStartParam();
+
+  const isSend = startapp === 'send';
+  const isRaffle = startapp === 'raffle';
+  const isEarn = startapp === 'earn';
+
   return (
     <>
       <div className="bg-white flex flex-col h-full">
@@ -15,22 +23,42 @@ const Page = () => {
           <h1 className="text-2xl font-bold mb-16">Welcome to Gluon</h1>
 
           {/* Message Box */}
-          <div className="w-full bg-gray-50 rounded-xl p-6 mb-auto">
-            <p className="mb-2">
-              <span>Alice sent you </span>
-              <span className="font-bold">20 USDC</span>
-              <span>.</span>
-            </p>
-            <p className="text-gray-700">
-              With Gluon it is super easy to accept crypto and earn from it, tap join to{' '}
-              <span className="font-bold">get started!</span>
-            </p>
-          </div>
+          {isSend ? (
+            <div className="w-full bg-gray-50 rounded-xl p-6 mb-auto">
+              <p className="mb-2">
+                <span>Alice sent you </span>
+                <span className="font-bold">{amount} USDT</span>
+                <span>.</span>
+              </p>
+              <p className="text-gray-700">
+                With Gluon it is super easy to accept crypto and earn from it, tap join to{' '}
+                <span className="font-bold">get started!</span>
+              </p>
+            </div>
+          ) : isRaffle ? (
+            <div className="w-full bg-gray-50 rounded-xl p-6 mb-auto">
+              <p className="mb-2">
+                <span>You’ve won </span>
+                <span className="font-bold">{amount} USDT!</span>
+              </p>
+              <br />
+              <p className="text-gray-700">
+                With Gluon it is super easy to accept crypto and earn from it, tap join to{' '}
+                <span className="font-bold">get started!</span>
+              </p>
+            </div>
+          ) : isEarn ? (
+            <div className="w-full bg-gray-50 rounded-xl p-6 mb-auto">
+              <p className="text-gray-700">
+                With Gluon it is super easy to accept crypto and earn from it, tap join to{' '}
+                <span className="font-bold">get started!</span>
+              </p>
+            </div>
+          ) : null}
 
-          {/* Join Button */}
           <div className="w-full p-4">
             <Link
-              href="/tgpwa"
+              href={isSend ? '/tgpwa/send' : isRaffle ? '/tgpwa?rafflesuccess=true' : isEarn ? '/tgpwa/growth' : '/tgpwa'}
               className="w-full bg-blue-500 text-white rounded-xl py-4 font-medium flex items-center justify-center space-x-2"
               onClick={() => {
                 // 处理加入按钮点击

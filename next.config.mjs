@@ -2,6 +2,7 @@ import BrowserSyncPlugin from "browser-sync-webpack-plugin";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: process.env.DIST_DIR || '.next',
   reactStrictMode: false,
   webpack(config, { isServer, dev }) {
     // Grab the existing rule that handles SVG imports
