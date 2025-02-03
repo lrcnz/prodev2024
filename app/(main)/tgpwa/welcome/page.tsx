@@ -58,7 +58,7 @@ const Page = () => {
 
           <div className="w-full p-4">
             <Link
-              href={isSend ? '/tgpwa/send' : isRaffle ? '/tgpwa?rafflesuccess=true' : isEarn ? '/tgpwa/growth' : '/tgpwa'}
+              href={isSend ? '/tgpwa/receive' : isRaffle ? '/tgpwa?rafflesuccess=true' : isEarn ? '/tgpwa/growth' : '/tgpwa'}
               className="w-full bg-blue-500 text-white rounded-xl py-4 font-medium flex items-center justify-center space-x-2"
               onClick={() => {
                 // 处理加入按钮点击
