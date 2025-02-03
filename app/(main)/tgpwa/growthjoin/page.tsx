@@ -169,17 +169,14 @@ export default function SuperGrowth() {
         </div>
         <div className="mt-auto">
           {/* Bottom Button */}
-          {/* <Link href="/tgpwa/growthrefer"> */}
-          <button
-            onClick={handleSelectContact}
-            className="bg-blue-500 text-white font-medium w-full py-3 rounded-lg flex items-center justify-center gap-2 shadow-lg"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" clipRule="evenodd" d="M18.5 2.07002C19.3536 1.92276 20.2286 2.16073 20.89 2.72002C21.5961 3.32552 22.0017 4.20983 22 5.14002V12.83C21.9941 13.7471 21.5888 14.6161 20.89 15.21C20.3582 15.6507 19.6906 15.8944 19 15.9C18.8337 15.9149 18.6663 15.9149 18.5 15.9L8 14.05V19.5C8 20.8807 6.88071 22 5.5 22C4.11929 22 3 20.8807 3 19.5V13C2.98963 12.9137 2.98963 12.8264 3 12.74C2.34566 12.1276 1.98216 11.2661 2 10.37V7.61002C1.97403 6.11426 3.02998 4.81755 4.5 4.54002L18.5 2.07002ZM4.84 6.51002C4.33097 6.62552 3.9774 7.08854 4 7.61002V10.37C3.98534 10.889 4.33551 11.3475 4.84 11.47L7 11.84V6.13002L4.84 6.51002ZM6 19.5C6 19.7762 5.77614 20 5.5 20C5.22386 20 5 19.7762 5 19.5V13.5L6 13.68V19.5ZM19.6 13.72C19.8566 13.4958 20.0026 13.1708 20 12.83V5.11002C20.0013 4.76954 19.8555 4.44508 19.6 4.22002C19.4323 4.07812 19.2197 4.00018 19 4.00002H18.84L9 5.78002V12.2L18.84 13.93C19.1119 13.9748 19.3897 13.898 19.6 13.72Z" fill="white" />
-            </svg>
-            REFER & EARN
-          </button>
-          {/* </Link> */}
+          <Link href="/tgpwa/growthreceive">
+            <button
+              // onClick={handleSelectContact}
+              className="bg-blue-500 text-white font-medium w-full py-3 rounded-lg flex items-center justify-center gap-2 shadow-lg"
+            >
+              JOIN
+            </button>
+          </Link>
         </div>
       </div>
 
