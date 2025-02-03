@@ -199,14 +199,6 @@ const Page = () => {
   return (
     <>
       <div className="bg-white flex flex-col h-full">
-        {/* <div className="h-11 flex-col flex">
-          <div className="relative flex w-full justify-center items-center pt-2">
-            <Link href="/tgpwa" className="absolute left-3">
-              <ChevronLeft size={28} />
-            </Link>
-          </div>
-        </div> */}
-
 
         <CryptoWallet />
         <div className="h-[1px] w-full bg-gray-100" />
