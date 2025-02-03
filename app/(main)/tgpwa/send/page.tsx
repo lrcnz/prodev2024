@@ -207,14 +207,10 @@ const Page = () => {
           </div>
         </div> */}
 
-        {isSend ? (
-          <SendWallet />
-        ) : (
-          <>
-            <CryptoWallet />
-            <div className="h-[1px] w-full bg-gray-100" />
-          </>
-        )}
+
+        <CryptoWallet />
+        <div className="h-[1px] w-full bg-gray-100" />
+
         <Footer active="send" />
       </div>
     </>
