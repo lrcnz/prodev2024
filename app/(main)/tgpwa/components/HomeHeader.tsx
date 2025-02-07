@@ -18,7 +18,7 @@ export const HomeHeader = () => {
       <div className="absolute right-5 top-[60px]">
         <GrowthImg />
       </div>
-      <Link href="/tgpwa" className="flex justify-center relative w-full">
+      <Link href="/tgpwa/setting" className="flex justify-center relative w-full">
         <AlignJustify className="w-6 h-6 absolute left-0 top-0.5" />
         <span className="text-lg font-semibold">Gluon Money</span>
       </Link>
