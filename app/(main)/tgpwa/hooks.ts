@@ -1,6 +1,7 @@
 'use client';
 import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
+
 import { isReadyAtom } from './atoms';
 
 export const useStartParam = () => {
@@ -11,7 +12,7 @@ export const useStartParam = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const start_param = (window as any).Telegram.WebApp.initDataUnsafe.start_param || ''
+    const start_param = (window as any).Telegram.WebApp.initDataUnsafe.start_param || '';
 
     if (start_param.startsWith('send')) {
       setStartapp('send');
@@ -30,7 +31,6 @@ export const useStartParam = () => {
       setAmount(undefined);
     }
     setIsLoading(true);
-
   }, [isReady]);
 
   return { startapp, amount, loading };

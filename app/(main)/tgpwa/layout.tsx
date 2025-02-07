@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Deposit } from './components/Deposit';
 import { Login } from './components/Login';
 import { Pay } from './components/Pay';

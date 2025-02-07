@@ -67,7 +67,10 @@ const SendCrypto: React.FC = () => {
 
   const handleSelectContact = async () => {
     if (typeof window === 'undefined') return;
-    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`send-${parseInt(amount || '20')}`)}`, ['users', 'bots'])
+    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`send-${parseInt(amount || '20')}`)}`, [
+      'users',
+      'bots',
+    ]);
   };
 
   return (

@@ -12,12 +12,12 @@ import { useCurrentWallet } from '@/hooks/useWallet';
 import { ERC20_ABI } from '@/lib/abis/erc20';
 import { SHORT_MARKET_ABI } from '@/lib/abis/short-market';
 import { MOCK_SHORT_MARKET, UNI_WETH_ADDRESS } from '@/lib/contracts';
+import { withdrawGrowthContract } from '@/lib/execution';
 import { delay } from '@/lib/utils';
 import { w3sSDKAtom } from '@/state/w3s';
 import { Button } from '@/ui-components/Button';
 
 import { Toast } from '@/ui-components/Toast';
-import { withdrawGrowthContract } from '@/lib/execution';
 
 const Page = () => {
   const { data: wallet } = useCurrentWallet();
@@ -73,7 +73,7 @@ const Page = () => {
       setLoading(true);
       let contracts: any[] = [];
 
-      contracts = await withdrawGrowthContract(publicClient, wallet.address)
+      contracts = await withdrawGrowthContract(publicClient, wallet.address);
       console.log('contracts', contracts);
       const res = await execution(contracts);
 

@@ -49,21 +49,22 @@ const SettingPage = () => {
               <div className="ml-8">
                 <ExternalLink />
               </div>
-              <div className="text-base font-medium">
-                Disconnect
-              </div>
+              <div className="text-base font-medium">Disconnect</div>
             </div>
           </div>
-          <div onClick={() => (window as any).Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=t.me/GluonMoneyBot/gluon&text=${encodeURIComponent(`Join Gluon and earn up to 11.9% with Gluon's Savings account!`)}`
-          )} className="rounded-xl bg-accent flex flex-col py-2">
+          <div
+            onClick={() =>
+              (window as any).Telegram.WebApp.openTelegramLink(
+                `https://t.me/share/url?url=t.me/GluonMoneyBot/gluon&text=${encodeURIComponent(`Join Gluon and earn up to 11.9% with Gluon's Savings account!`)}`
+              )
+            }
+            className="rounded-xl bg-accent flex flex-col py-2"
+          >
             <div className="flex h-14 items-center cursor-pointer gap-4">
               <div className="ml-8">
                 <ExternalLink />
               </div>
-              <div className="text-base font-medium">
-                Share
-              </div>
+              <div className="text-base font-medium">Share</div>
             </div>
           </div>
         </div>

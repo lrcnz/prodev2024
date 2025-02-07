@@ -18,7 +18,7 @@ export default function RafflePage() {
       'channels',
       'users',
       'bots',
-    ])
+    ]);
   };
 
   return (

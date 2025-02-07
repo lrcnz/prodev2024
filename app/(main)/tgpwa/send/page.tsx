@@ -199,7 +199,6 @@ const Page = () => {
   return (
     <>
       <div className="bg-white flex flex-col h-full">
-
         <CryptoWallet />
         <div className="h-[1px] w-full bg-gray-100" />
 

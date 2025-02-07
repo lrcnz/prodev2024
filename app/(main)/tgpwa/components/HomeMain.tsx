@@ -16,10 +16,10 @@ import SavingsIcon from '../assets/icons/savings.png';
 
 import { useStartParam } from '../hooks';
 
-import { cn } from '@/lib/utils';
-import { openedModalAtom } from '@/state/modal';
 import { RaffleModal } from './RaffleModal';
 
+import { cn } from '@/lib/utils';
+import { openedModalAtom } from '@/state/modal';
 
 const Card = ({
   icon,
@@ -57,13 +57,11 @@ const Card = ({
   );
 };
 
-
-
 const skipAtom = atom(false);
 
 export const HomeMain = () => {
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const [skip, setSkip] = useAtom(skipAtom);
   const { startapp, amount, loading } = useStartParam();
   const showRaffle = searchParams.get('rafflesuccess');
@@ -78,9 +76,9 @@ export const HomeMain = () => {
 
   useEffect(() => {
     if (showRaffle) {
-      setOpenedModal('raffle')
+      setOpenedModal('raffle');
     }
-  }, [showRaffle])
+  }, [showRaffle]);
 
   if (!loading) {
     return null;

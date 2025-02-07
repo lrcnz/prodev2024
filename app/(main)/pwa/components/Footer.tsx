@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import Link from 'next/link';
+
 import AccountIcon from '../assets/footer/account.svg';
 import EarnActiveIcon from '../assets/footer/earn-active.svg';
 import EarnInActiveIcon from '../assets/footer/earn-inactive.svg';
@@ -7,7 +9,6 @@ import SendIcon from '../assets/footer/send.svg';
 import SpendIcon from '../assets/footer/spend.svg';
 
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 
 export const Footer = ({ active }: { active: 'account' | 'earn' | 'send' | 'spend' }) => {
   return (
