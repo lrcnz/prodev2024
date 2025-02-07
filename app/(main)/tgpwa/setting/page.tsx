@@ -12,7 +12,7 @@ const SettingPage = () => {
       <header className="h-14 flex justify-center items-center ">
         <div className="text-lg font-semibold relative w-full flex items-center justify-center">
           <div className="absolute left-4">
-            <Link href="/tontgpwa">
+            <Link href="/tgpwa">
               <X />
             </Link>
           </div>
