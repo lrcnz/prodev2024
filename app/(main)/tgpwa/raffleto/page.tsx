@@ -3,22 +3,58 @@
 import { ChevronLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function RafflePage() {
   const searchParams = useSearchParams();
   const amount = searchParams.get('amount');
   const draws = searchParams.get('draws');
+  const [fecthing, setFetching] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleSelectContact = async () => {
-    if (typeof window === 'undefined') return;
-    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`raffle-${parseInt(amount || '200')}`)}`, [
-      'groups',
-      'channels',
-      'users',
-      'bots',
-    ]);
+    if (typeof window === 'undefined' || fecthing) return;
+    setFetching(true);
+    const user_id = (window as any).Telegram.WebApp.initDataUnsafe.user.id;
+    try {
+      const result = await fetch('/api/shareMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id,
+          type: 'raffle',
+        }),
+      });
+      const data = await result.json();
+
+      if (!data) {
+        setFetching(false);
+        (window as any).Telegram.WebApp.showPopup({
+          title: 'Send Failed',
+          message: 'Message sending failed. Please try again later.',
+          buttons: [{ text: 'OK', type: 'ok' }],
+        });
+        return;
+      }
+      (window as any).Telegram.WebApp.shareMessage(data.prepared_message_id, (success: any) => {
+        if (success) {
+          router.push('/tgpwa/raffleto/success');
+        } else {
+          (window as any).Telegram.WebApp.showPopup({
+            title: 'Send Failed',
+            message: 'Message sending failed. Please try again later.',
+            buttons: [{ text: 'OK', type: 'ok' }],
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setFetching(false);
+    }
   };
 
   return (

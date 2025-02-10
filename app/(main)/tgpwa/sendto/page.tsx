@@ -1,7 +1,9 @@
 'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, type FormEvent } from 'react';
+import { set } from 'react-hook-form';
 
 // SendCrypto.tsx
 
@@ -27,6 +29,8 @@ const isNumber = (s: string, decimals = 4) => {
 const SendCrypto: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [selectedContact, setSelectedContact] = useState<any | null>(null);
+  const [fecthing, setFetching] = useState<boolean>(false);
+  const router = useRouter();
 
   const cryptoBalance: CryptoBalance = {
     symbol: '₮',
@@ -66,11 +70,48 @@ const SendCrypto: React.FC = () => {
   );
 
   const handleSelectContact = async () => {
-    if (typeof window === 'undefined') return;
-    (window as any).Telegram.WebApp.switchInlineQuery(`share ${btoa(`send-${parseInt(amount || '20')}`)}`, [
-      'users',
-      'bots',
-    ]);
+    if (typeof window === 'undefined' || fecthing) return;
+    setFetching(true);
+    const user_id = (window as any).Telegram.WebApp.initDataUnsafe.user.id;
+    try {
+      const result = await fetch('/api/shareMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id,
+          amount,
+          type: 'send',
+        }),
+      });
+      const data = await result.json();
+
+      if (!data) {
+        setFetching(false);
+        (window as any).Telegram.WebApp.showPopup({
+          title: 'Send Failed',
+          message: 'Message sending failed. Please try again later.',
+          buttons: [{ text: 'OK', type: 'ok' }],
+        });
+        return;
+      }
+      (window as any).Telegram.WebApp.shareMessage(data.prepared_message_id, (success: any) => {
+        if (success) {
+          router.push(`/tgpwa/sendto/success?amount=${amount}`);
+        } else {
+          (window as any).Telegram.WebApp.showPopup({
+            title: 'Send Failed',
+            message: 'Message sending failed. Please try again later.',
+            buttons: [{ text: 'OK', type: 'ok' }],
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setFetching(false);
+    }
   };
 
   return (
