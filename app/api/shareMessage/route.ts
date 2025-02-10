@@ -1,7 +1,7 @@
 import { setDefaultResultOrder } from 'node:dns';
 
 import { type NextRequest } from 'next/server';
-setDefaultResultOrder('ipv6first');
+setDefaultResultOrder('ipv4first');
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '7848270317:AAF-Nw5O4xyYF5mW73dsZgs-4R2ceZ5j6p4';
 
