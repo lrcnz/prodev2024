@@ -3,7 +3,7 @@ import { setDefaultResultOrder } from 'node:dns';
 import { type NextRequest } from 'next/server';
 setDefaultResultOrder('ipv4first');
 
-const BOT_TOKEN = process.env.BOT_TOKEN || '7848270317:AAF-Nw5O4xyYF5mW73dsZgs-4R2ceZ5j6p4';
+const BOT_TOKEN = process.env.BOT_TOKEN || '8012156179:AAEKe8evO086TeCuoVTinLIMs3e_y5Xj9fQ';
 
 export async function POST(req: NextRequest) {
   if (req.method !== 'POST') {
