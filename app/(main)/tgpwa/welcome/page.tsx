@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 
+import GluonLogo from '../assets/gluon-logo.svg';
 import { useStartParam } from '../hooks';
 
 const Page = () => {
@@ -15,8 +16,8 @@ const Page = () => {
       <div className="bg-white flex flex-col h-full">
         <div className="flex flex-col items-center min-h-screen bg-white px-4 pt-16">
           {/* Logo */}
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
-            <span className="text-white text-5xl font-bold">G</span>
+          <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
+            <GluonLogo />
           </div>
 
           {/* Title */}
