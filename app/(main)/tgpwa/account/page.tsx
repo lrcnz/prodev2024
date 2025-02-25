@@ -18,9 +18,9 @@ export const viewport: Viewport = {
 const referrals = [
   {
     id: 1,
-    name: 'Bitcoin + Yield',
+    name: 'Super Growth',
     rate: '1.2%',
-    description: 'Staked BTC',
+    description: 'Crypto Income Fund',
     referred: 112,
     earnings: 220,
   },
@@ -39,7 +39,7 @@ const ReferralItem = ({ name, rate, description, referred, earnings }: any) => (
     {/* 左侧部分 */}
     <div className="flex items-center gap-3">
       {/* 占位符图标 */}
-      {name === 'Bitcoin + Yield' ? (
+      {name === 'Super Growth' ? (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="48" height="48" rx="24" fill="url(#paint0_radial_1333_9078)" />
           <path
