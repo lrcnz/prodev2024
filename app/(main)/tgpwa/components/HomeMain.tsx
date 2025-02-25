@@ -13,6 +13,7 @@ import InsuranceIcon from '../assets/icons/insurance.png';
 import MicroLendingIcon from '../assets/icons/micro-lending.png';
 import RemittenceIcon from '../assets/icons/remittence.png';
 import SavingsIcon from '../assets/icons/savings.png';
+import TermIcon from '../assets/icons/term.png';
 
 import { useStartParam } from '../hooks';
 
@@ -39,15 +40,15 @@ const Card = ({
   return (
     <div
       onClick={onClick}
-      className={cn('text-[#111111] justify-between p-3 bg-white rounded-xl items-center gap-5 inline-flex', className)}
+      className={cn('text-[#111111] justify-between p-3 bg-white rounded-xl items-center gap-4 inline-flex', className)}
     >
-      <div className="h-12 items-center gap-2 flex">
-        <div className="rounded-[48px] justify-center items-center">
+      <div className="h-12  items-center gap-2 flex">
+        <div className="rounded-[48px] justify-center items-center ">
           <Image src={icon} className="w-12 h-12 relative" alt="icon" />
         </div>
-        <div className="flex-col gap-0.5 flex">
+        <div className="flex-col gap-0.5 flex flex-1">
           <div className="text-base">{title}</div>
-          <div className="text-[#92918e] text-sm">{describe}</div>
+          <div className="text-[#92918e] text-xs">{describe}</div>
         </div>
       </div>
       <div className="px-2.5 py-1 bg-[#111111]/10 rounded-2xl justify-center items-center flex">
@@ -106,6 +107,13 @@ export const HomeMain = () => {
             title="Super Growth"
             describe="grow savings with premium and passive income, withdraw anytime"
             apr="13.2% p.a."
+          />
+          <Card
+            onClick={() => router.push('/tgpwa')}
+            icon={TermIcon}
+            title="Term Deposit"
+            describe="locked in interest rate, 1 year fixed term"
+            apr="23% p.a."
           />
         </div>
         <div className="flex items-center justify-between mt-6">

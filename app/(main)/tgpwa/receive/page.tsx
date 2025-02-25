@@ -23,9 +23,12 @@ interface CryptoItemProps {
 const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, change }) => (
   <div className="flex justify-between items-center mb-6">
     <div className="text-2xl font-bold flex items-center">Wallet</div>
-    <div className="bg-[#E8FFDB] rounded-xl p-4 flex items-baseline">
-      <span className="text-2xl font-bold">${balance}</span>
-      <span className="text-sm text-green-600 ml-2">+${change} Yesterday</span>
+    <div className="bg-[#e6e6ea] rounded-[20px] h-[60px] px-4 gap-4 flex items-center">
+      <span className="text-3xl font-bold">${balance}</span>
+      <div className="text-sm text-[#007AFF]">
+        <div className="font-semibold">+${change}</div>
+        <div>Yesterday</div>
+      </div>
     </div>
   </div>
 );

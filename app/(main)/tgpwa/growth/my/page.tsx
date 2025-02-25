@@ -161,12 +161,12 @@ export default function SuperGrowth() {
         {/* Earnings Section */}
         <h2 className="text-xl font-bold mt-6">My Earnings</h2>
         <div className="h-px bg-gray-200 mt-1 mb-5" />
-        <div className="bg-green-100 p-4 rounded-xl">
+        <div className="bg-[#e6e6ea] p-4 rounded-xl">
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold">$2,315.5</span>
-            <div className="flex items-center text-green-600">
-              <span className="text-sm">+$5</span>
-              <span className="text-xs ml-1">Yesterday</span>
+            <div className="text-sm text-[#007AFF]">
+              <div className="font-semibold">+5</div>
+              <div>Yesterday</div>
             </div>
           </div>
         </div>
