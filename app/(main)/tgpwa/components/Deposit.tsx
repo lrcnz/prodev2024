@@ -1,5 +1,4 @@
 'use client';
-import { format } from 'path';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -9,8 +8,6 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
-import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useWalletBalance } from '@/hooks/useWalletBalance';
 import { cn } from '@/lib/utils';
 import { openedModalAtom } from '@/state/modal';
 import { AlertDialog, AlertDialogOverlay, AlertDialogPortal } from '@/ui-components/AlertDialog';

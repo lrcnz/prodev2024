@@ -5,6 +5,8 @@ import { type Viewport } from 'next';
 
 import Link from 'next/link';
 
+import { useEffect } from 'react';
+
 import ApyIcon from '../assets/icons/apy.svg';
 import AumIcon from '../assets/icons/aum.svg';
 import SaversIcon from '../assets/icons/savers.svg';
@@ -34,7 +36,11 @@ const Card = ({ title, value, icon, className }: { title: string; value: string;
 };
 
 const Page = () => {
-  const setOpened = useSetAtom(openedModalAtom);
+  const setOpenedModal = useSetAtom(openedModalAtom);
+
+  useEffect(() => {
+    setOpenedModal('login');
+  }, [setOpenedModal]);
 
   return (
     <>
@@ -70,7 +76,7 @@ const Page = () => {
         </div>
         <div className="mt-auto mb-8 px-4">
           <div
-            onClick={() => setOpened('deposit')}
+            onClick={() => setOpenedModal('login')}
             className="h-[50px] px-6 bg-[#007aff] rounded-xl justify-center items-center flex"
           >
             <div>

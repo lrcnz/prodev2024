@@ -93,10 +93,10 @@ export default function SuperGrowth() {
           </svg>
 
           <div>
-            <p className="text-lg font-bold">Bitcoin + Yield</p>
+            <p className="text-lg font-bold">Crypto Income Fund</p>
             <div className="flex items-center gap-2">
-              <span className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-lg font-semibold">1.2%</span>
-              <span className="text-gray-500 text-sm">Staked BTC</span>
+              <span className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-lg font-semibold">13.2%</span>
+              <span className="text-gray-500 text-sm">Passive income from ETH, BTC etc.</span>
             </div>
           </div>
         </div>
@@ -296,7 +296,8 @@ export default function SuperGrowth() {
 
           {/* 描述文本 */}
           <p className="text-gray-900 text-base mt-2 leading-relaxed">
-            This strategy combines safety of high yield USD & delta neutral trades.
+            This strategy combines safety of passive USD income, high yield potential of crypto and market-neutral
+            strategy
           </p>
         </div>
         <div className="mt-2 ml-16">

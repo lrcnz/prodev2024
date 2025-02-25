@@ -37,10 +37,25 @@ export const Pay = () => {
           duration: 0,
           content: 'loading...',
         });
-        delay(1000).then(() => {
+        setTimeout(() => {
+          setOpenedModal(undefined);
           Toast.clear();
-          setOpenedModal('ton');
-        });
+          setPlan(plan === 'growth' ? 'savings' : 'growth');
+          router.push('/tgpwa/successful');
+        }, 2000);
+        // switchPlan(
+        //   () => {
+        //     Toast.clear();
+        //     setPlan(plan === 'growth' ? 'savings' : 'growth');
+        //     router.push('/tgpwa/successful');
+        //   },
+        //   {
+        //     hideToast: true,
+        //     beforeChallenge: () => {
+        //       setOpenedModal(undefined);
+        //     },
+        //   }
+        // );
       }, 2000);
     }
   }, [isInProcess, openedModal, plan, router, setOpenedModal, setPlan, switchPlan]);

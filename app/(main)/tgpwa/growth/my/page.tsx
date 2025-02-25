@@ -31,8 +31,13 @@ export default function SuperGrowth() {
                 <TrendingUp className="w-6 h-6 text-sky-500" />
               </div>
               <div>
-                <div className="font-semibold">Bitcoin + Yield</div>
-                <div className="text-gray-500 text-sm">1.2% Staked BTC</div>
+                <div className="font-semibold">Super Growth</div>
+                <div className="text-gray-500 text-sm">
+                  <span className="bg-gray-200 text-gray-500 text-[10px] px-1 py-0.5 rounded-lg font-semibold mr-1">
+                    1.2%
+                  </span>
+                  Crypto Income Fund
+                </div>
               </div>
             </div>
 
@@ -49,8 +54,13 @@ export default function SuperGrowth() {
                 <Wallet className="w-6 h-6 text-green-500" />
               </div>
               <div>
-                <div className="font-semibold">Stable Saving</div>
-                <div className="text-gray-500 text-sm">3.2% Safe Heaven</div>
+                <div className="font-semibold">Super Saving</div>
+                <div className="text-gray-500 text-sm">
+                  <span className="bg-gray-200 text-gray-500 text-[10px] px-1 py-0.5 rounded-lg font-semibold mr-1">
+                    3.2%
+                  </span>
+                  Safe Heaven
+                </div>
               </div>
             </div>
             <div className="bg-blue-50 px-3 py-1 rounded-full">

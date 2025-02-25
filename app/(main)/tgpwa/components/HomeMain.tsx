@@ -51,7 +51,7 @@ const Card = ({
         </div>
       </div>
       <div className="px-2.5 py-1 bg-[#111111]/10 rounded-2xl justify-center items-center flex">
-        <div className="text-center text-xs">{apr}</div>
+        <div className="text-center text-xs whitespace-nowrap">{apr}</div>
       </div>
     </div>
   );
@@ -97,15 +97,15 @@ export const HomeMain = () => {
             onClick={() => router.push('/tgpwa/savings')}
             icon={SavingsIcon}
             title="Super Savings"
-            describe="SuperState"
-            apr="5.60%"
+            describe="build savings overtime, withdraw anytime, low min. deposits"
+            apr="5.60% p.a."
           />
           <Card
             onClick={() => router.push('/tgpwa/growth')}
             icon={GrowthIcon}
             title="Super Growth"
-            describe="Gluon Protocol"
-            apr="8.50%"
+            describe="grow savings with premium and passive income, withdraw anytime"
+            apr="13.2% p.a."
           />
         </div>
         <div className="flex items-center justify-between mt-6">

@@ -26,12 +26,15 @@ export const HomeHeader = () => {
         <div className="inline-flex mt-8 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
           <div className="text-center text-xs font-medium">12,510 Savers</div>
         </div>
-        <div className="my-2 text-7xl font-bold">5.8%</div>
+        <div className="my-2 text-7xl font-bold flex">
+          5.6%
+          <div className="text-3xl mt-auto">p.a.</div>
+        </div>
         <div className="flex gap-2 items-center">
           <div>
             <Image src={SavingsIcon} alt="Savings Icon" width={56} />
           </div>
-          <span className="text-xl">Super Savings - powered by SuperState</span>
+          <span className="text-xl">Super Savings - withdraw anytime</span>
         </div>
         <div className="my-5 px-5 py-4 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
           <div className="text-base font-semibold">Super Savings</div>
