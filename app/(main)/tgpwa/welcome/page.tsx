@@ -49,8 +49,7 @@ const Page = () => {
           ) : isEarn ? (
             <div className="w-full bg-gray-50 rounded-xl p-6 mb-auto">
               <p className="text-gray-700">
-                With Gluon it is super easy to accept crypto and earn from it, tap join to{' '}
-                <span className="font-bold">get started!</span>
+                Smarter Money, Better Returns only in Gluon. Tap👇 to <span className="font-bold">get started!</span>
               </p>
             </div>
           ) : null}
