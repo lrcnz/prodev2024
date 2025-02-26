@@ -5,8 +5,57 @@ import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { ExternalLink, X } from 'lucide-react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const SettingPage = () => {
+  const [fecthing, setFetching] = useState(false);
+  const router = useRouter();
+
+  const handleClick = async () => {
+    if (typeof window === 'undefined' || fecthing) return;
+    setFetching(true);
+    const user_id = (window as any).Telegram.WebApp.initDataUnsafe.user.id;
+    try {
+      const result = await fetch('/api/shareMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id,
+          type: 'earn',
+        }),
+      });
+      const data = await result.json();
+
+      if (!data) {
+        setFetching(false);
+        (window as any).Telegram.WebApp.showPopup({
+          title: 'Send Failed',
+          message: 'Message sending failed. Please try again later.',
+          buttons: [{ text: 'OK', type: 'ok' }],
+        });
+        return;
+      }
+      (window as any).Telegram.WebApp.shareMessage(data.prepared_message_id, (success: any) => {
+        if (success) {
+          // router.push('/tgpwa/growth/my');
+        } else {
+          (window as any).Telegram.WebApp.showPopup({
+            title: 'Send Failed',
+            message: 'Message sending failed. Please try again later.',
+            buttons: [{ text: 'OK', type: 'ok' }],
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setFetching(false);
+    }
+  };
+
   return (
     <>
       <header className="h-14 flex justify-center items-center ">
@@ -52,14 +101,7 @@ const SettingPage = () => {
               <div className="text-base font-medium">Disconnect</div>
             </div>
           </div>
-          <div
-            onClick={() =>
-              (window as any).Telegram.WebApp.openTelegramLink(
-                `https://t.me/share/url?url=t.me/GluonMoneyBot/gluon&text=${encodeURIComponent(`Join Gluon and earn up to 11.9% with Gluon's Savings account!`)}`
-              )
-            }
-            className="rounded-xl bg-accent flex flex-col py-2"
-          >
+          <div onClick={handleClick} className="rounded-xl bg-accent flex flex-col py-2">
             <div className="flex h-14 items-center cursor-pointer gap-4">
               <div className="ml-8">
                 <ExternalLink />

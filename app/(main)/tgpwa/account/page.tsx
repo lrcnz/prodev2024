@@ -158,7 +158,7 @@ const Page = () => {
   return (
     <div className="text-[#111111] select-none">
       <div className="px-4 pt-2 relative flex flex-col">
-        <Link href="/" className="flex justify-center relative w-full">
+        <Link href="/tgpwa" className="flex justify-center relative w-full">
           <AlignJustify className="w-6 h-6 absolute left-0 top-0.5" />
           <span className="text-lg font-semibold">Account</span>
         </Link>
