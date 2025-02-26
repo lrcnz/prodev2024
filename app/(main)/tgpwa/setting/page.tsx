@@ -24,7 +24,7 @@ const SettingPage = () => {
         },
         body: JSON.stringify({
           user_id,
-          type: 'earn',
+          type: 'share',
         }),
       });
       const data = await result.json();
