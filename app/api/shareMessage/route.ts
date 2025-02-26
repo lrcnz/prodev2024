@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
     let payload: any = {};
     if (type === 'share') {
       payload = {
-        photo_url: 'https://prodev2024.vercel.app/share/share.png', // 发送完整的图片
-        thumb_url: 'https://prodev2024.vercel.app/share/share.png', // 预览缩略图
+        photo_url: 'https://prodev2024.vercel.app/share/strategy.png', // 发送完整的图片
+        thumb_url: 'https://prodev2024.vercel.app/share/strategy.png', // 预览缩略图
         caption: `Join me in the new PayFi app, earn up 11.90% yield with Gluon's Savings Strategy`,
         reply_markup: {
           inline_keyboard: [
