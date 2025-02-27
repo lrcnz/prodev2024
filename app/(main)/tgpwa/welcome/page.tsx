@@ -16,7 +16,7 @@ const Page = () => {
       <div className="bg-white flex flex-col h-full">
         <div className="flex flex-col items-center min-h-screen bg-white px-4 pt-16">
           {/* Logo */}
-          <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
+          <div className="bg-gradient-to-brrounded-2xl flex items-center justify-center mb-6">
             <GluonLogo />
           </div>
 
