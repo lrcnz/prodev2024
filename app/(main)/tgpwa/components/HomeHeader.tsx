@@ -2,8 +2,10 @@
 import { useSetAtom } from 'jotai';
 import { AlignJustify } from 'lucide-react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
+import CheckInImg from '../assets/checkin.png';
 import GrowthImg from '../assets/growth-img.svg';
 
 import { openedModalAtom } from '@/state/modal';
@@ -13,6 +15,9 @@ export const HomeHeader = () => {
 
   return (
     <div className="bg-gradient4 px-4 pt-2 relative flex flex-col">
+      <div className="absolute right-4 top-14">
+        <Image src={CheckInImg} alt="Check In" width={122} />
+      </div>
       <div className="absolute right-5 top-[60px]">
         <GrowthImg />
       </div>
@@ -36,7 +41,7 @@ export const HomeHeader = () => {
         </div>
         <div className="my-5 px-5 py-2 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
           <div className="text-base font-semibold">Super Savings</div>
-          <div className="px-3 py-1.5 bg-[#f7f6f0] rounded-2xl justify-center items-center flex">
+          <div className="px-4 py-1.5 bg-[#f7f6f0] rounded-2xl justify-center items-center flex">
             <div onClick={() => setOpenedModal('deposit')} className="text-center text-[#111111] text-base font-medium">
               JOIN
             </div>
