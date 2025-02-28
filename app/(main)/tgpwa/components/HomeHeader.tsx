@@ -1,12 +1,10 @@
 'use client';
 import { useSetAtom } from 'jotai';
 import { AlignJustify } from 'lucide-react';
-import Image from 'next/image';
 
 import Link from 'next/link';
 
 import GrowthImg from '../assets/growth-img.svg';
-import SavingsIcon from '../assets/icons/savings.png';
 
 import { openedModalAtom } from '@/state/modal';
 
