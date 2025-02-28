@@ -36,7 +36,7 @@ export const HomeHeader = () => {
           </div> */}
           <span className="text-xl">Super Savings - withdraw anytime</span>
         </div>
-        <div className="my-5 px-5 py-4 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
+        <div className="my-5 px-5 py-2 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
           <div className="text-base font-semibold">Super Savings</div>
           <div className="px-3 py-1.5 bg-[#f7f6f0] rounded-2xl justify-center items-center flex">
             <div onClick={() => setOpenedModal('deposit')} className="text-center text-[#111111] text-base font-medium">
