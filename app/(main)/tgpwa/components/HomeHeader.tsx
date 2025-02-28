@@ -31,9 +31,9 @@ export const HomeHeader = () => {
           <div className="text-3xl mt-auto">p.a.</div>
         </div>
         <div className="flex gap-2 items-center">
-          <div>
+          {/* <div>
             <Image src={SavingsIcon} alt="Savings Icon" width={56} />
-          </div>
+          </div> */}
           <span className="text-xl">Super Savings - withdraw anytime</span>
         </div>
         <div className="my-5 px-5 py-4 bg-[#007aff]/60 rounded-xl justify-between items-center flex">
