@@ -137,7 +137,7 @@ export const HomeMain = () => {
           ].map(({ title, icon }, i) => (
             <div key={i} className="py-3 bg-white rounded-xl flex-col justify-center items-center gap-2 flex">
               <div className="justify-center items-center inline-flex">
-                <Image src={icon} alt={title} className="w-12 h-12 relative" />
+                <Image src={icon} alt={title} className="w-10 h-10 relative" />
               </div>
               <div className="text-center text-[#333333] text-sm">{title}</div>
             </div>
