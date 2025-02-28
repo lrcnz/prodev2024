@@ -135,7 +135,7 @@ export const HomeMain = () => {
               icon: MicroLendingIcon,
             },
           ].map(({ title, icon }, i) => (
-            <div key={i} className="py-3 bg-white rounded-xl flex-col justify-center items-center gap-2 flex">
+            <div key={i} className="py-2 bg-white rounded-xl flex-col justify-center items-center gap-1 flex">
               <div className="justify-center items-center inline-flex">
                 <Image src={icon} alt={title} className="w-10 h-10 relative" />
               </div>
