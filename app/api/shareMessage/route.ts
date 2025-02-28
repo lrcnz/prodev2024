@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       payload = {
         photo_url: 'https://prodev2024.vercel.app/share/share212.png', // 发送完整的图片
         thumb_url: 'https://prodev2024.vercel.app/share/share212.png', // 预览缩略图
-        caption: `\nJoin my safe Crypto Income Fund strategy and earn together!\!\nCheckout Alice’s Crypto Income Fund strategy, 2510 followers.\.`,
+        caption: `\nJoin my safe Crypto Income Fund strategy and earn together!\nCheckout Alice’s Crypto Income Fund strategy, 2510 followers.`,
         reply_markup: {
           inline_keyboard: [
             [
