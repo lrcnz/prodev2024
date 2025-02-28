@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
     let payload: any = {};
     if (type === 'share') {
       payload = {
-        photo_url: 'https://prodev2024.vercel.app/share/share21.png', // 发送完整的图片
-        thumb_url: 'https://prodev2024.vercel.app/share/share21.png', // 预览缩略图
+        photo_url: 'https://prodev2024.vercel.app/share/share212.png', // 发送完整的图片
+        thumb_url: 'https://prodev2024.vercel.app/share/share212.png', // 预览缩略图
         caption: `Join me in the new PayFi app, earn up 11.90% yield with Gluon's Savings Strategy`,
         reply_markup: {
           inline_keyboard: [
@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
     }
     if (type === 'send') {
       payload = {
-        photo_url: 'https://prodev2024.vercel.app/share/send21.png', // 发送完整的图片
-        thumb_url: 'https://prodev2024.vercel.app/share/send21.png', // 预览缩略图
+        photo_url: 'https://prodev2024.vercel.app/share/send212.png', // 发送完整的图片
+        thumb_url: 'https://prodev2024.vercel.app/share/send212.png', // 预览缩略图
         caption: `\nHere you go\!\n🎉🎉A Friend sent you **${amount || 20} USD**`,
         reply_markup: {
           inline_keyboard: [
@@ -55,8 +55,8 @@ export async function POST(req: NextRequest) {
     }
     if (type === 'raffle') {
       payload = {
-        photo_url: 'https://prodev2024.vercel.app/share/raffle21.png', // 发送完整的图片
-        thumb_url: 'https://prodev2024.vercel.app/share/raffle21.png', // 预览缩略图
+        photo_url: 'https://prodev2024.vercel.app/share/raffle212.png', // 发送完整的图片
+        thumb_url: 'https://prodev2024.vercel.app/share/raffle212.png', // 预览缩略图
         caption: `\nHere you go\!\n🎉🎉A Friend sent you **a Raffle**`,
         reply_markup: {
           inline_keyboard: [
@@ -72,8 +72,8 @@ export async function POST(req: NextRequest) {
     }
     if (type === 'earn') {
       payload = {
-        photo_url: 'https://prodev2024.vercel.app/share/share21.png', // 发送完整的图片
-        thumb_url: 'https://prodev2024.vercel.app/share/share21.png', // 预览缩略图
+        photo_url: 'https://prodev2024.vercel.app/share/share212.png', // 发送完整的图片
+        thumb_url: 'https://prodev2024.vercel.app/share/share212.png', // 预览缩略图
         caption: `\nJoin my safe Crypto Income Fund strategy and earn together!\!\nCheckout Alice’s Crypto Income Fund strategy, 2510 followers.\.`,
         reply_markup: {
           inline_keyboard: [
