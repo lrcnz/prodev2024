@@ -29,7 +29,7 @@ export const HomeHeader = () => {
         <div className="inline-flex mt-6 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
           <div className="text-center text-xs font-medium">12,510 Savers</div>
         </div>
-        <div className="my-2 text-7xl font-bold flex">
+        <div className="my-2 text-[64px] leading-none font-bold flex">
           5.6%
           <div className="text-3xl mt-auto">p.a.</div>
         </div>

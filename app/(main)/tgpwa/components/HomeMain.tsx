@@ -89,8 +89,8 @@ export const HomeMain = () => {
     <>
       <RaffleModal />
       <div className="bg-[#F7F6F1] text-[#111111] px-4 flex flex-col mb-24">
-        <div className="flex items-center justify-between mt-6">
-          <div className="text-2xl font-bold">Featured Products</div>
+        <div className="flex items-center justify-between mt-5">
+          <div className="text-[20px] font-bold">Featured Products</div>
           <div className="text-right text-[#007aff] text-base">See All</div>
         </div>
         <div className="flex flex-col gap-3 mt-3">
@@ -116,8 +116,8 @@ export const HomeMain = () => {
             apr="23% p.a."
           />
         </div>
-        <div className="flex items-center justify-between mt-6">
-          <div className="text-2xl font-bold">Coming Soon</div>
+        <div className="flex items-center justify-between mt-5">
+          <div className="text-[20px] font-bold">Coming Soon</div>
           <div className="text-right text-[#007aff] text-base">See All</div>
         </div>
         <div className="grid grid-cols-3 gap-3 my-3 mb-32">
