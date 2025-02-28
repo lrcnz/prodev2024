@@ -23,7 +23,7 @@ export const HomeHeader = () => {
         <span className="text-lg font-semibold">Gluon Money</span>
       </Link>
       <div className="ml-1">
-        <div className="inline-flex mt-8 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
+        <div className="inline-flex mt-6 px-3 py-1 bg-[#111111]/20 rounded-[15px] justify-center items-center">
           <div className="text-center text-xs font-medium">12,510 Savers</div>
         </div>
         <div className="my-2 text-7xl font-bold flex">
